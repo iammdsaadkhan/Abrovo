@@ -2849,8 +2849,8 @@
         form.style.transition = 'opacity 0.3s';
         form.style.opacity = '0';
         setTimeout(() => {
-          form.hidden = true;
-          success.hidden = false;
+          form.style.display = 'none';
+          success.removeAttribute('hidden');
           success.classList.add('visible');
         }, 300);
         // Save email
