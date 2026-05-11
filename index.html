@@ -1596,10 +1596,13 @@
       box-shadow: 0 8px 20px rgba(37,99,235,0.4);
     }
     .newsletter-success {
-      display: flex; align-items: center; gap: 10px;
+      display: none; align-items: center; gap: 10px;
       background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
       border-radius: 12px; padding: 13px 18px;
       color: #6ee7b7; font-size: 0.9rem; font-weight: 600;
+    }
+    .newsletter-success.visible {
+      display: flex;
       animation: slideIn 0.4s cubic-bezier(0.16,1,0.3,1);
     }
     .newsletter-success span { font-size: 1.4rem; }
@@ -2848,7 +2851,7 @@
         setTimeout(() => {
           form.hidden = true;
           success.hidden = false;
-          success.style.animation = 'slideIn 0.4s cubic-bezier(0.16,1,0.3,1)';
+          success.classList.add('visible');
         }, 300);
         // Save email
         try {
