@@ -45,6 +45,7 @@
     a { text-decoration: none; color: inherit; }
     img { display: block; max-width: 100%; }
     ul { list-style: none; }
+    button { font-family: var(--font-body); }
 
     /* =========================================
        NAVBAR
@@ -158,6 +159,8 @@
       font-size: 0.84rem;
       font-weight: 600;
       border-radius: 50px;
+      border: none;
+      cursor: pointer;
       transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
       white-space: nowrap;
     }
@@ -174,6 +177,8 @@
       gap: 5px;
       cursor: pointer;
       padding: 8px;
+      border: none;
+      background: transparent;
       border-radius: 8px;
       transition: background 0.2s;
     }
@@ -252,358 +257,74 @@
     }
 
     /* Animated background */
-    .hero-canvas {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .hero-gradient {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(37,99,235,0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(99,102,241,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 60% 80%, rgba(16,185,129,0.06) 0%, transparent 60%);
-    }
-    .geo-shape {
-      position: absolute;
-      border-radius: 50%;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.06);
-      animation: floatShape linear infinite;
-    }
+    .hero-canvas { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .hero-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(37,99,235,0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 20%, rgba(99,102,241,0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 60% 80%, rgba(16,185,129,0.06) 0%, transparent 60%); }
+    .geo-shape { position: absolute; border-radius: 50%; background: transparent; border: 1px solid rgba(255,255,255,0.06); animation: floatShape linear infinite; }
     .geo-shape:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; animation-duration: 25s; }
     .geo-shape:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-duration: 20s; animation-delay: -8s; border-color: rgba(37,99,235,0.1); }
     .geo-shape:nth-child(3) { width: 250px; height: 250px; top: 30%; left: 10%; animation-duration: 18s; animation-delay: -5s; }
     .geo-shape:nth-child(4) { width: 150px; height: 150px; top: 15%; right: 20%; animation-duration: 14s; animation-delay: -12s; border-color: rgba(37,99,235,0.15); }
-
-    .geo-dot {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(37,99,235,0.4);
-      animation: floatDot ease-in-out infinite;
-    }
+    .geo-dot { position: absolute; border-radius: 50%; background: rgba(37,99,235,0.4); animation: floatDot ease-in-out infinite; }
     .geo-dot:nth-child(5) { width: 6px; height: 6px; top: 20%; left: 25%; animation-duration: 6s; }
     .geo-dot:nth-child(6) { width: 4px; height: 4px; top: 60%; right: 15%; animation-duration: 8s; animation-delay: -3s; }
     .geo-dot:nth-child(7) { width: 5px; height: 5px; bottom: 25%; left: 40%; animation-duration: 7s; animation-delay: -2s; }
 
-    @keyframes floatShape {
-      0%   { transform: rotate(0deg) scale(1); }
-      50%  { transform: rotate(180deg) scale(1.03); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-    @keyframes floatDot {
-      0%, 100% { transform: translateY(0); opacity: 0.4; }
-      50%       { transform: translateY(-20px); opacity: 1; }
-    }
+    @keyframes floatShape { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.03); } 100% { transform: rotate(360deg) scale(1); } }
+    @keyframes floatDot { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-20px); opacity: 1; } }
 
     /* Hero Content */
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      max-width: 860px;
-      width: 100%;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 16px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 50px;
-      color: rgba(255,255,255,0.8);
-      font-size: 0.82rem;
-      font-weight: 500;
-      margin-bottom: 28px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
-    }
-    .hero-badge-dot {
-      width: 7px; height: 7px;
-      background: var(--success);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50%       { transform: scale(1.5); opacity: 0.6; }
-    }
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 860px; width: 100%; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; color: rgba(255,255,255,0.8); font-size: 0.82rem; font-weight: 500; margin-bottom: 28px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards; }
+    .hero-badge-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.6; } }
 
-    .hero-headline {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      line-height: 1.12;
-      color: #fff;
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
-    }
-    .hero-headline em {
-      font-style: italic;
-      color: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-      background-image: linear-gradient(135deg, #60a5fa, #a78bfa);
-    }
+    .hero-headline { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.12; color: #fff; letter-spacing: -0.02em; margin-bottom: 24px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; }
+    .hero-headline em { font-style: italic; color: transparent; -webkit-background-clip: text; background-clip: text; background-image: linear-gradient(135deg, #60a5fa, #a78bfa); }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.7; color: rgba(255,255,255,0.6); max-width: 620px; margin: 0 auto 40px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
 
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      line-height: 1.7;
-      color: rgba(255,255,255,0.6);
-      max-width: 620px;
-      margin: 0 auto 40px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
-    }
-
-    .hero-ctas {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 60px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 50px;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 20px rgba(37,99,235,0.4);
-    }
-    .btn-primary:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 32px rgba(37,99,235,0.5);
-    }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background: transparent;
-      color: rgba(255,255,255,0.9);
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 50px;
-      border: 1.5px solid rgba(255,255,255,0.2);
-      transition: all 0.25s ease;
-    }
-    .btn-secondary:hover {
-      background: var(--glass);
-      border-color: rgba(255,255,255,0.4);
-      transform: translateY(-2px);
-    }
+    .hero-ctas { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.8s forwards; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--accent); color: #fff; border: none; cursor: pointer; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; border-radius: 50px; transition: all 0.25s ease; box-shadow: 0 4px 20px rgba(37,99,235,0.4); text-decoration: none; }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,99,235,0.5); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: transparent; color: rgba(255,255,255,0.9); font-weight: 600; font-size: 0.95rem; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.2); transition: all 0.25s ease; text-decoration: none; }
+    .btn-secondary:hover { background: var(--glass); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
 
     /* Stat Cards */
-    .stat-cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .stat-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 20px 16px;
-      text-align: center;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      opacity: 0;
-      transform: translateY(40px);
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
+    .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; max-width: 900px; margin: 0 auto; }
+    .stat-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px 16px; text-align: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); opacity: 0; transform: translateY(40px); transition: transform 0.3s ease, border-color 0.3s ease; }
     .stat-card.visible { opacity: 1; transform: translateY(0); }
-    .stat-card:hover {
-      border-color: rgba(37,99,235,0.5);
-      transform: translateY(-4px);
-    }
+    .stat-card:hover { border-color: rgba(37,99,235,0.5); transform: translateY(-4px); }
     .stat-card:nth-child(1) { animation-delay: 1.0s; }
     .stat-card:nth-child(2) { animation-delay: 1.15s; }
     .stat-card:nth-child(3) { animation-delay: 1.3s; }
     .stat-card:nth-child(4) { animation-delay: 1.45s; }
-    .stat-card-anim {
-      animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-    .stat-card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 8px;
-    }
-    .stat-card-num {
-      font-family: var(--font-mono);
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #fff;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-card-label {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.55);
-      font-weight: 500;
-    }
+    .stat-card-anim { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+    .stat-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .stat-card-num { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 600; color: #fff; line-height: 1; margin-bottom: 4px; }
+    .stat-card-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); font-weight: 500; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Scroll cue */
-    .scroll-cue {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      opacity: 0.4;
-      animation: fadeUp 1s ease 2s forwards, scrollBob 2.5s ease-in-out 3s infinite;
-    }
-    .scroll-cue span {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .scroll-arrow {
-      width: 20px; height: 20px;
-      border-right: 2px solid rgba(255,255,255,0.4);
-      border-bottom: 2px solid rgba(255,255,255,0.4);
-      transform: rotate(45deg);
-    }
-    @keyframes scrollBob {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(8px); }
-    }
+    .scroll-cue { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.4; animation: fadeUp 1s ease 2s forwards, scrollBob 2.5s ease-in-out 3s infinite; }
+    .scroll-cue span { font-size: 0.72rem; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; text-transform: uppercase; }
+    .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid rgba(255,255,255,0.4); border-bottom: 2px solid rgba(255,255,255,0.4); transform: rotate(45deg); }
+    @keyframes scrollBob { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
 
     /* =========================================
-       MARQUEE BAR
+       MARQUEE BAR & SECTION SHARED
     ========================================= */
-    .marquee-section {
-      background: var(--bg-white);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 0;
-      overflow: hidden;
-      position: relative;
-    }
-    .marquee-section::before,
-    .marquee-section::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .marquee-section::before {
-      left: 0;
-      background: linear-gradient(to right, var(--bg-white), transparent);
-    }
-    .marquee-section::after {
-      right: 0;
-      background: linear-gradient(to left, var(--bg-white), transparent);
-    }
-    .marquee-label {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 3;
-      background: var(--bg-white);
-      padding: 0 20px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .marquee-track {
-      display: flex;
-      align-items: center;
-      padding: 18px 0;
-      animation: marqueeScroll 28s linear infinite;
-      width: max-content;
-    }
+    .marquee-section { background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; overflow: hidden; position: relative; }
+    .marquee-track { display: flex; align-items: center; padding: 18px 0; animation: marqueeScroll 28s linear infinite; width: max-content; }
     .marquee-track:hover { animation-play-state: paused; }
-    .marquee-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 32px;
-      white-space: nowrap;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      border-right: 1px solid var(--border);
-      transition: color 0.2s;
-    }
-    .marquee-item:last-child { border-right: none; }
+    .marquee-item { display: flex; align-items: center; gap: 10px; padding: 8px 32px; white-space: nowrap; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); border-right: 1px solid var(--border); transition: color 0.2s; }
     .marquee-item:hover { color: var(--accent); }
     .marquee-flag { font-size: 1.4rem; }
+    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    @keyframes marqueeScroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* =========================================
-       SECTION SHARED
-    ========================================= */
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-    .section-label::before {
-      content: '';
-      display: inline-block;
-      width: 24px; height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 2.9rem);
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-      line-height: 1.18;
-      margin-bottom: 16px;
-    }
-    .section-sub {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 580px;
-    }
+    .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .section-label::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.9rem); color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.18; margin-bottom: 16px; }
+    .section-sub { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 580px; }
     .section-header { margin-bottom: 56px; }
     .section-header.center { text-align: center; }
     .section-header.center .section-label { justify-content: center; }
@@ -612,238 +333,36 @@
     /* =========================================
        SERVICES SECTION
     ========================================= */
-    .services-section {
-      background: var(--card-bg);
-      padding: 96px 5%;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .service-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
-      cursor: default;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: var(--accent);
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-      border-radius: 0 2px 2px 0;
-    }
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 48px rgba(15,23,42,0.10);
-      border-color: rgba(37,99,235,0.2);
-    }
+    .services-section { background: var(--card-bg); padding: 96px 5%; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .service-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 36px 32px; position: relative; overflow: hidden; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease; cursor: default; }
+    .service-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); border-radius: 0 2px 2px 0; }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(15,23,42,0.10); border-color: rgba(37,99,235,0.2); }
     .service-card:hover::before { transform: scaleY(1); }
-    .service-icon {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      display: block;
-      line-height: 1;
-    }
-    .service-title {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
-    }
-    .service-desc {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 24px;
-    }
-    .service-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--accent);
-      transition: gap 0.2s ease;
-    }
+    .service-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; line-height: 1; }
+    .service-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+    .service-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+    .service-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 600; color: var(--accent); transition: gap 0.2s ease; }
     .service-link:hover { gap: 10px; }
-    .service-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
-    .service-link:hover svg { transform: translateX(3px); }
-
-    @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px)  { .services-grid { grid-template-columns: 1fr; } }
 
     /* =========================================
-       HOW IT WORKS
+       HOW IT WORKS & DESTINATIONS
     ========================================= */
-    .hiw-section {
-      background: var(--bg-white);
-      padding: 96px 5%;
-      overflow: hidden;
-    }
-    .hiw-steps {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      max-width: 1100px;
-      margin: 0 auto;
-      gap: 0;
-    }
-    /* Connecting line */
-    .hiw-steps::before {
-      content: '';
-      position: absolute;
-      top: 36px;
-      left: calc(10% + 12px);
-      right: calc(10% + 12px);
-      height: 2px;
-      background: var(--border);
-      z-index: 0;
-    }
-    .hiw-line-fill {
-      position: absolute;
-      top: 36px;
-      left: calc(10% + 12px);
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), #60a5fa);
-      z-index: 1;
-      width: 0;
-      transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
-      border-radius: 2px;
-    }
-    .hiw-line-fill.animated {
-      width: calc(80% - 24px);
-    }
+    .hiw-section { background: var(--bg-white); padding: 96px 5%; overflow: hidden; }
+    .hiw-steps { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 1100px; margin: 0 auto; gap: 0; }
+    .hiw-steps::before { content: ''; position: absolute; top: 36px; left: calc(10% + 12px); right: calc(10% + 12px); height: 2px; background: var(--border); z-index: 0; }
+    .hiw-line-fill { position: absolute; top: 36px; left: calc(10% + 12px); height: 2px; background: linear-gradient(90deg, var(--accent), #60a5fa); z-index: 1; width: 0; transition: width 1.5s cubic-bezier(0.16,1,0.3,1); border-radius: 2px; }
+    .hiw-line-fill.animated { width: calc(80% - 24px); }
+    .hiw-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px; position: relative; z-index: 2; }
+    .hiw-node { width: 72px; height: 72px; background: var(--bg-white); border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 20px; position: relative; transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s; z-index: 2; }
+    .hiw-step:hover .hiw-node { border-color: var(--accent); box-shadow: 0 0 0 8px rgba(37,99,235,0.08); transform: scale(1.08); }
+    .hiw-step-num { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; background: var(--accent); color: #fff; font-size: 0.68rem; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); }
+    .hiw-step-title { font-family: var(--font-display); font-size: 1rem; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .hiw-step-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; }
 
-    .hiw-step {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 0 12px;
-      position: relative;
-      z-index: 2;
-    }
-    .hiw-node {
-      width: 72px; height: 72px;
-      background: var(--bg-white);
-      border: 2px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-      position: relative;
-      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-      z-index: 2;
-    }
-    .hiw-step:hover .hiw-node {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 8px rgba(37,99,235,0.08);
-      transform: scale(1.08);
-    }
-    .hiw-step-num {
-      position: absolute;
-      top: -6px; right: -6px;
-      width: 22px; height: 22px;
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.68rem;
-      font-weight: 700;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-mono);
-    }
-    .hiw-step-title {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-      letter-spacing: -0.01em;
-    }
-    .hiw-step-desc {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    /* Mobile vertical layout */
-    @media (max-width: 768px) {
-      .hiw-steps {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        max-width: 420px;
-        margin: 0 auto;
-      }
-      .hiw-steps::before {
-        top: 36px;
-        left: 35px;
-        right: auto;
-        bottom: 36px;
-        width: 2px;
-        height: auto;
-      }
-      .hiw-line-fill {
-        top: 36px;
-        left: 35px;
-        width: 2px;
-        height: 0;
-        background: linear-gradient(180deg, var(--accent), #60a5fa);
-        transition: height 1.5s cubic-bezier(0.16,1,0.3,1);
-      }
-      .hiw-line-fill.animated { width: 2px; height: calc(100% - 72px); }
-      .hiw-step {
-        flex-direction: row;
-        text-align: left;
-        align-items: flex-start;
-        gap: 20px;
-        padding: 0 0 36px 0;
-      }
-      .hiw-node { flex-shrink: 0; margin-bottom: 0; }
-      .hiw-step-body { padding-top: 8px; }
-    }
-
-    /* =========================================
-       DESTINATIONS SECTION
-    ========================================= */
-    .destinations-section {
-      background: var(--card-bg);
-      padding: 96px 5%;
-    }
-    .destinations-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .dest-card {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      cursor: pointer;
-      background: var(--bg-dark);
-    }
-    /* Gradient backgrounds per card */
+    .destinations-section { background: var(--card-bg); padding: 96px 5%; }
+    .destinations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .dest-card { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; cursor: pointer; background: var(--bg-dark); }
     .dest-card:nth-child(1) { background: linear-gradient(135deg, #1e3a5f 0%, #0a1628 100%); }
     .dest-card:nth-child(2) { background: linear-gradient(135deg, #1a1035 0%, #0d0a1e 100%); }
     .dest-card:nth-child(3) { background: linear-gradient(135deg, #0d2818 0%, #051409 100%); }
@@ -853,376 +372,151 @@
     .dest-card:nth-child(7) { background: linear-gradient(135deg, #0a1a2a 0%, #050d14 100%); }
     .dest-card:nth-child(8) { background: linear-gradient(135deg, #1a0a1a 0%, #0d050d 100%); }
     .dest-card:nth-child(9) { background: linear-gradient(135deg, #1a1205 0%, #0d0902 100%); }
-
-    .dest-card-inner {
-      position: absolute;
-      inset: 0;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%);
-      transition: background 0.35s ease;
-    }
-    .dest-flag {
-      position: absolute;
-      top: 24px; left: 24px;
-      font-size: 2.8rem;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
+    .dest-card-inner { position: absolute; inset: 0; padding: 28px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%); transition: background 0.35s ease; }
+    .dest-flag { position: absolute; top: 24px; left: 24px; font-size: 2.8rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
     .dest-card:hover .dest-flag { transform: scale(1.15) translateY(-4px); }
-    .dest-card-name {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: #fff;
-      margin-bottom: 8px;
-      letter-spacing: -0.01em;
-    }
-    .dest-stats {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .dest-stat {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.65);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .dest-stat::before {
-      content: '';
-      width: 4px; height: 4px;
-      background: var(--accent);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .dest-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(37,99,235,0.88);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      backdrop-filter: blur(4px);
-    }
+    .dest-card-name { font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .dest-stats { display: flex; gap: 14px; flex-wrap: wrap; }
+    .dest-stat { font-size: 0.75rem; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 5px; }
+    .dest-stat::before { content: ''; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+    .dest-overlay { position: absolute; inset: 0; background: rgba(37,99,235,0.88); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
     .dest-card:hover .dest-overlay { opacity: 1; }
-    .dest-explore-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #fff;
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 12px 24px;
-      border: 2px solid rgba(255,255,255,0.6);
-      border-radius: 50px;
-      transition: all 0.2s;
-      transform: translateY(10px);
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
-    }
-    .dest-card:hover .dest-explore-btn {
-      transform: translateY(0);
-      border-color: #fff;
-    }
-
-    @media (max-width: 900px) { .destinations-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 560px) { .destinations-grid { grid-template-columns: 1fr; } }
+    .dest-explore-btn { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; font-size: 1rem; padding: 12px 24px; border: 2px solid rgba(255,255,255,0.6); border-radius: 50px; transform: translateY(10px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.2s; }
+    .dest-card:hover .dest-explore-btn { transform: translateY(0); border-color: #fff; }
 
     /* =========================================
-       STATS COUNTER BAND
+       STATS BAND
     ========================================= */
-    .stats-band {
-      background: var(--bg-dark);
-      padding: 80px 5%;
-      position: relative;
-      overflow: hidden;
-    }
-    .stats-band::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(37,99,235,0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 90% 50%, rgba(99,102,241,0.1) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .stats-band-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 40px;
-      position: relative;
-      z-index: 1;
-    }
-    .stats-band-item {
-      text-align: center;
-    }
-    .stats-band-num {
-      font-family: var(--font-mono);
-      font-size: clamp(2.4rem, 5vw, 3.5rem);
-      font-weight: 600;
-      color: #fff;
-      line-height: 1;
-      margin-bottom: 10px;
-      display: block;
-      background: linear-gradient(135deg, #fff, #93c5fd);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .stats-band-label {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.5);
-      font-weight: 500;
-      line-height: 1.4;
-    }
-    .stats-band-divider {
-      width: 1px;
-      background: rgba(255,255,255,0.08);
-      align-self: stretch;
-      display: none;
-    }
-    @media (max-width: 768px) {
-      .stats-band-inner { grid-template-columns: repeat(2, 1fr); gap: 36px; }
-    }
-    @media (max-width: 400px) {
-      .stats-band-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
-      .stats-band-num { font-size: 2rem; }
-    }
+    .stats-band { background: var(--bg-dark); padding: 80px 5%; position: relative; overflow: hidden; }
+    .stats-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 10% 50%, rgba(37,99,235,0.15) 0%, transparent 60%), radial-gradient(ellipse 40% 60% at 90% 50%, rgba(99,102,241,0.1) 0%, transparent 60%); pointer-events: none; }
+    .stats-band-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; position: relative; z-index: 1; }
+    .stats-band-item { text-align: center; }
+    .stats-band-num { font-family: var(--font-mono); font-size: clamp(2.4rem, 5vw, 3.5rem); font-weight: 600; color: #fff; line-height: 1; margin-bottom: 10px; display: block; background: linear-gradient(135deg, #fff, #93c5fd); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .stats-band-label { font-size: 0.9rem; color: rgba(255,255,255,0.5); font-weight: 500; line-height: 1.4; }
 
     /* =========================================
        FOOTER
     ========================================= */
-    .footer {
-      background: var(--bg-dark);
-      color: rgba(255,255,255,0.7);
-      padding: 72px 5% 0;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1.4fr;
-      gap: 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-bottom: 56px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .footer-col-title {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: #fff;
-      margin-bottom: 20px;
-      letter-spacing: -0.01em;
-    }
-    .footer-about-text {
-      font-size: 0.875rem;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 24px;
-    }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+    .footer { background: var(--bg-dark); color: rgba(255,255,255,0.7); padding: 72px 5% 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 48px; max-width: 1200px; margin: 0 auto; padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-col-title { font-family: var(--font-display); font-size: 1rem; color: #fff; margin-bottom: 20px; letter-spacing: -0.01em; }
+    .footer-about-text { font-size: 0.875rem; line-height: 1.75; color: rgba(255,255,255,0.55); margin-bottom: 24px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
     .footer-logo .logo-text { font-size: 1.35rem; color: #fff; }
-    .social-links {
-      display: flex;
-      gap: 12px;
-    }
-    .social-link {
-      width: 38px; height: 38px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.6);
-      transition: all 0.25s ease;
-    }
-    .social-link:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-      transform: translateY(-3px);
-    }
+    .social-links { display: flex; gap: 12px; }
+    .social-link { width: 38px; height: 38px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); transition: all 0.25s ease; }
+    .social-link:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-3px); }
     .social-link svg { width: 17px; height: 17px; fill: currentColor; }
-
     .footer-links li { margin-bottom: 12px; }
-    .footer-link {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.55);
-      transition: color 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .footer-link { font-size: 0.875rem; color: rgba(255,255,255,0.55); transition: color 0.2s; display: inline-flex; align-items: center; gap: 6px; }
     .footer-link:hover { color: var(--accent); }
-    .footer-link::before {
-      content: '→';
-      font-size: 0.75rem;
-      opacity: 0;
-      transform: translateX(-6px);
-      transition: all 0.2s;
-    }
+    .footer-link::before { content: '→'; font-size: 0.75rem; opacity: 0; transform: translateX(-6px); transition: all 0.2s; }
     .footer-link:hover::before { opacity: 1; transform: translateX(0); }
-
-    .footer-country {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 10px;
-      transition: color 0.2s;
-    }
+    .footer-country { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; color: rgba(255,255,255,0.55); margin-bottom: 10px; transition: color 0.2s; }
     .footer-country:hover { color: rgba(255,255,255,0.85); }
     .footer-country .flag { font-size: 1.1rem; }
-
-    .footer-contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .footer-contact-icon {
-      width: 36px; height: 36px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+    .footer-contact-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .footer-contact-icon svg { width: 16px; height: 16px; fill: var(--accent); }
-    .footer-contact-text {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.5;
-    }
-    .footer-contact-text strong {
-      display: block;
-      color: rgba(255,255,255,0.8);
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 2px;
-    }
-
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 0;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-copyright {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.35);
-    }
-    .footer-legal {
-      display: flex;
-      gap: 20px;
-    }
-    .footer-legal a {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.35);
-      transition: color 0.2s;
-    }
+    .footer-contact-text { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+    .footer-contact-text strong { display: block; color: rgba(255,255,255,0.8); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 24px 0; flex-wrap: wrap; gap: 12px; }
+    .footer-copyright { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: 0.82rem; color: rgba(255,255,255,0.35); transition: color 0.2s; }
     .footer-legal a:hover { color: rgba(255,255,255,0.7); }
 
-    /* =========================================
-       WHATSAPP FLOATING BUTTON
-    ========================================= */
-    .wa-float {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      z-index: 900;
-      width: 58px;
-      height: 58px;
-      background: #25D366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      text-decoration: none;
-    }
-    .wa-float:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 36px rgba(37,211,102,0.55);
-    }
+    /* PHASE 4: Newsletter */
+    .newsletter-wrap { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .newsletter-title { font-size: 0.95rem; color: #fff; font-weight: 600; margin-bottom: 12px; }
+    .newsletter-form { display: flex; gap: 8px; }
+    .newsletter-form input { flex: 1; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; border-radius: 8px; font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+    .newsletter-form input:focus { border-color: var(--accent); }
+    .newsletter-form button { padding: 12px 18px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+    .newsletter-form button:hover { background: var(--accent-hover); }
+    .news-success-msg { font-size: 0.85rem; color: var(--success); margin-top: 10px; display: none; font-weight: 500; }
+
+    /* PHASE 4: Consult Modal */
+    .consult-modal { position: fixed; inset: 0; background: rgba(10, 15, 30, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 20px; }
+    .consult-modal.active { opacity: 1; pointer-events: all; }
+    .consult-modal-content { background: #fff; width: 100%; max-width: 520px; border-radius: 20px; padding: 36px; transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); position: relative; max-height: 90vh; overflow-y: auto; }
+    .consult-modal.active .consult-modal-content { transform: translateY(0); }
+    .modal-close { position: absolute; top: 20px; right: 20px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
+    .modal-close:hover { background: #e2e8f0; color: var(--text-primary); }
+    
+    .modal-header { text-align: center; margin-bottom: 24px; }
+    .modal-header h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--text-primary); margin-bottom: 8px; }
+    .modal-header p { font-size: 0.9rem; color: var(--text-secondary); }
+    
+    .form-progress { display: flex; gap: 8px; margin-bottom: 28px; }
+    .progress-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; transition: background 0.3s; }
+    .progress-bar.active { background: var(--accent); }
+    
+    .form-step { display: none; animation: slideInRight 0.3s forwards; }
+    .form-step.active { display: block; }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+    
+    .form-group { margin-bottom: 18px; text-align: left; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+    .form-control { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; font-family: var(--font-body); font-size: 0.95rem; color: var(--text-primary); outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; }
+    .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+    
+    .form-actions { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; }
+    .btn-block { flex: 1; justify-content: center; padding: 12px; }
+    .btn-outline { background: #fff; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-outline:hover { background: #f8fafc; border-color: #cbd5e1; transform: translateY(-1px); }
+    
+    .form-success-state { display: none; text-align: center; padding: 20px 0; animation: fadeUp 0.4s forwards; }
+    .form-success-state.active { display: block; }
+    .success-icon { width: 64px; height: 64px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-icon svg { width: 32px; height: 32px; fill: var(--success); }
+    .form-success-state h3 { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 12px; }
+    .form-success-state p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+
+    /* PHASE 4: WhatsApp Float & Chat Widget */
+    .wa-wrapper { position: fixed; bottom: 28px; right: 28px; z-index: 900; display: flex; flex-direction: column; align-items: flex-end; }
+    
+    .wa-chat-widget { width: 320px; background: #fff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); overflow: hidden; margin-bottom: 16px; opacity: 0; pointer-events: none; transform: translateY(20px); transition: all 0.3s cubic-bezier(0.16,1,0.3,1); transform-origin: bottom right; }
+    .wa-chat-widget.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+    
+    .wa-chat-header { background: #0A0F1E; padding: 20px; display: flex; align-items: center; gap: 14px; color: #fff; position: relative; }
+    .wa-chat-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 1.2rem; transition: color 0.2s; }
+    .wa-chat-close:hover { color: #fff; }
+    .wa-avatar { width: 48px; height: 48px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.2); }
+    .wa-avatar svg { width: 24px; height: 24px; fill: #fff; }
+    .wa-info h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .wa-info p { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+    
+    .wa-chat-body { padding: 24px 20px; background: #E5DDD5; position: relative; }
+    .wa-chat-body::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 10px 10px; opacity: 0.5; }
+    .wa-msg { background: #fff; padding: 12px 16px; border-radius: 0 12px 12px 12px; font-size: 0.9rem; color: var(--text-primary); line-height: 1.5; box-shadow: 0 1px 2px rgba(0,0,0,0.08); position: relative; z-index: 1; }
+    .wa-msg-time { display: block; font-size: 0.65rem; color: var(--text-secondary); text-align: right; margin-top: 4px; }
+    
+    .wa-chat-footer { padding: 16px 20px; background: #fff; text-align: center; }
+    .wa-chat-footer .btn-primary { width: 100%; justify-content: center; background: #25D366; padding: 12px; }
+    .wa-chat-footer .btn-primary:hover { background: #1ebe5c; box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+
+    .wa-float { width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(37,211,102,0.45); cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease; border: none; }
+    .wa-float:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 12px 36px rgba(37,211,102,0.55); }
     .wa-float svg { width: 30px; height: 30px; fill: #fff; }
-    .wa-pulse {
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 2px solid #25D366;
-      animation: waPulse 2.5s ease-out infinite;
-      pointer-events: none;
-    }
+    .wa-pulse { position: absolute; inset: -4px; border-radius: 50%; border: 2px solid #25D366; animation: waPulse 2.5s ease-out infinite; pointer-events: none; }
     .wa-pulse:nth-child(2) { animation-delay: 0.8s; }
-    @keyframes waPulse {
-      0%   { transform: scale(1); opacity: 0.7; }
-      100% { transform: scale(1.7); opacity: 0; }
-    }
-    .wa-tooltip {
-      position: absolute;
-      right: calc(100% + 14px);
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--text-primary);
-      color: #fff;
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 7px 12px;
-      border-radius: 8px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-    }
-    .wa-tooltip::after {
-      content: '';
-      position: absolute;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      border: 5px solid transparent;
-      border-left-color: var(--text-primary);
-    }
-    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* PHASE 4: Mobile Bottom Bar */
+    .mob-bottom-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 890; padding: 12px 5%; gap: 12px; border-top: 1px solid var(--border); }
+    .btn-mob { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: transform 0.2s; }
+    .btn-mob:active { transform: scale(0.98); }
+    .btn-mob-call { background: #f1f5f9; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-mob-wa { background: #25D366; color: #fff; }
 
     /* =========================================
        SCROLL ANIMATIONS
     ========================================= */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
     .fade-up.delay-1 { transition-delay: 0.1s; }
     .fade-up.delay-2 { transition-delay: 0.2s; }
     .fade-up.delay-3 { transition-delay: 0.3s; }
-    .fade-up.delay-4 { transition-delay: 0.4s; }
 
     /* =========================================
        RESPONSIVE
@@ -1235,22 +529,35 @@
       .stat-cards { grid-template-columns: repeat(2, 1fr); }
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
+    @media (max-width: 768px) {
+      .hiw-steps { flex-direction: column; align-items: flex-start; gap: 0; max-width: 420px; margin: 0 auto; }
+      .hiw-steps::before { top: 36px; left: 35px; right: auto; bottom: 36px; width: 2px; height: auto; }
+      .hiw-line-fill { top: 36px; left: 35px; width: 2px; height: 0; background: linear-gradient(180deg, var(--accent), #60a5fa); transition: height 1.5s cubic-bezier(0.16,1,0.3,1); }
+      .hiw-line-fill.animated { width: 2px; height: calc(100% - 72px); }
+      .hiw-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 20px; padding: 0 0 36px 0; }
+      .hiw-node { flex-shrink: 0; margin-bottom: 0; }
+      .hiw-step-body { padding-top: 8px; }
+      .stats-band-inner { grid-template-columns: repeat(2, 1fr); gap: 36px; }
+    }
     @media (max-width: 640px) {
       .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .stat-card { padding: 16px 12px; }
       .stat-card-num { font-size: 1.2rem; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-      .footer { padding: 48px 5% 0; }
+      .footer { padding: 48px 5% 80px; } /* Extra padding for mobile bottom bar */
       .hero-ctas { flex-direction: column; align-items: stretch; }
       .btn-primary, .btn-secondary { justify-content: center; }
-      .wa-float { bottom: 80px; right: 20px; }
       .footer-bottom { flex-direction: column; text-align: center; }
+      
+      /* Phase 4 mobile adjustments */
+      .mob-bottom-bar { display: flex; }
+      .wa-wrapper { bottom: 90px; right: 20px; } /* Lift WA button above sticky bar */
+      .wa-chat-widget { display: none !important; } /* Tapping directly opens WA app on mobile */
     }
   </style>
 </head>
 <body>
 
-  <!-- ============ NAVBAR ============ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="#" class="logo" aria-label="Abrovo Home">
@@ -1264,26 +571,26 @@
 
       <ul class="nav-links" role="list">
         <li><a href="#" class="nav-link">Home</a></li>
-        <li><a href="#marquee" class="nav-link">Destinations</a></li>
+        <li><a href="#destinations" class="nav-link">Destinations</a></li>
         <li><a href="#" class="nav-link">Universities</a></li>
-        <li><a href="#" class="nav-link">Services</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
         <li><a href="#" class="nav-link">Success Stories</a></li>
         <li><a href="#" class="nav-link">Blog</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="btn-wa" aria-label="Chat on WhatsApp">
+        <a href="https://wa.me/919748892883?text=Hi+I+want+to+study+abroad" target="_blank" rel="noopener" class="btn-wa" aria-label="Chat on WhatsApp">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
           </svg>
           Chat on WhatsApp
         </a>
-        <a href="#" class="btn-cta desktop-only" id="navConsultBtn">
+        <button class="btn-cta desktop-only open-consult-modal">
           Free Consultation
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="margin-left:4px;">
             <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+        </button>
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -1291,28 +598,26 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <ul>
       <li><a href="#" class="mob-link">Home</a></li>
-      <li><a href="#marquee" class="mob-link">Destinations</a></li>
+      <li><a href="#destinations" class="mob-link">Destinations</a></li>
       <li><a href="#" class="mob-link">Universities</a></li>
-      <li><a href="#" class="mob-link">Services</a></li>
+      <li><a href="#services" class="mob-link">Services</a></li>
       <li><a href="#" class="mob-link">Success Stories</a></li>
       <li><a href="#" class="mob-link">Blog</a></li>
     </ul>
     <div class="mob-actions">
-      <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="btn-wa">
+      <a href="https://wa.me/919748892883?text=Hi+I+want+to+study+abroad" target="_blank" rel="noopener" class="btn-wa">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:18px;height:18px;fill:#fff;">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
         </svg>
         Chat on WhatsApp
       </a>
-      <a href="#" class="btn-cta">Free Consultation →</a>
+      <button class="btn-cta open-consult-modal">Free Consultation →</button>
     </div>
   </div>
 
-  <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
     <div class="hero-canvas" aria-hidden="true">
       <div class="hero-gradient"></div>
@@ -1342,12 +647,12 @@
       </p>
 
       <div class="hero-ctas">
-        <a href="#" class="btn-primary">
+        <button class="btn-primary open-consult-modal">
           Start Free Consultation
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+        </button>
         <a href="#" class="btn-secondary">
           Explore Universities
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -1356,7 +661,6 @@
         </a>
       </div>
 
-      <!-- Stat Cards -->
       <div class="stat-cards" role="list">
         <div class="stat-card" role="listitem">
           <div class="stat-card-icon">🎓</div>
@@ -1387,10 +691,8 @@
     </div>
   </section>
 
-  <!-- ============ MARQUEE BAR ============ -->
   <section class="marquee-section" id="marquee" aria-label="Destination countries">
     <div class="marquee-track" aria-hidden="true">
-      <!-- Set 1 -->
       <div class="marquee-item"><span class="marquee-flag">🇺🇸</span> United States</div>
       <div class="marquee-item"><span class="marquee-flag">🇬🇧</span> United Kingdom</div>
       <div class="marquee-item"><span class="marquee-flag">🇨🇦</span> Canada</div>
@@ -1403,7 +705,6 @@
       <div class="marquee-item"><span class="marquee-flag">🇦🇪</span> Dubai</div>
       <div class="marquee-item"><span class="marquee-flag">🇸🇬</span> Singapore</div>
       <div class="marquee-item"><span class="marquee-flag">🇮🇹</span> Italy</div>
-      <!-- Set 2 (duplicate for seamless loop) -->
       <div class="marquee-item"><span class="marquee-flag">🇺🇸</span> United States</div>
       <div class="marquee-item"><span class="marquee-flag">🇬🇧</span> United Kingdom</div>
       <div class="marquee-item"><span class="marquee-flag">🇨🇦</span> Canada</div>
@@ -1419,7 +720,6 @@
     </div>
   </section>
 
-  <!-- ============ SERVICES ============ -->
   <section class="services-section" id="services">
     <div style="max-width:1200px;margin:0 auto;">
       <div class="section-header center fade-up">
@@ -1432,148 +732,106 @@
         <div class="service-card fade-up delay-1">
           <span class="service-icon">🎓</span>
           <h3 class="service-title">University Shortlisting</h3>
-          <p class="service-desc">AI-powered profile matching across 500+ universities globally. Get a personalised list of target, match, and safety schools based on your academics and goals.</p>
-          <a href="#" class="service-link">
-            Learn More
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="service-desc">AI-powered profile matching across 500+ universities globally. Get a personalised list of target, match, and safety schools.</p>
+          <a href="#" class="service-link">Learn More <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
         <div class="service-card fade-up delay-2">
           <span class="service-icon">📝</span>
           <h3 class="service-title">SOP &amp; LOR Writing</h3>
-          <p class="service-desc">Expert-crafted Statements of Purpose and Letters of Recommendation that tell your unique story and make admissions committees take notice.</p>
-          <a href="#" class="service-link">
-            Learn More
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="service-desc">Expert-crafted Statements of Purpose and Letters of Recommendation that tell your unique story and stand out.</p>
+          <a href="#" class="service-link">Learn More <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
         <div class="service-card fade-up delay-3">
           <span class="service-icon">📋</span>
           <h3 class="service-title">Application Management</h3>
-          <p class="service-desc">End-to-end application tracking across all universities. Never miss a deadline — we manage documents, portals, and follow-ups for you.</p>
-          <a href="#" class="service-link">
-            Learn More
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="service-desc">End-to-end application tracking. Never miss a deadline — we manage documents, portals, and follow-ups for you.</p>
+          <a href="#" class="service-link">Learn More <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
         <div class="service-card fade-up delay-1">
           <span class="service-icon">💰</span>
           <h3 class="service-title">Scholarship Guidance</h3>
-          <p class="service-desc">Discover and apply for scholarships worth over $1M+. Our experts match you with merit, need-based, and country-specific funding opportunities.</p>
-          <a href="#" class="service-link">
-            Learn More
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="service-desc">Discover and apply for scholarships worth over $1M+. Our experts match you with the best funding opportunities.</p>
+          <a href="#" class="service-link">Learn More <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
         <div class="service-card fade-up delay-2">
           <span class="service-icon">✈️</span>
           <h3 class="service-title">Visa Assistance</h3>
-          <p class="service-desc">98% visa success rate. Complete document preparation, SOP for visa, financial guidance, and mock interview coaching for a stress-free visa process.</p>
-          <a href="#" class="service-link">
-            Learn More
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="service-desc">98% visa success rate. Complete document preparation, financial guidance, and mock interview coaching.</p>
+          <a href="#" class="service-link">Learn More <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
         <div class="service-card fade-up delay-3">
           <span class="service-icon">🏠</span>
           <h3 class="service-title">Pre-departure Support</h3>
-          <p class="service-desc">Student accommodation sourcing, forex card guidance, travel insurance, airport pickup coordination, and a pre-departure briefing session.</p>
-          <a href="#" class="service-link">
-            Learn More
-            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <p class="service-desc">Student accommodation sourcing, forex card guidance, travel insurance, and a pre-departure briefing session.</p>
+          <a href="#" class="service-link">Learn More <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ============ HOW IT WORKS ============ -->
   <section class="hiw-section" id="how-it-works">
     <div style="max-width:1200px;margin:0 auto;">
       <div class="section-header center fade-up">
         <div class="section-label">The Process</div>
         <h2 class="section-title">Your Journey to a Global University</h2>
-        <p class="section-sub">Five clear steps from where you are today to where you want to be — guided by experts at every turn.</p>
+        <p class="section-sub">Five clear steps from where you are today to where you want to be — guided by experts.</p>
       </div>
 
       <div class="hiw-steps fade-up">
         <div class="hiw-line-fill" id="hiwLine"></div>
-
         <div class="hiw-step">
-          <div class="hiw-node">
-            🔍
-            <span class="hiw-step-num">1</span>
-          </div>
+          <div class="hiw-node">🔍<span class="hiw-step-num">1</span></div>
           <div class="hiw-step-body">
             <h3 class="hiw-step-title">Free Profile Assessment</h3>
-            <p class="hiw-step-desc">Share your academics, test scores, and goals. Our counsellors evaluate your profile in 24 hours.</p>
+            <p class="hiw-step-desc">Share your academics and goals. We evaluate your profile.</p>
           </div>
         </div>
-
         <div class="hiw-step">
-          <div class="hiw-node">
-            🏛️
-            <span class="hiw-step-num">2</span>
-          </div>
+          <div class="hiw-node">🏛️<span class="hiw-step-num">2</span></div>
           <div class="hiw-step-body">
             <h3 class="hiw-step-title">Shortlist Universities</h3>
-            <p class="hiw-step-desc">Get a curated list of target, match, and safety schools aligned with your career goals and budget.</p>
+            <p class="hiw-step-desc">Get a curated list of target, match, and safety schools.</p>
           </div>
         </div>
-
         <div class="hiw-step">
-          <div class="hiw-node">
-            📄
-            <span class="hiw-step-num">3</span>
-          </div>
+          <div class="hiw-node">📄<span class="hiw-step-num">3</span></div>
           <div class="hiw-step-body">
             <h3 class="hiw-step-title">Prepare Documents</h3>
-            <p class="hiw-step-desc">We craft your SOP, LOR, resume, and all supporting documents to the highest standard.</p>
+            <p class="hiw-step-desc">We craft your SOP, LOR, resume, and supporting docs.</p>
           </div>
         </div>
-
         <div class="hiw-step">
-          <div class="hiw-node">
-            📬
-            <span class="hiw-step-num">4</span>
-          </div>
+          <div class="hiw-node">📬<span class="hiw-step-num">4</span></div>
           <div class="hiw-step-body">
             <h3 class="hiw-step-title">Apply &amp; Track</h3>
-            <p class="hiw-step-desc">We submit applications, track statuses, and handle communication with universities on your behalf.</p>
+            <p class="hiw-step-desc">We submit applications and handle communication.</p>
           </div>
         </div>
-
         <div class="hiw-step">
-          <div class="hiw-node">
-            🛫
-            <span class="hiw-step-num">5</span>
-          </div>
+          <div class="hiw-node">🛫<span class="hiw-step-num">5</span></div>
           <div class="hiw-step-body">
             <h3 class="hiw-step-title">Visa &amp; Pre-departure</h3>
-            <p class="hiw-step-desc">End with a smooth visa approval and a fully prepared departure — accommodation, forex, travel ready.</p>
+            <p class="hiw-step-desc">Smooth visa approval and fully prepared departure.</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ DESTINATIONS ============ -->
   <section class="destinations-section" id="destinations">
     <div style="max-width:1200px;margin:0 auto;">
       <div class="section-header center fade-up">
         <div class="section-label">Where to Study</div>
         <h2 class="section-title">Choose Your Destination</h2>
-        <p class="section-sub">We have deep expertise across the most sought-after study destinations in the world.</p>
+        <p class="section-sub">We have deep expertise across the most sought-after study destinations.</p>
       </div>
       <div class="destinations-grid">
-
         <div class="dest-card fade-up delay-1">
           <div class="dest-flag">🇺🇸</div>
           <div class="dest-card-inner">
@@ -1581,14 +839,10 @@
             <div class="dest-stats">
               <span class="dest-stat">Avg. $25k–$55k/yr</span>
               <span class="dest-stat">Intakes: Jan, Aug</span>
-              <span class="dest-stat">200+ Universities</span>
             </div>
           </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore USA →</span>
-          </div>
+          <div class="dest-overlay"><span class="dest-explore-btn">Explore USA →</span></div>
         </div>
-
         <div class="dest-card fade-up delay-2">
           <div class="dest-flag">🇬🇧</div>
           <div class="dest-card-inner">
@@ -1596,14 +850,10 @@
             <div class="dest-stats">
               <span class="dest-stat">Avg. £15k–£35k/yr</span>
               <span class="dest-stat">Intake: Sep</span>
-              <span class="dest-stat">130+ Universities</span>
             </div>
           </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore UK →</span>
-          </div>
+          <div class="dest-overlay"><span class="dest-explore-btn">Explore UK →</span></div>
         </div>
-
         <div class="dest-card fade-up delay-3">
           <div class="dest-flag">🇨🇦</div>
           <div class="dest-card-inner">
@@ -1611,14 +861,10 @@
             <div class="dest-stats">
               <span class="dest-stat">Avg. CAD 20k–40k/yr</span>
               <span class="dest-stat">Intakes: Jan, Sep</span>
-              <span class="dest-stat">100+ Universities</span>
             </div>
           </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore Canada →</span>
-          </div>
+          <div class="dest-overlay"><span class="dest-explore-btn">Explore Canada →</span></div>
         </div>
-
         <div class="dest-card fade-up delay-1">
           <div class="dest-flag">🇦🇺</div>
           <div class="dest-card-inner">
@@ -1626,14 +872,10 @@
             <div class="dest-stats">
               <span class="dest-stat">Avg. AUD 25k–45k/yr</span>
               <span class="dest-stat">Intakes: Feb, Jul</span>
-              <span class="dest-stat">43+ Universities</span>
             </div>
           </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore Australia →</span>
-          </div>
+          <div class="dest-overlay"><span class="dest-explore-btn">Explore Australia →</span></div>
         </div>
-
         <div class="dest-card fade-up delay-2">
           <div class="dest-flag">🇩🇪</div>
           <div class="dest-card-inner">
@@ -1641,14 +883,10 @@
             <div class="dest-stats">
               <span class="dest-stat">Avg. €500–€3k/yr</span>
               <span class="dest-stat">Intakes: Apr, Oct</span>
-              <span class="dest-stat">400+ Universities</span>
             </div>
           </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore Germany →</span>
-          </div>
+          <div class="dest-overlay"><span class="dest-explore-btn">Explore Germany →</span></div>
         </div>
-
         <div class="dest-card fade-up delay-3">
           <div class="dest-flag">🇫🇷</div>
           <div class="dest-card-inner">
@@ -1656,64 +894,14 @@
             <div class="dest-stats">
               <span class="dest-stat">Avg. €3k–€15k/yr</span>
               <span class="dest-stat">Intake: Sep</span>
-              <span class="dest-stat">80+ Universities</span>
             </div>
           </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore France →</span>
-          </div>
+          <div class="dest-overlay"><span class="dest-explore-btn">Explore France →</span></div>
         </div>
-
-        <div class="dest-card fade-up delay-1">
-          <div class="dest-flag">🇮🇪</div>
-          <div class="dest-card-inner">
-            <div class="dest-card-name">Ireland</div>
-            <div class="dest-stats">
-              <span class="dest-stat">Avg. €10k–€25k/yr</span>
-              <span class="dest-stat">Intake: Sep</span>
-              <span class="dest-stat">30+ Universities</span>
-            </div>
-          </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore Ireland →</span>
-          </div>
-        </div>
-
-        <div class="dest-card fade-up delay-2">
-          <div class="dest-flag">🇳🇿</div>
-          <div class="dest-card-inner">
-            <div class="dest-card-name">New Zealand</div>
-            <div class="dest-stats">
-              <span class="dest-stat">Avg. NZD 22k–35k/yr</span>
-              <span class="dest-stat">Intakes: Feb, Jul</span>
-              <span class="dest-stat">8+ Universities</span>
-            </div>
-          </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore NZ →</span>
-          </div>
-        </div>
-
-        <div class="dest-card fade-up delay-3">
-          <div class="dest-flag">🇦🇪</div>
-          <div class="dest-card-inner">
-            <div class="dest-card-name">Dubai / UAE</div>
-            <div class="dest-stats">
-              <span class="dest-stat">Avg. AED 40k–90k/yr</span>
-              <span class="dest-stat">Intakes: Jan, Sep</span>
-              <span class="dest-stat">60+ Universities</span>
-            </div>
-          </div>
-          <div class="dest-overlay">
-            <span class="dest-explore-btn">Explore Dubai →</span>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ============ STATS COUNTER BAND ============ -->
   <section class="stats-band" id="stats">
     <div class="stats-band-inner">
       <div class="stats-band-item fade-up">
@@ -1735,11 +923,9 @@
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="footer" id="footer">
     <div class="footer-grid">
 
-      <!-- About Column -->
       <div class="footer-col fade-up">
         <div class="footer-logo">
           <svg class="logo-globe" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;" aria-hidden="true">
@@ -1752,27 +938,22 @@
         <p class="footer-about-text">
           India's most trusted study abroad counselling platform. We guide ambitious students from profile assessment to university admission and visa approval across 20+ countries.
         </p>
+        
         <div class="social-links" role="list">
-          <!-- Instagram -->
-          <a href="#" class="social-link" aria-label="Instagram" role="listitem">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </a>
-          <!-- LinkedIn -->
-          <a href="#" class="social-link" aria-label="LinkedIn" role="listitem">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-          <!-- YouTube -->
-          <a href="#" class="social-link" aria-label="YouTube" role="listitem">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          </a>
-          <!-- Facebook -->
-          <a href="#" class="social-link" aria-label="Facebook" role="listitem">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
+          <a href="#" class="social-link" aria-label="Instagram" role="listitem"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn" role="listitem"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        </div>
+
+        <div class="newsletter-wrap">
+          <h4 class="newsletter-title">Subscribe to our Newsletter</h4>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit">Get Free Guide</button>
+          </form>
+          <div class="news-success-msg" id="newsSuccess">Your free guide is on the way! 🎉</div>
         </div>
       </div>
 
-      <!-- Quick Links -->
       <div class="footer-col fade-up delay-1">
         <h3 class="footer-col-title">Quick Links</h3>
         <ul class="footer-links">
@@ -1781,13 +962,9 @@
           <li><a href="#" class="footer-link">Our Services</a></li>
           <li><a href="#" class="footer-link">Universities</a></li>
           <li><a href="#" class="footer-link">Success Stories</a></li>
-          <li><a href="#" class="footer-link">Blog & Resources</a></li>
-          <li><a href="#" class="footer-link">Free Consultation</a></li>
-          <li><a href="#" class="footer-link">Contact Us</a></li>
         </ul>
       </div>
 
-      <!-- Destinations -->
       <div class="footer-col fade-up delay-2">
         <h3 class="footer-col-title">Destinations</h3>
         <ul>
@@ -1796,79 +973,216 @@
           <li><a href="#" class="footer-country"><span class="flag">🇨🇦</span> Canada</a></li>
           <li><a href="#" class="footer-country"><span class="flag">🇦🇺</span> Australia</a></li>
           <li><a href="#" class="footer-country"><span class="flag">🇩🇪</span> Germany</a></li>
-          <li><a href="#" class="footer-country"><span class="flag">🇫🇷</span> France</a></li>
-          <li><a href="#" class="footer-country"><span class="flag">🇮🇪</span> Ireland</a></li>
-          <li><a href="#" class="footer-country"><span class="flag">🇸🇬</span> Singapore</a></li>
         </ul>
       </div>
 
-      <!-- Contact -->
       <div class="footer-col fade-up delay-3">
         <h3 class="footer-col-title">Contact Us</h3>
         <div class="footer-contact-item">
           <div class="footer-contact-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
           </div>
           <div class="footer-contact-text">
             <strong>Office</strong>
-            Salt Lake City, Kolkata — 700064, West Bengal, India
+            Salt Lake City, Kolkata — 700064, WB, India
           </div>
         </div>
         <div class="footer-contact-item">
           <div class="footer-contact-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           </div>
           <div class="footer-contact-text">
             <strong>Phone / WhatsApp</strong>
             +91 97488 92883
           </div>
         </div>
-        <div class="footer-contact-item">
-          <div class="footer-contact-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          </div>
-          <div class="footer-contact-text">
-            <strong>Email</strong>
-            hello@abrovo.in
-          </div>
-        </div>
-        <div class="footer-contact-item">
-          <div class="footer-contact-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
-          </div>
-          <div class="footer-contact-text">
-            <strong>Office Hours</strong>
-            Mon–Sat, 9:00 AM – 7:00 PM IST
-          </div>
-        </div>
       </div>
-
     </div>
 
-    <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <p class="footer-copyright">
-        &copy; 2025 Abrovo Education Pvt. Ltd. All rights reserved.
-      </p>
+      <p class="footer-copyright">&copy; 2025 Abrovo Education Pvt. Ltd. All rights reserved.</p>
       <nav class="footer-legal" aria-label="Legal links">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
-        <a href="#">Cookie Policy</a>
       </nav>
     </div>
   </footer>
 
-  <!-- ============ WHATSAPP FLOATING BUTTON ============ -->
-  <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
-    <div class="wa-pulse" aria-hidden="true"></div>
-    <div class="wa-pulse" aria-hidden="true"></div>
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-    </svg>
-    <span class="wa-tooltip">Chat with us!</span>
-  </a>
+  <div class="wa-wrapper">
+    <div class="wa-chat-widget" id="waChatWidget">
+      <div class="wa-chat-header">
+        <div class="wa-avatar">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </div>
+        <div class="wa-info">
+          <h4>GlobalPath Counsellor</h4>
+          <p>Typically replies in minutes</p>
+        </div>
+        <button class="wa-chat-close" id="waChatClose" aria-label="Close Chat">✕</button>
+      </div>
+      <div class="wa-chat-body">
+        <div class="wa-msg">
+          Hi! 👋 I'm interested in studying abroad. Can you guide me?
+          <span class="wa-msg-time">Just now</span>
+        </div>
+      </div>
+      <div class="wa-chat-footer">
+        <a href="https://wa.me/919748892883?text=Hi+I+want+to+study+abroad" target="_blank" rel="noopener" class="btn-primary">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;margin-right:8px;" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Start Chat
+        </a>
+      </div>
+    </div>
+    
+    <button class="wa-float" id="waTrigger" aria-label="Open WhatsApp Chat">
+      <div class="wa-pulse" aria-hidden="true"></div>
+      <div class="wa-pulse" aria-hidden="true"></div>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+    </button>
+  </div>
 
-  <!-- ============ JAVASCRIPT ============ -->
+  <div class="consult-modal" id="consultModal">
+    <div class="consult-modal-content">
+      <button class="modal-close" id="closeConsultModal" aria-label="Close form">✕</button>
+      
+      <div id="consultFormContainer">
+        <div class="modal-header">
+          <h2>Free Consultation</h2>
+          <p>Tell us about yourself to get personalized guidance.</p>
+        </div>
+
+        <div class="form-progress">
+          <div class="progress-bar active" id="prog1"></div>
+          <div class="progress-bar" id="prog2"></div>
+          <div class="progress-bar" id="prog3"></div>
+        </div>
+
+        <form id="multiStepForm">
+          <div class="form-step active" id="step1">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" placeholder="e.g. John Doe" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" class="form-control" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" class="form-control" placeholder="e.g. Mumbai" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-primary btn-block next-btn">Next Step →</button>
+            </div>
+          </div>
+
+          <div class="form-step" id="step2">
+            <div class="form-group">
+              <label>Preferred Destination</label>
+              <select class="form-control" required>
+                <option value="">Select Country</option>
+                <option value="usa">USA</option>
+                <option value="uk">UK</option>
+                <option value="canada">Canada</option>
+                <option value="australia">Australia</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Target Intake</label>
+              <select class="form-control" required>
+                <option value="">Select Intake</option>
+                <option value="fall">Fall (Aug/Sep)</option>
+                <option value="spring">Spring (Jan/Feb)</option>
+                <option value="summer">Summer (May/Jun)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Course Level</label>
+              <select class="form-control" required>
+                <option value="">Select Level</option>
+                <option value="bachelors">Bachelor's</option>
+                <option value="masters">Master's</option>
+                <option value="phd">PhD</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Field of Study</label>
+              <input type="text" class="form-control" placeholder="e.g. Computer Science" required>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-primary btn-outline btn-block prev-btn">← Back</button>
+              <button type="button" class="btn-primary btn-block next-btn">Next Step →</button>
+            </div>
+          </div>
+
+          <div class="form-step" id="step3">
+            <div class="form-group">
+              <label>Latest Academic Percentage / CGPA</label>
+              <input type="text" class="form-control" placeholder="e.g. 85% or 8.5" required>
+            </div>
+            <div class="form-group">
+              <label>English Proficiency Test</label>
+              <select class="form-control" required>
+                <option value="">Select Test</option>
+                <option value="ielts">IELTS</option>
+                <option value="toefl">TOEFL</option>
+                <option value="pte">PTE</option>
+                <option value="duolingo">Duolingo</option>
+                <option value="none">Not Taken Yet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Work Experience (if any)</label>
+              <select class="form-control" required>
+                <option value="none">None</option>
+                <option value="1-2">1 - 2 Years</option>
+                <option value="3-5">3 - 5 Years</option>
+                <option value="5+">5+ Years</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-primary btn-outline btn-block prev-btn">← Back</button>
+              <button type="submit" class="btn-primary btn-block">Book Free Session</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-success-state" id="formSuccessState">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h3>Consultation Booked!</h3>
+        <p>Thanks for sharing your details. One of our expert counsellors will contact you within 24 hours.</p>
+        <a href="https://wa.me/919748892883?text=Hi+I+just+booked+a+consultation" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;margin-right:8px;" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Chat with us Now
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mob-bottom-bar">
+    <a href="tel:+919748892883" class="btn-mob btn-mob-call">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      Call Us
+    </a>
+    <a href="https://wa.me/919748892883?text=Hi+I+want+to+study+abroad" target="_blank" class="btn-mob btn-mob-wa">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
   <script>
     /* ---- Navbar scroll behaviour ---- */
     const navbar = document.getElementById('navbar');
@@ -1892,7 +1206,6 @@
       }
     });
 
-    /* Close mobile menu on link click */
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         hamburger.classList.remove('open');
@@ -1901,14 +1214,6 @@
         mobileMenu.setAttribute('aria-hidden', 'true');
         setTimeout(() => { mobileMenu.style.display = ''; }, 350);
       });
-    });
-
-    /* ---- Stat cards stagger animation on load ---- */
-    const statCards = document.querySelectorAll('.stat-card');
-    statCards.forEach((card, i) => {
-      setTimeout(() => {
-        card.classList.add('visible', 'stat-card-anim');
-      }, 1000 + i * 150);
     });
 
     /* ---- IntersectionObserver for fade-up ---- */
@@ -1920,19 +1225,7 @@
         }
       });
     }, { threshold: 0.12 });
-
     document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
-
-    /* ---- Smooth scroll for anchor links ---- */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', e => {
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
 
     /* ---- Animated number counter ---- */
     function animateCounter(el) {
@@ -1974,11 +1267,131 @@
       lineObserver.observe(document.getElementById('how-it-works'));
     }
 
-    /* ---- Reduce marquee speed on mobile ---- */
-    const marqueeTrack = document.querySelector('.marquee-track');
-    if (window.innerWidth < 640 && marqueeTrack) {
-      marqueeTrack.style.animationDuration = '20s';
+    /* =========================================
+       PHASE 4 JAVASCRIPT
+    ========================================= */
+
+    /* 1. WhatsApp Floating Widget Toggle */
+    const waTrigger = document.getElementById('waTrigger');
+    const waChatWidget = document.getElementById('waChatWidget');
+    const waChatClose = document.getElementById('waChatClose');
+
+    waTrigger.addEventListener('click', (e) => {
+      // On mobile devices, let the default link behavior happen (open wa.me)
+      if (window.innerWidth <= 640) {
+        window.open('https://wa.me/919748892883?text=Hi+I+want+to+study+abroad', '_blank');
+        return;
+      }
+      // On desktop, toggle the widget
+      waChatWidget.classList.toggle('active');
+    });
+
+    waChatClose.addEventListener('click', () => {
+      waChatWidget.classList.remove('active');
+    });
+
+    /* 2. Free Consultation Modal & Multi-step Form */
+    const consultModal = document.getElementById('consultModal');
+    const closeConsultModal = document.getElementById('closeConsultModal');
+    const openConsultBtns = document.querySelectorAll('.open-consult-modal');
+    
+    // Open modal
+    openConsultBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        consultModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      });
+    });
+
+    // Close modal
+    closeConsultModal.addEventListener('click', () => {
+      consultModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Close on outside click
+    consultModal.addEventListener('click', (e) => {
+      if (e.target === consultModal) {
+        consultModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Form Steps Logic
+    let currentStep = 1;
+    const totalSteps = 3;
+    const nextBtns = document.querySelectorAll('.next-btn');
+    const prevBtns = document.querySelectorAll('.prev-btn');
+    
+    function showStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+      // Show target step
+      document.getElementById(`step${step}`).classList.add('active');
+      
+      // Update Progress Bar
+      for(let i=1; i<=totalSteps; i++) {
+        const bar = document.getElementById(`prog${i}`);
+        if(i <= step) {
+          bar.classList.add('active');
+        } else {
+          bar.classList.remove('active');
+        }
+      }
     }
+
+    nextBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Simple HTML5 validation check before moving next
+        const currentFormStep = document.getElementById(`step${currentStep}`);
+        const inputs = currentFormStep.querySelectorAll('input, select');
+        let isValid = true;
+        inputs.forEach(input => {
+          if (!input.checkValidity()) {
+            input.reportValidity();
+            isValid = false;
+          }
+        });
+
+        if(isValid && currentStep < totalSteps) {
+          currentStep++;
+          showStep(currentStep);
+        }
+      });
+    });
+
+    prevBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if(currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      });
+    });
+
+    // Handle Form Submit
+    document.getElementById('multiStepForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Hide form container and show success state
+      document.getElementById('consultFormContainer').style.display = 'none';
+      document.getElementById('formSuccessState').classList.add('active');
+    });
+
+    /* 3. Newsletter Form Submission */
+    document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      const successMsg = document.getElementById('newsSuccess');
+      
+      // Simulate submission
+      input.value = '';
+      successMsg.style.display = 'block';
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 5000);
+    });
+
   </script>
 </body>
 </html>
