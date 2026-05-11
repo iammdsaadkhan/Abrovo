@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abrovo — Study Abroad Counselling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================
+       CSS CUSTOM PROPERTIES
+    ========================================= */
+    :root {
+      --bg-dark: #0A0F1E;
+      --bg-dark-2: #0D1428;
+      --bg-white: #FFFFFF;
+      --accent: #2563EB;
+      --accent-hover: #1D4ED8;
+      --accent-light: rgba(37, 99, 235, 0.12);
+      --text-primary: #0F172A;
+      --text-secondary: #64748B;
+      --border: #E2E8F0;
+      --success: #10B981;
+      --card-bg: #F8FAFC;
+      --glass: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.13);
+      --nav-height: 72px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    /* =========================================
+       RESET & BASE
+    ========================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-white);
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    /* =========================================
+       NAVBAR
+    ========================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .navbar.scrolled .nav-link { color: var(--text-primary); }
+    .navbar.scrolled .logo-text { color: var(--text-primary); }
+    .navbar.scrolled .logo-dot { color: var(--accent); }
+    .navbar.scrolled .logo-globe path { stroke: var(--text-primary); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .logo-globe {
+      width: 32px; height: 32px;
+      flex-shrink: 0;
+    }
+    .logo-globe path, .logo-globe circle {
+      stroke: #fff;
+      transition: stroke 0.4s ease;
+    }
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      transition: color 0.4s ease;
+    }
+    .logo-dot {
+      color: var(--accent);
+      transition: color 0.4s ease;
+    }
+
+    /* Nav Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-link:hover {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* Nav Actions */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      background: #25D366;
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .btn-wa:hover { background: #1ebe5c; transform: translateY(-1px); }
+    .btn-wa svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+
+    .btn-cta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .btn-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(37,99,235,0.35);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .hamburger:hover { background: var(--glass); }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all 0.35s ease;
+    }
+    .navbar.scrolled .hamburger span { background: var(--text-primary); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0; right: 0;
+      background: rgba(10, 15, 30, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 16px 5% 24px;
+      z-index: 999;
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .navbar.scrolled + .mobile-menu { background: rgba(255,255,255,0.97); }
+    .navbar.scrolled + .mobile-menu .mob-link { color: var(--text-primary); }
+    .mobile-menu.open {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mob-link {
+      display: block;
+      color: rgba(255,255,255,0.9);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--glass-border);
+      transition: color 0.2s;
+    }
+    .mob-link:hover { color: var(--accent); }
+    .mob-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .mob-actions .btn-wa,
+    .mob-actions .btn-cta {
+      justify-content: center;
+      padding: 13px;
+      font-size: 0.95rem;
+    }
+
+    /* =========================================
+       HERO SECTION
+    ========================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: calc(var(--nav-height) + 40px) 5% 60px;
+    }
+
+    /* Animated background */
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(37,99,235,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(99,102,241,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 60% 80%, rgba(16,185,129,0.06) 0%, transparent 60%);
+    }
+    .geo-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.06);
+      animation: floatShape linear infinite;
+    }
+    .geo-shape:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; animation-duration: 25s; }
+    .geo-shape:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-duration: 20s; animation-delay: -8s; border-color: rgba(37,99,235,0.1); }
+    .geo-shape:nth-child(3) { width: 250px; height: 250px; top: 30%; left: 10%; animation-duration: 18s; animation-delay: -5s; }
+    .geo-shape:nth-child(4) { width: 150px; height: 150px; top: 15%; right: 20%; animation-duration: 14s; animation-delay: -12s; border-color: rgba(37,99,235,0.15); }
+
+    .geo-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(37,99,235,0.4);
+      animation: floatDot ease-in-out infinite;
+    }
+    .geo-dot:nth-child(5) { width: 6px; height: 6px; top: 20%; left: 25%; animation-duration: 6s; }
+    .geo-dot:nth-child(6) { width: 4px; height: 4px; top: 60%; right: 15%; animation-duration: 8s; animation-delay: -3s; }
+    .geo-dot:nth-child(7) { width: 5px; height: 5px; bottom: 25%; left: 40%; animation-duration: 7s; animation-delay: -2s; }
+
+    @keyframes floatShape {
+      0%   { transform: rotate(0deg) scale(1); }
+      50%  { transform: rotate(180deg) scale(1.03); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes floatDot {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50%       { transform: translateY(-20px); opacity: 1; }
+    }
+
+    /* Hero Content */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 860px;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.5); opacity: 0.6; }
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.12;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-image: linear-gradient(135deg, #60a5fa, #a78bfa);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      max-width: 620px;
+      margin: 0 auto 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 50px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(37,99,235,0.5);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      transition: all 0.25s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--glass);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Stat Cards */
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .stat-card.visible { opacity: 1; transform: translateY(0); }
+    .stat-card:hover {
+      border-color: rgba(37,99,235,0.5);
+      transform: translateY(-4px);
+    }
+    .stat-card:nth-child(1) { animation-delay: 1.0s; }
+    .stat-card:nth-child(2) { animation-delay: 1.15s; }
+    .stat-card:nth-child(3) { animation-delay: 1.3s; }
+    .stat-card:nth-child(4) { animation-delay: 1.45s; }
+    .stat-card-anim {
+      animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .stat-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .stat-card-num {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-card-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.4;
+      animation: fadeUp 1s ease 2s forwards, scrollBob 2.5s ease-in-out 3s infinite;
+    }
+    .scroll-cue span {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 2px solid rgba(255,255,255,0.4);
+      border-bottom: 2px solid rgba(255,255,255,0.4);
+      transform: rotate(45deg);
+    }
+    @keyframes scrollBob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* =========================================
+       MARQUEE BAR
+    ========================================= */
+    .marquee-section {
+      background: var(--bg-white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-section::before,
+    .marquee-section::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-section::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-white), transparent);
+    }
+    .marquee-section::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-white), transparent);
+    }
+    .marquee-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      background: var(--bg-white);
+      padding: 0 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      padding: 18px 0;
+      animation: marqueeScroll 28s linear infinite;
+      width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 32px;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-right: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .marquee-item:last-child { border-right: none; }
+    .marquee-item:hover { color: var(--accent); }
+    .marquee-flag { font-size: 1.4rem; }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    .footer {
+      background: var(--bg-dark);
+      color: rgba(255,255,255,0.7);
+      padding: 72px 5% 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.4fr;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .footer-about-text {
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 24px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .footer-logo .logo-text { font-size: 1.35rem; color: #fff; }
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+    .social-link {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.25s ease;
+    }
+    .social-link:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+    .social-link svg { width: 17px; height: 17px; fill: currentColor; }
+
+    .footer-links li { margin-bottom: 12px; }
+    .footer-link {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-link:hover { color: var(--accent); }
+    .footer-link::before {
+      content: '→';
+      font-size: 0.75rem;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all 0.2s;
+    }
+    .footer-link:hover::before { opacity: 1; transform: translateX(0); }
+
+    .footer-country {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .footer-country:hover { color: rgba(255,255,255,0.85); }
+    .footer-country .flag { font-size: 1.1rem; }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .footer-contact-icon {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .footer-contact-icon svg { width: 16px; height: 16px; fill: var(--accent); }
+    .footer-contact-text {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+    .footer-contact-text strong {
+      display: block;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copyright {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-legal a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+    /* =========================================
+       WHATSAPP FLOATING BUTTON
+    ========================================= */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 900;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+    }
+    .wa-float:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 36px rgba(37,211,102,0.55);
+    }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+    .wa-pulse {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid #25D366;
+      animation: waPulse 2.5s ease-out infinite;
+      pointer-events: none;
+    }
+    .wa-pulse:nth-child(2) { animation-delay: 0.8s; }
+    @keyframes waPulse {
+      0%   { transform: scale(1); opacity: 0.7; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+    .wa-tooltip {
+      position: absolute;
+      right: calc(100% + 14px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--text-primary);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .wa-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-left-color: var(--text-primary);
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* =========================================
+       SCROLL ANIMATIONS
+    ========================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .btn-wa { display: none; }
+      .btn-cta.desktop-only { display: none; }
+      .hamburger { display: flex; }
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat-card { padding: 16px 12px; }
+      .stat-card-num { font-size: 1.2rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer { padding: 48px 5% 0; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+      .wa-float { bottom: 80px; right: 20px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo" aria-label="Abrovo Home">
+        <svg class="logo-globe" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="13.5" stroke-width="1.4"/>
+          <ellipse cx="16" cy="16" rx="6" ry="13.5" stroke-width="1.4"/>
+          <path d="M2.5 11h27M2.5 21h27" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">Abrovo<span class="logo-dot">.</span></span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#marquee" class="nav-link">Destinations</a></li>
+        <li><a href="#" class="nav-link">Universities</a></li>
+        <li><a href="#" class="nav-link">Services</a></li>
+        <li><a href="#" class="nav-link">Success Stories</a></li>
+        <li><a href="#" class="nav-link">Blog</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="btn-wa" aria-label="Chat on WhatsApp">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          Chat on WhatsApp
+        </a>
+        <a href="#" class="btn-cta desktop-only" id="navConsultBtn">
+          Free Consultation
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+      <li><a href="#" class="mob-link">Home</a></li>
+      <li><a href="#marquee" class="mob-link">Destinations</a></li>
+      <li><a href="#" class="mob-link">Universities</a></li>
+      <li><a href="#" class="mob-link">Services</a></li>
+      <li><a href="#" class="mob-link">Success Stories</a></li>
+      <li><a href="#" class="mob-link">Blog</a></li>
+    </ul>
+    <div class="mob-actions">
+      <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="btn-wa">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:18px;height:18px;fill:#fff;">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Chat on WhatsApp
+      </a>
+      <a href="#" class="btn-cta">Free Consultation →</a>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-canvas" aria-hidden="true">
+      <div class="hero-gradient"></div>
+      <div class="geo-shape"></div>
+      <div class="geo-shape"></div>
+      <div class="geo-shape"></div>
+      <div class="geo-shape"></div>
+      <div class="geo-dot"></div>
+      <div class="geo-dot"></div>
+      <div class="geo-dot"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Trusted by 10,000+ students across India
+      </div>
+
+      <h1 class="hero-headline">
+        Your Dream University.<br>
+        <em>Our Expert Guidance.</em>
+      </h1>
+
+      <p class="hero-sub">
+        End-to-end study abroad counselling — from shortlisting to visa.
+        10,000+ students placed in 500+ universities across 20+ countries.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">
+          Start Free Consultation
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#" class="btn-secondary">
+          Explore Universities
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stat-cards" role="list">
+        <div class="stat-card" role="listitem">
+          <div class="stat-card-icon">🎓</div>
+          <div class="stat-card-num">10,000+</div>
+          <div class="stat-card-label">Students Placed</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-card-icon">🏛️</div>
+          <div class="stat-card-num">500+</div>
+          <div class="stat-card-label">Partner Universities</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-card-icon">🌍</div>
+          <div class="stat-card-num">20+</div>
+          <div class="stat-card-label">Countries</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-card-icon">✈️</div>
+          <div class="stat-card-num">98%</div>
+          <div class="stat-card-label">Visa Success Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE BAR ============ -->
+  <section class="marquee-section" id="marquee" aria-label="Destination countries">
+    <div class="marquee-track" aria-hidden="true">
+      <!-- Set 1 -->
+      <div class="marquee-item"><span class="marquee-flag">🇺🇸</span> United States</div>
+      <div class="marquee-item"><span class="marquee-flag">🇬🇧</span> United Kingdom</div>
+      <div class="marquee-item"><span class="marquee-flag">🇨🇦</span> Canada</div>
+      <div class="marquee-item"><span class="marquee-flag">🇦🇺</span> Australia</div>
+      <div class="marquee-item"><span class="marquee-flag">🇩🇪</span> Germany</div>
+      <div class="marquee-item"><span class="marquee-flag">🇫🇷</span> France</div>
+      <div class="marquee-item"><span class="marquee-flag">🇮🇪</span> Ireland</div>
+      <div class="marquee-item"><span class="marquee-flag">🇳🇿</span> New Zealand</div>
+      <div class="marquee-item"><span class="marquee-flag">🇳🇱</span> Netherlands</div>
+      <div class="marquee-item"><span class="marquee-flag">🇦🇪</span> Dubai</div>
+      <div class="marquee-item"><span class="marquee-flag">🇸🇬</span> Singapore</div>
+      <div class="marquee-item"><span class="marquee-flag">🇮🇹</span> Italy</div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="marquee-item"><span class="marquee-flag">🇺🇸</span> United States</div>
+      <div class="marquee-item"><span class="marquee-flag">🇬🇧</span> United Kingdom</div>
+      <div class="marquee-item"><span class="marquee-flag">🇨🇦</span> Canada</div>
+      <div class="marquee-item"><span class="marquee-flag">🇦🇺</span> Australia</div>
+      <div class="marquee-item"><span class="marquee-flag">🇩🇪</span> Germany</div>
+      <div class="marquee-item"><span class="marquee-flag">🇫🇷</span> France</div>
+      <div class="marquee-item"><span class="marquee-flag">🇮🇪</span> Ireland</div>
+      <div class="marquee-item"><span class="marquee-flag">🇳🇿</span> New Zealand</div>
+      <div class="marquee-item"><span class="marquee-flag">🇳🇱</span> Netherlands</div>
+      <div class="marquee-item"><span class="marquee-flag">🇦🇪</span> Dubai</div>
+      <div class="marquee-item"><span class="marquee-flag">🇸🇬</span> Singapore</div>
+      <div class="marquee-item"><span class="marquee-flag">🇮🇹</span> Italy</div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="footer">
+    <div class="footer-grid">
+
+      <!-- About Column -->
+      <div class="footer-col fade-up">
+        <div class="footer-logo">
+          <svg class="logo-globe" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;" aria-hidden="true">
+            <circle cx="16" cy="16" r="13.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.4"/>
+            <ellipse cx="16" cy="16" rx="6" ry="13.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.4"/>
+            <path d="M2.5 11h27M2.5 21h27" stroke="rgba(255,255,255,0.6)" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-text">Abrovo<span class="logo-dot">.</span></span>
+        </div>
+        <p class="footer-about-text">
+          India's most trusted study abroad counselling platform. We guide ambitious students from profile assessment to university admission and visa approval across 20+ countries.
+        </p>
+        <div class="social-links" role="list">
+          <!-- Instagram -->
+          <a href="#" class="social-link" aria-label="Instagram" role="listitem">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" class="social-link" aria-label="LinkedIn" role="listitem">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <!-- YouTube -->
+          <a href="#" class="social-link" aria-label="YouTube" role="listitem">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <!-- Facebook -->
+          <a href="#" class="social-link" aria-label="Facebook" role="listitem">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col fade-up delay-1">
+        <h3 class="footer-col-title">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Home</a></li>
+          <li><a href="#" class="footer-link">About Us</a></li>
+          <li><a href="#" class="footer-link">Our Services</a></li>
+          <li><a href="#" class="footer-link">Universities</a></li>
+          <li><a href="#" class="footer-link">Success Stories</a></li>
+          <li><a href="#" class="footer-link">Blog & Resources</a></li>
+          <li><a href="#" class="footer-link">Free Consultation</a></li>
+          <li><a href="#" class="footer-link">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Destinations -->
+      <div class="footer-col fade-up delay-2">
+        <h3 class="footer-col-title">Destinations</h3>
+        <ul>
+          <li><a href="#" class="footer-country"><span class="flag">🇺🇸</span> United States</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇬🇧</span> United Kingdom</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇨🇦</span> Canada</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇦🇺</span> Australia</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇩🇪</span> Germany</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇫🇷</span> France</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇮🇪</span> Ireland</a></li>
+          <li><a href="#" class="footer-country"><span class="flag">🇸🇬</span> Singapore</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-col fade-up delay-3">
+        <h3 class="footer-col-title">Contact Us</h3>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div class="footer-contact-text">
+            <strong>Office</strong>
+            Salt Lake City, Kolkata — 700064, West Bengal, India
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div class="footer-contact-text">
+            <strong>Phone / WhatsApp</strong>
+            +91 97488 92883
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="footer-contact-text">
+            <strong>Email</strong>
+            hello@abrovo.in
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          </div>
+          <div class="footer-contact-text">
+            <strong>Office Hours</strong>
+            Mon–Sat, 9:00 AM – 7:00 PM IST
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; 2025 Abrovo Education Pvt. Ltd. All rights reserved.
+      </p>
+      <nav class="footer-legal" aria-label="Legal links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ============ WHATSAPP FLOATING BUTTON ============ -->
+  <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+    <div class="wa-pulse" aria-hidden="true"></div>
+    <div class="wa-pulse" aria-hidden="true"></div>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span class="wa-tooltip">Chat with us!</span>
+  </a>
+
+  <!-- ============ JAVASCRIPT ============ -->
+  <script>
+    /* ---- Navbar scroll behaviour ---- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* ---- Hamburger menu ---- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      if (isOpen) {
+        mobileMenu.style.display = 'block';
+        requestAnimationFrame(() => mobileMenu.classList.add('open'));
+      } else {
+        mobileMenu.classList.remove('open');
+        setTimeout(() => { mobileMenu.style.display = ''; }, 350);
+      }
+    });
+
+    /* Close mobile menu on link click */
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('open');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        setTimeout(() => { mobileMenu.style.display = ''; }, 350);
+      });
+    });
+
+    /* ---- Stat cards stagger animation on load ---- */
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add('visible', 'stat-card-anim');
+      }, 1000 + i * 150);
+    });
+
+    /* ---- IntersectionObserver for fade-up ---- */
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+    /* ---- Smooth scroll for anchor links ---- */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    /* ---- Reduce marquee speed on mobile ---- */
+    const marqueeTrack = document.querySelector('.marquee-track');
+    if (window.innerWidth < 640 && marqueeTrack) {
+      marqueeTrack.style.animationDuration = '20s';
+    }
+  </script>
+</body>
+</html>
