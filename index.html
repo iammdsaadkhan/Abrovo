@@ -570,6 +570,432 @@
     }
 
     /* =========================================
+       SECTION SHARED
+    ========================================= */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 580px;
+    }
+    .section-header { margin-bottom: 56px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-label { justify-content: center; }
+    .section-header.center .section-sub { margin: 0 auto; }
+
+    /* =========================================
+       SERVICES SECTION
+    ========================================= */
+    .services-section {
+      background: var(--card-bg);
+      padding: 96px 5%;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      border-radius: 0 2px 2px 0;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(15,23,42,0.10);
+      border-color: rgba(37,99,235,0.2);
+    }
+    .service-card:hover::before { transform: scaleY(1); }
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1;
+    }
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+      transition: gap 0.2s ease;
+    }
+    .service-link:hover { gap: 10px; }
+    .service-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .service-link:hover svg { transform: translateX(3px); }
+
+    @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .services-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================
+       HOW IT WORKS
+    ========================================= */
+    .hiw-section {
+      background: var(--bg-white);
+      padding: 96px 5%;
+      overflow: hidden;
+    }
+    .hiw-steps {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 1100px;
+      margin: 0 auto;
+      gap: 0;
+    }
+    /* Connecting line */
+    .hiw-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(10% + 12px);
+      right: calc(10% + 12px);
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .hiw-line-fill {
+      position: absolute;
+      top: 36px;
+      left: calc(10% + 12px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), #60a5fa);
+      z-index: 1;
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+      border-radius: 2px;
+    }
+    .hiw-line-fill.animated {
+      width: calc(80% - 24px);
+    }
+
+    .hiw-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 2;
+    }
+    .hiw-node {
+      width: 72px; height: 72px;
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+      z-index: 2;
+    }
+    .hiw-step:hover .hiw-node {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 8px rgba(37,99,235,0.08);
+      transform: scale(1.08);
+    }
+    .hiw-step-num {
+      position: absolute;
+      top: -6px; right: -6px;
+      width: 22px; height: 22px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+    }
+    .hiw-step-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .hiw-step-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* Mobile vertical layout */
+    @media (max-width: 768px) {
+      .hiw-steps {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .hiw-steps::before {
+        top: 36px;
+        left: 35px;
+        right: auto;
+        bottom: 36px;
+        width: 2px;
+        height: auto;
+      }
+      .hiw-line-fill {
+        top: 36px;
+        left: 35px;
+        width: 2px;
+        height: 0;
+        background: linear-gradient(180deg, var(--accent), #60a5fa);
+        transition: height 1.5s cubic-bezier(0.16,1,0.3,1);
+      }
+      .hiw-line-fill.animated { width: 2px; height: calc(100% - 72px); }
+      .hiw-step {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 0 0 36px 0;
+      }
+      .hiw-node { flex-shrink: 0; margin-bottom: 0; }
+      .hiw-step-body { padding-top: 8px; }
+    }
+
+    /* =========================================
+       DESTINATIONS SECTION
+    ========================================= */
+    .destinations-section {
+      background: var(--card-bg);
+      padding: 96px 5%;
+    }
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .dest-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      background: var(--bg-dark);
+    }
+    /* Gradient backgrounds per card */
+    .dest-card:nth-child(1) { background: linear-gradient(135deg, #1e3a5f 0%, #0a1628 100%); }
+    .dest-card:nth-child(2) { background: linear-gradient(135deg, #1a1035 0%, #0d0a1e 100%); }
+    .dest-card:nth-child(3) { background: linear-gradient(135deg, #0d2818 0%, #051409 100%); }
+    .dest-card:nth-child(4) { background: linear-gradient(135deg, #1a2a0a 0%, #0d1505 100%); }
+    .dest-card:nth-child(5) { background: linear-gradient(135deg, #1a0a0a 0%, #0d0505 100%); }
+    .dest-card:nth-child(6) { background: linear-gradient(135deg, #1a1505 0%, #0d0b02 100%); }
+    .dest-card:nth-child(7) { background: linear-gradient(135deg, #0a1a2a 0%, #050d14 100%); }
+    .dest-card:nth-child(8) { background: linear-gradient(135deg, #1a0a1a 0%, #0d050d 100%); }
+    .dest-card:nth-child(9) { background: linear-gradient(135deg, #1a1205 0%, #0d0902 100%); }
+
+    .dest-card-inner {
+      position: absolute;
+      inset: 0;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%);
+      transition: background 0.35s ease;
+    }
+    .dest-flag {
+      position: absolute;
+      top: 24px; left: 24px;
+      font-size: 2.8rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .dest-card:hover .dest-flag { transform: scale(1.15) translateY(-4px); }
+    .dest-card-name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .dest-stats {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .dest-stat {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.65);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dest-stat::before {
+      content: '';
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dest-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(37,99,235,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+    .dest-card:hover .dest-overlay { opacity: 1; }
+    .dest-explore-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 12px 24px;
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: 50px;
+      transition: all 0.2s;
+      transform: translateY(10px);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
+    }
+    .dest-card:hover .dest-explore-btn {
+      transform: translateY(0);
+      border-color: #fff;
+    }
+
+    @media (max-width: 900px) { .destinations-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .destinations-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================
+       STATS COUNTER BAND
+    ========================================= */
+    .stats-band {
+      background: var(--bg-dark);
+      padding: 80px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(37,99,235,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 90% 50%, rgba(99,102,241,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .stats-band-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .stats-band-item {
+      text-align: center;
+    }
+    .stats-band-num {
+      font-family: var(--font-mono);
+      font-size: clamp(2.4rem, 5vw, 3.5rem);
+      font-weight: 600;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+      display: block;
+      background: linear-gradient(135deg, #fff, #93c5fd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stats-band-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .stats-band-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.08);
+      align-self: stretch;
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .stats-band-inner { grid-template-columns: repeat(2, 1fr); gap: 36px; }
+    }
+    @media (max-width: 400px) {
+      .stats-band-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .stats-band-num { font-size: 2rem; }
+    }
+
+    /* =========================================
        FOOTER
     ========================================= */
     .footer {
@@ -993,6 +1419,322 @@
     </div>
   </section>
 
+  <!-- ============ SERVICES ============ -->
+  <section class="services-section" id="services">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="section-header center fade-up">
+        <div class="section-label">What We Offer</div>
+        <h2 class="section-title">Everything You Need,<br>Under One Roof</h2>
+        <p class="section-sub">From your first profile evaluation to landing at your dream campus — we've got every step covered.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card fade-up delay-1">
+          <span class="service-icon">🎓</span>
+          <h3 class="service-title">University Shortlisting</h3>
+          <p class="service-desc">AI-powered profile matching across 500+ universities globally. Get a personalised list of target, match, and safety schools based on your academics and goals.</p>
+          <a href="#" class="service-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card fade-up delay-2">
+          <span class="service-icon">📝</span>
+          <h3 class="service-title">SOP &amp; LOR Writing</h3>
+          <p class="service-desc">Expert-crafted Statements of Purpose and Letters of Recommendation that tell your unique story and make admissions committees take notice.</p>
+          <a href="#" class="service-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card fade-up delay-3">
+          <span class="service-icon">📋</span>
+          <h3 class="service-title">Application Management</h3>
+          <p class="service-desc">End-to-end application tracking across all universities. Never miss a deadline — we manage documents, portals, and follow-ups for you.</p>
+          <a href="#" class="service-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card fade-up delay-1">
+          <span class="service-icon">💰</span>
+          <h3 class="service-title">Scholarship Guidance</h3>
+          <p class="service-desc">Discover and apply for scholarships worth over $1M+. Our experts match you with merit, need-based, and country-specific funding opportunities.</p>
+          <a href="#" class="service-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card fade-up delay-2">
+          <span class="service-icon">✈️</span>
+          <h3 class="service-title">Visa Assistance</h3>
+          <p class="service-desc">98% visa success rate. Complete document preparation, SOP for visa, financial guidance, and mock interview coaching for a stress-free visa process.</p>
+          <a href="#" class="service-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card fade-up delay-3">
+          <span class="service-icon">🏠</span>
+          <h3 class="service-title">Pre-departure Support</h3>
+          <p class="service-desc">Student accommodation sourcing, forex card guidance, travel insurance, airport pickup coordination, and a pre-departure briefing session.</p>
+          <a href="#" class="service-link">
+            Learn More
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="hiw-section" id="how-it-works">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="section-header center fade-up">
+        <div class="section-label">The Process</div>
+        <h2 class="section-title">Your Journey to a Global University</h2>
+        <p class="section-sub">Five clear steps from where you are today to where you want to be — guided by experts at every turn.</p>
+      </div>
+
+      <div class="hiw-steps fade-up">
+        <div class="hiw-line-fill" id="hiwLine"></div>
+
+        <div class="hiw-step">
+          <div class="hiw-node">
+            🔍
+            <span class="hiw-step-num">1</span>
+          </div>
+          <div class="hiw-step-body">
+            <h3 class="hiw-step-title">Free Profile Assessment</h3>
+            <p class="hiw-step-desc">Share your academics, test scores, and goals. Our counsellors evaluate your profile in 24 hours.</p>
+          </div>
+        </div>
+
+        <div class="hiw-step">
+          <div class="hiw-node">
+            🏛️
+            <span class="hiw-step-num">2</span>
+          </div>
+          <div class="hiw-step-body">
+            <h3 class="hiw-step-title">Shortlist Universities</h3>
+            <p class="hiw-step-desc">Get a curated list of target, match, and safety schools aligned with your career goals and budget.</p>
+          </div>
+        </div>
+
+        <div class="hiw-step">
+          <div class="hiw-node">
+            📄
+            <span class="hiw-step-num">3</span>
+          </div>
+          <div class="hiw-step-body">
+            <h3 class="hiw-step-title">Prepare Documents</h3>
+            <p class="hiw-step-desc">We craft your SOP, LOR, resume, and all supporting documents to the highest standard.</p>
+          </div>
+        </div>
+
+        <div class="hiw-step">
+          <div class="hiw-node">
+            📬
+            <span class="hiw-step-num">4</span>
+          </div>
+          <div class="hiw-step-body">
+            <h3 class="hiw-step-title">Apply &amp; Track</h3>
+            <p class="hiw-step-desc">We submit applications, track statuses, and handle communication with universities on your behalf.</p>
+          </div>
+        </div>
+
+        <div class="hiw-step">
+          <div class="hiw-node">
+            🛫
+            <span class="hiw-step-num">5</span>
+          </div>
+          <div class="hiw-step-body">
+            <h3 class="hiw-step-title">Visa &amp; Pre-departure</h3>
+            <p class="hiw-step-desc">End with a smooth visa approval and a fully prepared departure — accommodation, forex, travel ready.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DESTINATIONS ============ -->
+  <section class="destinations-section" id="destinations">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="section-header center fade-up">
+        <div class="section-label">Where to Study</div>
+        <h2 class="section-title">Choose Your Destination</h2>
+        <p class="section-sub">We have deep expertise across the most sought-after study destinations in the world.</p>
+      </div>
+      <div class="destinations-grid">
+
+        <div class="dest-card fade-up delay-1">
+          <div class="dest-flag">🇺🇸</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">United States</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. $25k–$55k/yr</span>
+              <span class="dest-stat">Intakes: Jan, Aug</span>
+              <span class="dest-stat">200+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore USA →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-2">
+          <div class="dest-flag">🇬🇧</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">United Kingdom</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. £15k–£35k/yr</span>
+              <span class="dest-stat">Intake: Sep</span>
+              <span class="dest-stat">130+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore UK →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-3">
+          <div class="dest-flag">🇨🇦</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">Canada</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. CAD 20k–40k/yr</span>
+              <span class="dest-stat">Intakes: Jan, Sep</span>
+              <span class="dest-stat">100+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore Canada →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-1">
+          <div class="dest-flag">🇦🇺</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">Australia</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. AUD 25k–45k/yr</span>
+              <span class="dest-stat">Intakes: Feb, Jul</span>
+              <span class="dest-stat">43+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore Australia →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-2">
+          <div class="dest-flag">🇩🇪</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">Germany</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. €500–€3k/yr</span>
+              <span class="dest-stat">Intakes: Apr, Oct</span>
+              <span class="dest-stat">400+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore Germany →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-3">
+          <div class="dest-flag">🇫🇷</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">France</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. €3k–€15k/yr</span>
+              <span class="dest-stat">Intake: Sep</span>
+              <span class="dest-stat">80+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore France →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-1">
+          <div class="dest-flag">🇮🇪</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">Ireland</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. €10k–€25k/yr</span>
+              <span class="dest-stat">Intake: Sep</span>
+              <span class="dest-stat">30+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore Ireland →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-2">
+          <div class="dest-flag">🇳🇿</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">New Zealand</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. NZD 22k–35k/yr</span>
+              <span class="dest-stat">Intakes: Feb, Jul</span>
+              <span class="dest-stat">8+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore NZ →</span>
+          </div>
+        </div>
+
+        <div class="dest-card fade-up delay-3">
+          <div class="dest-flag">🇦🇪</div>
+          <div class="dest-card-inner">
+            <div class="dest-card-name">Dubai / UAE</div>
+            <div class="dest-stats">
+              <span class="dest-stat">Avg. AED 40k–90k/yr</span>
+              <span class="dest-stat">Intakes: Jan, Sep</span>
+              <span class="dest-stat">60+ Universities</span>
+            </div>
+          </div>
+          <div class="dest-overlay">
+            <span class="dest-explore-btn">Explore Dubai →</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS COUNTER BAND ============ -->
+  <section class="stats-band" id="stats">
+    <div class="stats-band-inner">
+      <div class="stats-band-item fade-up">
+        <span class="stats-band-num" data-target="10000" data-suffix="+">0</span>
+        <span class="stats-band-label">Students Successfully Placed</span>
+      </div>
+      <div class="stats-band-item fade-up delay-1">
+        <span class="stats-band-num" data-target="500" data-suffix="+">0</span>
+        <span class="stats-band-label">Partner Universities</span>
+      </div>
+      <div class="stats-band-item fade-up delay-2">
+        <span class="stats-band-num" data-target="20" data-suffix="+">0</span>
+        <span class="stats-band-label">Countries Covered</span>
+      </div>
+      <div class="stats-band-item fade-up delay-3">
+        <span class="stats-band-num" data-target="98" data-suffix="%">0</span>
+        <span class="stats-band-label">Visa Success Rate</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ FOOTER ============ -->
   <footer class="footer" id="footer">
     <div class="footer-grid">
@@ -1191,6 +1933,46 @@
         }
       });
     });
+
+    /* ---- Animated number counter ---- */
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const startTime = performance.now();
+      const easeOut = t => 1 - Math.pow(1 - t, 3);
+      function step(now) {
+        const elapsed = Math.min((now - startTime) / duration, 1);
+        const value = Math.round(easeOut(elapsed) * target);
+        el.textContent = value.toLocaleString() + suffix;
+        if (elapsed < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const statsBand = document.getElementById('stats');
+    if (statsBand) counterObserver.observe(statsBand);
+
+    /* ---- HIW connecting line animation ---- */
+    const hiwLine = document.getElementById('hiwLine');
+    if (hiwLine) {
+      const lineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            hiwLine.classList.add('animated');
+            lineObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      lineObserver.observe(document.getElementById('how-it-works'));
+    }
 
     /* ---- Reduce marquee speed on mobile ---- */
     const marqueeTrack = document.querySelector('.marquee-track');
