@@ -1,0 +1,908 @@
+# universities.html — Phase 3 University Explorer Page
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abrovo — University Explorer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0A0F1E;
+      --bg-white: #FFFFFF;
+      --accent: #2563EB;
+      --accent-hover: #1D4ED8;
+      --text-primary: #0F172A;
+      --text-secondary: #64748B;
+      --border: #E2E8F0;
+      --card-bg: #F8FAFC;
+      --success: #10B981;
+      --font-display: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--card-bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 5%;
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      color: var(--bg-dark);
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      transition: .2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      background: linear-gradient(135deg,#0A0F1E 0%, #111D39 100%);
+      color: white;
+      padding: 90px 5% 70px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem,6vw,5rem);
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: auto;
+      color: rgba(255,255,255,.72);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .filter-bar {
+      position: sticky;
+      top: 76px;
+      z-index: 900;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 5%;
+    }
+
+    .filters {
+      max-width: 1280px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr repeat(4,1fr) auto auto;
+      gap: 14px;
+    }
+
+    .filters input,
+    .filters select {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      font-family: var(--font-body);
+      outline: none;
+    }
+
+    .reset-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .92rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .section {
+      padding: 70px 5%;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+    }
+
+    .section-sub {
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .results-count {
+      color: var(--text-secondary);
+      font-size: .95rem;
+    }
+
+    .university-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 26px;
+    }
+
+    .uni-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: .3s ease;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.03);
+    }
+
+    .uni-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 60px rgba(15,23,42,0.1);
+    }
+
+    .uni-banner {
+      height: 190px;
+      position: relative;
+      padding: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      color: white;
+    }
+
+    .uni-initials {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .bookmark-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,.15);
+      color: white;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .uni-content {
+      padding: 26px;
+    }
+
+    .country {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .uni-name {
+      font-size: 1.28rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 18px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .tag {
+      background: #EFF6FF;
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .76rem;
+      font-weight: 600;
+    }
+
+    .meta {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: .9rem;
+      color: var(--text-secondary);
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 10px;
+    }
+
+    .meta-item strong {
+      color: var(--text-primary);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .outline-btn {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .outline-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .load-more {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,15,30,.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s ease;
+      z-index: 9999;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-box {
+      width: min(980px,100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 28px;
+      padding: 36px;
+      transform: translateY(30px);
+      transition: .35s ease;
+    }
+
+    .modal.active .modal-box {
+      transform: translateY(0);
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+    }
+
+    .close-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #F1F5F9;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .tab-panel {
+      display: none;
+      line-height: 1.9;
+      color: var(--text-secondary);
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .detail-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .detail-card h4 {
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .footer {
+      background: var(--bg-dark);
+      color: rgba(255,255,255,.7);
+      padding: 70px 5% 40px;
+      margin-top: 70px;
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 30px;
+    }
+
+    .footer h3 {
+      color: white;
+      margin-bottom: 16px;
+      font-family: var(--font-display);
+    }
+
+    .footer p,
+    .footer li {
+      color: rgba(255,255,255,.6);
+      line-height: 1.8;
+      list-style: none;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: .8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width:1100px){
+      .filters {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .university-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:768px){
+      .nav-links {
+        display:none;
+      }
+
+      .university-grid,
+      .footer-grid,
+      .detail-grid {
+        grid-template-columns:1fr;
+      }
+
+      .filters {
+        grid-template-columns:1fr;
+      }
+
+      .hero {
+        padding-top: 70px;
+      }
+
+      .filter-bar {
+        top: 72px;
+      }
+
+      .modal-box {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="logo">Abrovo<span>.</span></div>
+
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Destinations</a>
+        <a href="#">Universities</a>
+        <a href="#">Services</a>
+        <a href="#">Success Stories</a>
+      </div>
+
+      <button class="btn-primary">Free Consultation</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Explore Top Universities Worldwide</h1>
+    <p>
+      Find the right university, compare programs, check tuition fees,
+      explore eligibility criteria, and apply with expert counsellor support.
+    </p>
+  </section>
+
+  <section class="filter-bar">
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Search universities, programs...">
+
+      <select id="countryFilter">
+        <option value="">Country</option>
+        <option>USA</option>
+        <option>UK</option>
+        <option>Canada</option>
+        <option>Australia</option>
+      </select>
+
+      <select id="levelFilter">
+        <option value="">Program Level</option>
+        <option>Bachelor's</option>
+        <option>Master's</option>
+        <option>PhD</option>
+      </select>
+
+      <select id="fieldFilter">
+        <option value="">Field</option>
+        <option>Computer Science</option>
+        <option>Business</option>
+        <option>Engineering</option>
+        <option>Data Science</option>
+      </select>
+
+      <select id="intakeFilter">
+        <option value="">Intake</option>
+        <option>Jan</option>
+        <option>Sep</option>
+      </select>
+
+      <button class="btn-primary" onclick="renderUniversities()">Apply Filters</button>
+      <div class="reset-btn" onclick="resetFilters()">Reset</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head fade-up">
+      <div>
+        <h2 class="section-title">Featured Universities</h2>
+        <p class="section-sub">Explore universities across USA, UK, Canada & Australia.</p>
+      </div>
+
+      <div class="results-count" id="resultsCount">12 Universities Found</div>
+    </div>
+
+    <div class="university-grid" id="universityGrid"></div>
+
+    <div class="load-more fade-up">
+      <button class="btn-primary">Load More Universities</button>
+    </div>
+  </section>
+
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="modal-top">
+        <div>
+          <div class="country" id="modalCountry"></div>
+          <h2 class="modal-title" id="modalTitle"></h2>
+        </div>
+
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="programs">Programs</button>
+        <button class="tab-btn" data-tab="eligibility">Eligibility</button>
+        <button class="tab-btn" data-tab="intake">Intake & Deadlines</button>
+        <button class="tab-btn" data-tab="scholarships">Scholarships</button>
+      </div>
+
+      <div class="tab-panel active" id="overview">
+        <p id="overviewText"></p>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <h4>World Ranking</h4>
+            <p id="rankingText"></p>
+          </div>
+
+          <div class="detail-card">
+            <h4>Acceptance Rate</h4>
+            <p id="acceptanceText"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="programs"></div>
+      <div class="tab-panel" id="eligibility"></div>
+      <div class="tab-panel" id="intake"></div>
+      <div class="tab-panel" id="scholarships"></div>
+
+      <br><br>
+
+      <a href="https://wa.me/919748892883" target="_blank" class="btn-primary">
+        Apply via Counsellor
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h3>About Abrovo</h3>
+        <p>
+          Helping students secure admissions into top global universities with expert guidance.
+        </p>
+      </div>
+
+      <div>
+        <h3>Quick Links</h3>
+        <ul>
+          <li>Universities</li>
+          <li>Scholarships</li>
+          <li>Visa Support</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Destinations</h3>
+        <ul>
+          <li>USA</li>
+          <li>UK</li>
+          <li>Canada</li>
+          <li>Australia</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contact</h3>
+        <p>hello@abrovo.com</p>
+        <p>+91 97488 92883</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+const universities = [
+  {
+    name: 'Stanford University',
+    country: 'USA 🇺🇸',
+    initials: 'SU',
+    banner: 'linear-gradient(135deg,#2563EB,#1E3A8A)',
+    programs: ['Computer Science','MBA','AI'],
+    intake: 'Jan, Sep',
+    tuition: '$25,000 - $48,000/yr',
+    eligibility: 'IELTS 7.0 | GPA 3.5+',
+    ranking: '#6 QS World Ranking',
+    acceptance: '4%',
+    about: 'Stanford is globally known for innovation, entrepreneurship, AI, and research excellence.',
+    scholarship: '$10,000 Merit Scholarship'
+  },
+  {
+    name: 'University of Toronto',
+    country: 'Canada 🇨🇦',
+    initials: 'UT',
+    banner: 'linear-gradient(135deg,#059669,#064E3B)',
+    programs: ['Engineering','Business','Data Science'],
+    intake: 'Sep',
+    tuition: '$18,000 - $35,000/yr',
+    eligibility: 'IELTS 6.5 | GPA 3.0+',
+    ranking: '#21 QS World Ranking',
+    acceptance: '43%',
+    about: 'Top Canadian university with strong research opportunities and co-op programs.',
+    scholarship: '$8,000 International Award'
+  },
+  {
+    name: 'University of Melbourne',
+    country: 'Australia 🇦🇺',
+    initials: 'UM',
+    banner: 'linear-gradient(135deg,#7C3AED,#312E81)',
+    programs: ['Medicine','Business','Computer Science'],
+    intake: 'Jan, Jul',
+    tuition: '$22,000 - $40,000/yr',
+    eligibility: 'IELTS 6.5 | GPA 3.2+',
+    ranking: '#14 QS World Ranking',
+    acceptance: '70%',
+    about: 'Australia’s leading institution known for academic excellence and global employability.',
+    scholarship: '$12,000 Excellence Grant'
+  },
+  {
+    name: 'University of Manchester',
+    country: 'UK 🇬🇧',
+    initials: 'MU',
+    banner: 'linear-gradient(135deg,#DC2626,#7F1D1D)',
+    programs: ['Mechanical Engineering','MBA','Finance'],
+    intake: 'Jan, Sep',
+    tuition: '$19,000 - $32,000/yr',
+    eligibility: 'IELTS 6.5 | GPA 3.0+',
+    ranking: '#32 QS World Ranking',
+    acceptance: '56%',
+    about: 'A Russell Group university known for engineering, research, and student diversity.',
+    scholarship: '$7,000 International Scholarship'
+  }
+];
+
+while(universities.length < 12){
+  universities.push({...universities[universities.length % 4]});
+}
+
+const grid = document.getElementById('universityGrid');
+
+function renderUniversities(){
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const country = document.getElementById('countryFilter').value;
+
+  const filtered = universities.filter(u => {
+    const matchSearch = u.name.toLowerCase().includes(search) ||
+      u.programs.join(' ').toLowerCase().includes(search);
+
+    const matchCountry = !country || u.country.includes(country);
+
+    return matchSearch && matchCountry;
+  });
+
+  document.getElementById('resultsCount').innerText = `${filtered.length} Universities Found`;
+
+  grid.innerHTML = filtered.map((u,index)=>`
+    <div class="uni-card fade-up">
+      <div class="uni-banner" style="background:${u.banner}">
+        <div class="uni-initials">${u.initials}</div>
+        <button class="bookmark-btn">♡</button>
+      </div>
+
+      <div class="uni-content">
+        <div class="country">${u.country}</div>
+        <div class="uni-name">${u.name}</div>
+
+        <div class="tags">
+          ${u.programs.map(p=>`<span class="tag">${p}</span>`).join('')}
+        </div>
+
+        <div class="meta">
+          <div class="meta-item">
+            <span>Intake</span>
+            <strong>${u.intake}</strong>
+          </div>
+
+          <div class="meta-item">
+            <span>Tuition</span>
+            <strong>${u.tuition}</strong>
+          </div>
+
+          <div class="meta-item">
+            <span>Eligibility</span>
+            <strong>${u.eligibility}</strong>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn-primary" onclick="openModal(${index})">View Details</button>
+          <button class="outline-btn">Compare</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  observeFade();
+}
+
+function resetFilters(){
+  document.getElementById('searchInput').value = '';
+  document.getElementById('countryFilter').value = '';
+  document.getElementById('levelFilter').value = '';
+  document.getElementById('fieldFilter').value = '';
+  document.getElementById('intakeFilter').value = '';
+
+  renderUniversities();
+}
+
+function openModal(index){
+  const u = universities[index];
+
+  document.getElementById('modal').classList.add('active');
+  document.getElementById('modalTitle').innerText = u.name;
+  document.getElementById('modalCountry').innerText = u.country;
+  document.getElementById('overviewText').innerText = u.about;
+  document.getElementById('rankingText').innerText = u.ranking;
+  document.getElementById('acceptanceText').innerText = u.acceptance;
+
+  document.getElementById('programs').innerHTML = `
+    <div class="detail-grid">
+      ${u.programs.map(p=>`
+        <div class="detail-card">
+          <h4>${p}</h4>
+          <p>Duration: 2 Years</p>
+          <p>Tuition: ${u.tuition}</p>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('eligibility').innerHTML = `
+    <div class="detail-card">
+      <h4>Eligibility Requirements</h4>
+      <p>${u.eligibility}</p>
+      <p>Work Experience: Preferred for MBA programs</p>
+    </div>
+  `;
+
+  document.getElementById('intake').innerHTML = `
+    <div class="detail-card">
+      <h4>Intakes & Deadlines</h4>
+      <p>Available Intakes: ${u.intake}</p>
+      <p>Application Deadline: Rolling Basis</p>
+      <p>Decision Timeline: 4–8 Weeks</p>
+    </div>
+  `;
+
+  document.getElementById('scholarships').innerHTML = `
+    <div class="detail-card">
+      <h4>Scholarships</h4>
+      <p>${u.scholarship}</p>
+    </div>
+  `;
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('active');
+}
+
+const tabButtons = document.querySelectorAll('.tab-btn');
+
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+function observeFade(){
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  },{threshold:.1});
+
+  document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+}
+
+renderUniversities();
+observeFade();
+</script>
+
+</body>
+</html>
+```
+
+## Included in this Phase
+
+* Sticky navbar + responsive layout
+* University Explorer hero section
+* Sticky filter/search bar
+* Dynamic university cards from JavaScript array
+* Country/program search filters
+* Responsive 3-column grid
+* University detail modal with tabs
+* Overview / Programs / Eligibility / Intake / Scholarship sections
+* Hover animations + fade-up scroll effects
+* Load More CTA
+* Footer matching Phase 1 & 2 aesthetic
+* Mobile responsive layout
