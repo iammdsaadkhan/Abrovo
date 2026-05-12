@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Abrovo Admin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ─── Reset & Variables ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0A0F1E;
+  --blue: #2563EB;
+  --blue-hover: #1D4ED8;
+  --blue-light: #EFF6FF;
+  --blue-mid: #DBEAFE;
+  --sidebar-bg: #FFFFFF;
+  --main-bg: #F1F5F9;
+  --white: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --border: #E2E8F0;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --card-bg: #FFFFFF;
+  --sidebar-w: 260px;
+  --header-h: 64px;
+  --radius: 12px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.14);
+}
+html { font-size: 15px; }
+body { font-family: 'DM Sans', sans-serif; background: var(--main-bg); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+input, select, textarea { font-family: inherit; }
+table { border-collapse: collapse; width: 100%; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 99px; }
+
+/* ─── Login Screen ──────────────────────────────────────────────── */
+#login-screen {
+  position: fixed; inset: 0; background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; transition: opacity .4s ease, visibility .4s;
+}
+#login-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.login-box {
+  background: var(--white); border-radius: 20px; padding: 48px 44px;
+  width: 100%; max-width: 420px; box-shadow: var(--shadow-lg);
+  animation: slideUp .5s cubic-bezier(.16,1,.3,1);
+}
+.login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+.login-logo svg { width: 36px; height: 36px; }
+.login-logo span { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--navy); }
+.login-box h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 6px; }
+.login-box p { color: var(--text-secondary); font-size: .9rem; margin-bottom: 28px; }
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: .83rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; letter-spacing: .04em; text-transform: uppercase; }
+.form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .95rem; transition: border-color .2s; }
+.form-group input:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-mid); }
+.login-error { background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626; border-radius: 8px; padding: 10px 14px; font-size: .88rem; margin-bottom: 16px; display: none; }
+.login-error.show { display: block; }
+.btn-login { width: 100%; background: var(--blue); color: #fff; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: 600; transition: background .2s, transform .1s; margin-top: 4px; }
+.btn-login:hover { background: var(--blue-hover); }
+.btn-login:active { transform: scale(.98); }
+.login-hint { text-align: center; margin-top: 20px; color: var(--text-secondary); font-size: .82rem; }
+.login-hint code { background: var(--main-bg); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; color: var(--navy); font-size: .8rem; }
+
+/* ─── App Shell ─────────────────────────────────────────────────── */
+#app { display: flex; min-height: 100vh; }
+#app.hidden { display: none; }
+
+/* ─── Sidebar ───────────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w); background: var(--sidebar-bg);
+  border-right: 1px solid var(--border); position: fixed;
+  top: 0; left: 0; height: 100vh; display: flex; flex-direction: column;
+  z-index: 100; transition: transform .3s cubic-bezier(.16,1,.3,1);
+  overflow-y: auto;
+}
+.sidebar-logo {
+  display: flex; align-items: center; gap: 10px;
+  padding: 22px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.sidebar-logo svg { width: 30px; height: 30px; }
+.sidebar-logo span { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--navy); }
+.sidebar-logo .badge { font-size: .68rem; background: var(--blue); color: #fff; border-radius: 4px; padding: 1px 6px; margin-left: 2px; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+nav.sidebar-nav { flex: 1; padding: 14px 12px; }
+.nav-section-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #94A3B8; padding: 10px 10px 6px; }
+.nav-link {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  border-radius: 8px; color: var(--text-secondary); font-weight: 500;
+  font-size: .93rem; transition: all .18s; cursor: pointer; position: relative; margin-bottom: 2px;
+}
+.nav-link:hover { background: var(--main-bg); color: var(--text-primary); }
+.nav-link.active { background: var(--blue-light); color: var(--blue); font-weight: 600; }
+.nav-link .icon { width: 20px; text-align: center; font-size: 1rem; flex-shrink: 0; }
+.nav-link .count { margin-left: auto; background: var(--blue); color: #fff; font-size: .7rem; border-radius: 99px; padding: 1px 7px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); }
+.sidebar-admin { display: flex; align-items: center; gap: 10px; }
+.admin-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), #7C3AED); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
+.admin-info { min-width: 0; }
+.admin-name { font-weight: 600; font-size: .88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-role { font-size: .75rem; color: var(--text-secondary); }
+
+/* ─── Header ────────────────────────────────────────────────────── */
+#header {
+  position: fixed; top: 0; left: var(--sidebar-w); right: 0;
+  height: var(--header-h); background: var(--white); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 24px; gap: 16px; z-index: 50;
+  transition: left .3s cubic-bezier(.16,1,.3,1);
+}
+#hamburger { display: none; width: 36px; height: 36px; border-radius: 8px; background: var(--main-bg); align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+#hamburger svg { width: 18px; height: 18px; }
+#page-title { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--navy); flex: 1; }
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.btn-logout { display: flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 8px; background: #FEF2F2; color: #DC2626; font-size: .88rem; font-weight: 600; transition: background .18s; }
+.btn-logout:hover { background: #FEE2E2; }
+
+/* ─── Main Content ───────────────────────────────────────────────── */
+#main { margin-left: var(--sidebar-w); padding-top: var(--header-h); min-height: 100vh; transition: margin-left .3s cubic-bezier(.16,1,.3,1); }
+.page-content { padding: 28px 28px; display: none; animation: fadeIn .3s ease; }
+.page-content.active { display: block; }
+
+/* ─── Stat Cards ─────────────────────────────────────────────────── */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--card-bg); border-radius: var(--radius); padding: 22px 22px;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--border); position: relative; overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent, var(--blue)); border-radius: 4px 0 0 4px; }
+.stat-card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 14px; background: var(--icon-bg, var(--blue-light)); }
+.stat-card-value { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-bottom: 4px; }
+.stat-card-label { color: var(--text-secondary); font-size: .85rem; font-weight: 500; }
+.stat-card-delta { font-size: .78rem; margin-top: 10px; display: flex; align-items: center; gap: 4px; color: var(--success); font-weight: 500; }
+
+/* ─── Section Header ─────────────────────────────────────────────── */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+.section-title { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
+.section-subtitle { font-size: .83rem; color: var(--text-secondary); margin-top: 2px; }
+
+/* ─── Table Card ─────────────────────────────────────────────────── */
+.table-card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: hidden; }
+.table-toolbar { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.search-input-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-input-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); width: 16px; }
+.search-input { width: 100%; padding: 9px 12px 9px 38px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .9rem; transition: border-color .2s; background: var(--main-bg); }
+.search-input:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-mid); background: #fff; }
+.filter-select { padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .88rem; background: var(--main-bg); color: var(--text-primary); cursor: pointer; }
+.filter-select:focus { border-color: var(--blue); outline: none; }
+table thead tr { background: #F8FAFC; }
+table thead th { padding: 11px 16px; text-align: left; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-secondary); white-space: nowrap; }
+table tbody tr { border-top: 1px solid var(--border); transition: background .15s; }
+table tbody tr:hover { background: var(--main-bg); }
+table tbody td { padding: 13px 16px; font-size: .9rem; color: var(--text-primary); vertical-align: middle; }
+.table-empty { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
+.table-empty .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.table-empty p { font-size: .9rem; }
+
+/* ─── Badges ─────────────────────────────────────────────────────── */
+.badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 99px; font-size: .75rem; font-weight: 600; }
+.badge-active { background: #D1FAE5; color: #065F46; }
+.badge-inactive { background: #F1F5F9; color: #64748B; }
+.badge-new { background: #DBEAFE; color: #1E40AF; }
+.badge-contacted { background: #E0E7FF; color: #3730A3; }
+.badge-inprogress { background: #FEF3C7; color: #92400E; }
+.badge-converted { background: #D1FAE5; color: #065F46; }
+.badge-lost { background: #FEE2E2; color: #991B1B; }
+.level-tag { display: inline-block; padding: 3px 9px; border-radius: 6px; font-size: .75rem; font-weight: 600; background: var(--blue-light); color: var(--blue); }
+
+/* ─── Action Buttons ─────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 8px; font-size: .88rem; font-weight: 600; transition: all .18s; cursor: pointer; border: none; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-hover); box-shadow: 0 4px 12px rgba(37,99,235,.3); }
+.btn-sm { padding: 6px 12px; font-size: .82rem; border-radius: 6px; }
+.btn-edit { background: #EFF6FF; color: var(--blue); }
+.btn-edit:hover { background: var(--blue-mid); }
+.btn-delete { background: #FEF2F2; color: var(--danger); }
+.btn-delete:hover { background: #FEE2E2; }
+.btn-success { background: #D1FAE5; color: #065F46; }
+.btn-outline { background: #fff; color: var(--text-primary); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+.actions-cell { display: flex; gap: 6px; }
+
+/* ─── Quick Actions ──────────────────────────────────────────────── */
+.quick-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.quick-action-btn {
+  display: flex; align-items: center; gap: 10px; padding: 16px 20px;
+  background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: .9rem; font-weight: 600; transition: all .18s; cursor: pointer; color: var(--text-primary);
+}
+.quick-action-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); transform: translateY(-1px); }
+.quick-action-btn svg { width: 18px; height: 18px; }
+
+/* ─── Modal ──────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15,23,42,.55);
+  backdrop-filter: blur(4px); z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+  padding: 20px;
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal {
+  background: var(--white); border-radius: 18px; width: 100%; max-width: 680px;
+  max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);
+  transform: translateY(16px) scale(.98); transition: transform .3s cubic-bezier(.16,1,.3,1);
+}
+.modal-overlay.open .modal { transform: translateY(0) scale(1); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 22px 26px 18px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: #fff; z-index: 2; }
+.modal-title { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
+.modal-close { width: 32px; height: 32px; border-radius: 8px; background: var(--main-bg); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; font-size: 1.2rem; color: var(--text-secondary); border: none; }
+.modal-close:hover { background: var(--border); }
+.modal-body { padding: 22px 26px; }
+.modal-footer { padding: 16px 26px 22px; display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid var(--border); position: sticky; bottom: 0; background: #fff; }
+
+/* ─── Form Fields ─────────────────────────────────────────────────── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-grid.cols-1 { grid-template-columns: 1fr; }
+.form-field { display: flex; flex-direction: column; gap: 5px; }
+.form-field.span-2 { grid-column: span 2; }
+.form-field.span-3 { grid-column: span 3; }
+.form-label { font-size: .8rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+.form-control { padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .9rem; transition: border-color .2s, box-shadow .2s; color: var(--text-primary); background: #fff; }
+.form-control:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-mid); }
+textarea.form-control { resize: vertical; min-height: 80px; }
+.form-section { margin-top: 20px; }
+.form-section-title { font-size: .88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.checkboxes-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.checkbox-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.checkbox-item input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--blue); }
+.checkbox-item label { font-size: .75rem; color: var(--text-secondary); font-weight: 500; }
+.intake-deadline { margin-top: 12px; }
+.intake-deadline-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.intake-deadline-row label { font-size: .82rem; min-width: 36px; color: var(--text-secondary); font-weight: 600; }
+.scholarship-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px; }
+.btn-add-row { background: var(--blue-light); color: var(--blue); border: none; border-radius: 6px; padding: 6px 12px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: background .15s; }
+.btn-add-row:hover { background: var(--blue-mid); }
+.btn-remove-row { background: #FEF2F2; color: var(--danger); border: none; border-radius: 6px; padding: 6px 8px; font-size: .82rem; cursor: pointer; }
+
+/* ─── Inline Status Select ──────────────────────────────────────── */
+.status-select { padding: 4px 8px; border-radius: 6px; font-size: .82rem; font-weight: 600; border: 1.5px solid transparent; cursor: pointer; background: transparent; }
+.status-select:focus { outline: none; border-color: var(--blue); }
+
+/* ─── Toast ──────────────────────────────────────────────────────── */
+#toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+.toast {
+  background: var(--navy); color: #fff; padding: 13px 20px; border-radius: 10px;
+  font-size: .9rem; font-weight: 500; box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: 10px;
+  animation: toastIn .35s cubic-bezier(.16,1,.3,1) both;
+  pointer-events: auto;
+}
+.toast.success { background: #022C22; border-left: 4px solid var(--success); }
+.toast.error { background: #450A0A; border-left: 4px solid var(--danger); }
+.toast.info { background: var(--navy); border-left: 4px solid var(--blue); }
+.toast-icon { font-size: 1rem; }
+@keyframes toastIn { from { opacity:0; transform: translateY(16px) scale(.96); } to { opacity:1; transform: none; } }
+@keyframes toastOut { to { opacity:0; transform: translateY(8px) scale(.96); } }
+
+/* ─── Overview Specific ──────────────────────────────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.recent-table-card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: hidden; }
+.card-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: .95rem; color: var(--text-primary); display: flex; align-items: center; justify-content: space-between; }
+.view-all-link { font-size: .82rem; color: var(--blue); font-weight: 600; cursor: pointer; }
+.view-all-link:hover { text-decoration: underline; }
+
+/* ─── Leads Filters ──────────────────────────────────────────────── */
+.leads-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+.date-input { padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .88rem; background: var(--main-bg); color: var(--text-primary); }
+
+/* ─── Sidebar Overlay (mobile) ───────────────────────────────────── */
+#sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 99; }
+
+/* ─── Settings Page ──────────────────────────────────────────────── */
+.settings-card { background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); padding: 26px; margin-bottom: 20px; }
+.settings-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; color: var(--text-primary); }
+.settings-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.settings-row:last-child { border-bottom: none; }
+.settings-row-label { font-size: .9rem; font-weight: 500; }
+.settings-row-desc { font-size: .8rem; color: var(--text-secondary); margin-top: 2px; }
+.toggle { position: relative; width: 42px; height: 24px; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; inset: 0; border-radius: 99px; background: #CBD5E1; cursor: pointer; transition: background .2s; }
+.toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: transform .2s; box-shadow: var(--shadow-sm); }
+.toggle input:checked + .toggle-slider { background: var(--blue); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: none; } }
+@keyframes slideUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: none; } }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+  .form-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay { display: block; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  #sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+  #header { left: 0; }
+  #main { margin-left: 0; }
+  #hamburger { display: flex; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .page-content { padding: 18px 14px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-field.span-2, .form-field.span-3 { grid-column: span 1; }
+  .checkboxes-grid { grid-template-columns: repeat(4, 1fr); }
+  .scholarship-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .login-box { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Toast Container ─────────────────────────────────────────── -->
+<div id="toast-container"></div>
+
+<!-- ─── Login Screen ────────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="18" fill="#2563EB"/>
+        <ellipse cx="18" cy="18" rx="10" ry="14" stroke="#fff" stroke-width="1.8" fill="none"/>
+        <line x1="4" y1="18" x2="32" y2="18" stroke="#fff" stroke-width="1.8"/>
+        <path d="M8 11c3 2 6 3 10 3s7-1 10-3" stroke="#fff" stroke-width="1.5" fill="none"/>
+        <path d="M8 25c3-2 6-3 10-3s7 1 10 3" stroke="#fff" stroke-width="1.5" fill="none"/>
+      </svg>
+      <span>Abrovo</span><span class="badge">Admin</span>
+    </div>
+    <h2>Welcome back 👋</h2>
+    <p>Sign in to your admin dashboard</p>
+    <div id="login-error" class="login-error">Incorrect username or password. Please try again.</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="login-username" placeholder="admin" autocomplete="username" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="••••••••••••" autocomplete="current-password" />
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In →</button>
+    <p class="login-hint">Credentials: <code>admin</code> / <code>globalpath2024</code></p>
+  </div>
+</div>
+
+<!-- ─── App Shell ────────────────────────────────────────────────── -->
+<div id="app" class="hidden">
+
+  <!-- Sidebar Overlay -->
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="18" fill="#2563EB"/>
+        <ellipse cx="18" cy="18" rx="10" ry="14" stroke="#fff" stroke-width="1.8" fill="none"/>
+        <line x1="4" y1="18" x2="32" y2="18" stroke="#fff" stroke-width="1.8"/>
+        <path d="M8 11c3 2 6 3 10 3s7-1 10-3" stroke="#fff" stroke-width="1.5" fill="none"/>
+        <path d="M8 25c3-2 6-3 10-3s7 1 10 3" stroke="#fff" stroke-width="1.5" fill="none"/>
+      </svg>
+      <span>Abrovo</span><span class="badge">Admin</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a class="nav-link active" data-page="overview" onclick="navigate('overview',this)">
+        <span class="icon">📊</span> Overview
+      </a>
+      <a class="nav-link" data-page="universities" onclick="navigate('universities',this)">
+        <span class="icon">🏫</span> Universities
+        <span class="count" id="nav-count-universities">0</span>
+      </a>
+      <a class="nav-link" data-page="programs" onclick="navigate('programs',this)">
+        <span class="icon">📚</span> Programs
+        <span class="count" id="nav-count-programs">0</span>
+      </a>
+      <div class="nav-section-label" style="margin-top:10px">CRM</div>
+      <a class="nav-link" data-page="leads" onclick="navigate('leads',this)">
+        <span class="icon">👥</span> Leads / Enquiries
+        <span class="count" id="nav-count-leads">0</span>
+      </a>
+      <a class="nav-link" data-page="intakes" onclick="navigate('intakes',this)">
+        <span class="icon">🗓️</span> Intakes
+      </a>
+      <div class="nav-section-label" style="margin-top:10px">System</div>
+      <a class="nav-link" data-page="settings" onclick="navigate('settings',this)">
+        <span class="icon">⚙️</span> Settings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-admin">
+        <div class="admin-avatar">AD</div>
+        <div class="admin-info">
+          <div class="admin-name">Admin User</div>
+          <div class="admin-role">Super Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Header -->
+  <header id="header">
+    <button id="hamburger" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <span id="page-title">Overview</span>
+    <div class="header-actions">
+      <button class="btn-logout" onclick="doLogout()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main id="main">
+
+    <!-- ── Overview ─────────────────────────────────────────────── -->
+    <div class="page-content active" id="page-overview">
+      <div class="stats-grid">
+        <div class="stat-card" style="--accent:#2563EB;--icon-bg:#EFF6FF">
+          <div class="stat-card-icon">🏫</div>
+          <div class="stat-card-value" id="stat-universities">0</div>
+          <div class="stat-card-label">Total Universities</div>
+          <div class="stat-card-delta">↑ Active entries</div>
+        </div>
+        <div class="stat-card" style="--accent:#10B981;--icon-bg:#D1FAE5">
+          <div class="stat-card-icon">📚</div>
+          <div class="stat-card-value" id="stat-programs">0</div>
+          <div class="stat-card-label">Total Programs</div>
+          <div class="stat-card-delta" style="color:var(--success)">↑ Across all universities</div>
+        </div>
+        <div class="stat-card" style="--accent:#F59E0B;--icon-bg:#FEF3C7">
+          <div class="stat-card-icon">👥</div>
+          <div class="stat-card-value" id="stat-leads-month">0</div>
+          <div class="stat-card-label">New Leads This Month</div>
+          <div class="stat-card-delta" style="color:var(--warning)">↑ Current month</div>
+        </div>
+        <div class="stat-card" style="--accent:#8B5CF6;--icon-bg:#EDE9FE">
+          <div class="stat-card-icon">⏳</div>
+          <div class="stat-card-value" id="stat-pending">0</div>
+          <div class="stat-card-label">Pending Applications</div>
+          <div class="stat-card-delta" style="color:#8B5CF6">↑ In Progress leads</div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <button class="quick-action-btn" onclick="navigate('universities'); openUniversityModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add University
+        </button>
+        <button class="quick-action-btn" onclick="navigate('programs'); openProgramModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Program
+        </button>
+        <button class="quick-action-btn" onclick="navigate('leads')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          View All Leads
+        </button>
+        <button class="quick-action-btn" onclick="exportLeadsCSV()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export Leads CSV
+        </button>
+      </div>
+
+      <div class="section-header">
+        <div><div class="section-title">Recent Enquiries</div><div class="section-subtitle">Latest leads from prospective students</div></div>
+        <span class="view-all-link" onclick="navigate('leads')">View all →</span>
+      </div>
+      <div class="table-card">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Name</th><th>Phone</th><th>Destination</th><th>Date</th><th>Status</th>
+            </tr></thead>
+            <tbody id="recent-leads-tbody">
+              <tr><td colspan="5" class="table-empty"><div class="empty-icon">📭</div><p>No leads yet. Add some leads to see them here.</p></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Universities ──────────────────────────────────────────── -->
+    <div class="page-content" id="page-universities">
+      <div class="section-header">
+        <div><div class="section-title">Universities</div><div class="section-subtitle">Manage partner universities</div></div>
+        <button class="btn btn-primary" onclick="openUniversityModal()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add University
+        </button>
+      </div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" type="text" placeholder="Search universities..." id="uni-search" oninput="renderUniversities()" />
+          </div>
+          <select class="filter-select" id="uni-filter-country" onchange="renderUniversities()">
+            <option value="">All Countries</option>
+          </select>
+          <select class="filter-select" id="uni-filter-status" onchange="renderUniversities()">
+            <option value="">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>University Name</th><th>Country</th><th>City</th><th>Programs</th><th>Type</th><th>Ranking</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="uni-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Programs ──────────────────────────────────────────────── -->
+    <div class="page-content" id="page-programs">
+      <div class="section-header">
+        <div><div class="section-title">Programs</div><div class="section-subtitle">Manage study programs across universities</div></div>
+        <button class="btn btn-primary" onclick="openProgramModal()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Program
+        </button>
+      </div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" type="text" placeholder="Search programs..." id="prog-search" oninput="renderPrograms()" />
+          </div>
+          <select class="filter-select" id="prog-filter-level" onchange="renderPrograms()">
+            <option value="">All Levels</option>
+            <option>Bachelor's</option><option>Master's</option><option>PhD</option><option>Diploma</option>
+          </select>
+          <select class="filter-select" id="prog-filter-uni" onchange="renderPrograms()">
+            <option value="">All Universities</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Program Name</th><th>University</th><th>Level</th><th>Field</th><th>Duration</th><th>Tuition (USD)</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="prog-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Leads ─────────────────────────────────────────────────── -->
+    <div class="page-content" id="page-leads">
+      <div class="section-header">
+        <div><div class="section-title">Leads / Enquiries</div><div class="section-subtitle">Manage student enquiries and applications</div></div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-outline" onclick="exportLeadsCSV()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+          <button class="btn btn-primary" onclick="openLeadModal()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Lead
+          </button>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-toolbar leads-filters">
+          <div class="search-input-wrap" style="min-width:180px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" type="text" placeholder="Search leads..." id="lead-search" oninput="renderLeads()" />
+          </div>
+          <select class="filter-select" id="lead-filter-status" onchange="renderLeads()">
+            <option value="">All Status</option>
+            <option>New</option><option>Contacted</option><option>In Progress</option><option>Converted</option><option>Lost</option>
+          </select>
+          <select class="filter-select" id="lead-filter-country" onchange="renderLeads()">
+            <option value="">All Countries</option>
+          </select>
+          <input type="date" class="date-input" id="lead-from" onchange="renderLeads()" title="From date" />
+          <input type="date" class="date-input" id="lead-to" onchange="renderLeads()" title="To date" />
+          <button class="btn btn-outline btn-sm" onclick="clearLeadFilters()">Reset</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr>
+              <th>Name</th><th>Email</th><th>Phone</th><th>Country Interest</th><th>Level</th><th>Date</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="lead-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Intakes ────────────────────────────────────────────────── -->
+    <div class="page-content" id="page-intakes">
+      <div class="section-header">
+        <div><div class="section-title">Intakes Calendar</div><div class="section-subtitle">View upcoming program intakes and deadlines</div></div>
+      </div>
+      <div id="intakes-content" class="table-card" style="padding:20px">
+        <p style="color:var(--text-secondary);text-align:center;padding:40px 0">Intake information is pulled from Programs. <span class="view-all-link" onclick="navigate('programs')">Manage Programs →</span></p>
+      </div>
+    </div>
+
+    <!-- ── Settings ──────────────────────────────────────────────── -->
+    <div class="page-content" id="page-settings">
+      <div class="section-header">
+        <div><div class="section-title">Settings</div><div class="section-subtitle">Configure dashboard preferences</div></div>
+      </div>
+      <div class="settings-card">
+        <h3>General</h3>
+        <div class="settings-row">
+          <div><div class="settings-row-label">WhatsApp Number</div><div class="settings-row-desc">Used for lead redirects and consultation CTAs</div></div>
+          <input class="form-control" style="width:180px" id="setting-wa" value="919748892883" />
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Company Name</div><div class="settings-row-desc">Displayed in exported CSV headers</div></div>
+          <input class="form-control" style="width:180px" id="setting-company" value="Abrovo" />
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3>Notifications</h3>
+        <div class="settings-row">
+          <div><div class="settings-row-label">New Lead Alerts</div><div class="settings-row-desc">Show toast when a new lead is added</div></div>
+          <label class="toggle"><input type="checkbox" checked id="setting-lead-alert"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Deadline Reminders</div><div class="settings-row-desc">Highlight programs with upcoming deadlines</div></div>
+          <label class="toggle"><input type="checkbox" id="setting-deadlines"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3>Data Management</h3>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Clear All Data</div><div class="settings-row-desc">Permanently delete all universities, programs, and leads</div></div>
+          <button class="btn btn-delete btn-sm" onclick="clearAllData()">Clear Data</button>
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-row-label">Load Sample Data</div><div class="settings-row-desc">Populate with demo universities, programs, and leads</div></div>
+          <button class="btn btn-success btn-sm" onclick="loadSampleData()">Load Samples</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- ─── University Modal ─────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-university" onclick="handleModalClick(event,'modal-university')">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="uni-modal-title">Add University</span>
+      <button class="modal-close" onclick="closeModal('modal-university')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="uni-edit-id" />
+      <div class="form-grid">
+        <div class="form-field span-2">
+          <label class="form-label">University Name *</label>
+          <input class="form-control" type="text" id="uni-name" placeholder="e.g. University of Melbourne" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Country *</label>
+          <input class="form-control" type="text" id="uni-country" placeholder="e.g. Australia" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">City</label>
+          <input class="form-control" type="text" id="uni-city" placeholder="e.g. Melbourne" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">World Ranking</label>
+          <input class="form-control" type="number" id="uni-ranking" placeholder="e.g. 33" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Acceptance Rate (%)</label>
+          <input class="form-control" type="number" id="uni-acceptance" placeholder="e.g. 70" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">University Type</label>
+          <select class="form-control" id="uni-type">
+            <option>Public</option><option>Private</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="uni-status">
+            <option>Active</option><option>Inactive</option>
+          </select>
+        </div>
+        <div class="form-field span-2">
+          <label class="form-label">Website URL</label>
+          <input class="form-control" type="url" id="uni-website" placeholder="https://..." />
+        </div>
+        <div class="form-field span-2">
+          <label class="form-label">Banner Image URL</label>
+          <input class="form-control" type="url" id="uni-banner" placeholder="https://..." />
+        </div>
+        <div class="form-field span-2">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="uni-desc" placeholder="Brief description of the university..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-university')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveUniversity()">Save University</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Program Modal ────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-program" onclick="handleModalClick(event,'modal-program')">
+  <div class="modal" style="max-width:760px">
+    <div class="modal-header">
+      <span class="modal-title" id="prog-modal-title">Add Program</span>
+      <button class="modal-close" onclick="closeModal('modal-program')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="prog-edit-id" />
+      <div class="form-grid">
+        <div class="form-field span-2">
+          <label class="form-label">Program Name *</label>
+          <input class="form-control" type="text" id="prog-name" placeholder="e.g. MSc Computer Science" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">University *</label>
+          <select class="form-control" id="prog-university"><option value="">Select University</option></select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Level</label>
+          <select class="form-control" id="prog-level">
+            <option>Bachelor's</option><option>Master's</option><option>PhD</option><option>Diploma</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Field of Study</label>
+          <input class="form-control" type="text" id="prog-field" placeholder="e.g. Computer Science" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Duration</label>
+          <input class="form-control" type="text" id="prog-duration" placeholder="e.g. 2 years" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Annual Tuition (USD)</label>
+          <input class="form-control" type="number" id="prog-tuition" placeholder="e.g. 28000" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Currency</label>
+          <select class="form-control" id="prog-currency">
+            <option>USD</option><option>GBP</option><option>AUD</option><option>CAD</option><option>EUR</option><option>INR</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Eligibility -->
+      <div class="form-section">
+        <div class="form-section-title">🎓 Eligibility</div>
+        <div class="form-grid cols-3">
+          <div class="form-field">
+            <label class="form-label">Min GPA</label>
+            <input class="form-control" type="number" step="0.1" id="prog-gpa" placeholder="e.g. 3.0" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">IELTS Min</label>
+            <input class="form-control" type="number" step="0.5" id="prog-ielts" placeholder="e.g. 6.5" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">TOEFL Min</label>
+            <input class="form-control" type="number" id="prog-toefl" placeholder="e.g. 90" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">Work Experience</label>
+            <select class="form-control" id="prog-workexp">
+              <option value="no">Not Required</option>
+              <option value="yes">Required</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Intakes -->
+      <div class="form-section">
+        <div class="form-section-title">🗓️ Intakes</div>
+        <div class="checkboxes-grid" id="intake-checkboxes"></div>
+        <div class="intake-deadline" id="intake-deadlines-container"></div>
+      </div>
+
+      <!-- Scholarships -->
+      <div class="form-section">
+        <div class="form-section-title">💰 Scholarships</div>
+        <div id="scholarships-list"></div>
+        <button class="btn-add-row" onclick="addScholarshipRow()">+ Add Scholarship</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-program')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProgram()">Save Program</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Lead Modal ───────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-lead" onclick="handleModalClick(event,'modal-lead')">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-header">
+      <span class="modal-title" id="lead-modal-title">Add Lead</span>
+      <button class="modal-close" onclick="closeModal('modal-lead')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="lead-edit-id" />
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Full Name *</label>
+          <input class="form-control" type="text" id="lead-name" placeholder="e.g. Rahul Sharma" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" id="lead-email" placeholder="email@example.com" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Phone *</label>
+          <input class="form-control" type="tel" id="lead-phone" placeholder="+91 98765 43210" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Country Interest</label>
+          <input class="form-control" type="text" id="lead-country" placeholder="e.g. UK, Canada" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Course Level</label>
+          <select class="form-control" id="lead-level">
+            <option>Bachelor's</option><option>Master's</option><option>PhD</option><option>Diploma</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="lead-status">
+            <option>New</option><option>Contacted</option><option>In Progress</option><option>Converted</option><option>Lost</option>
+          </select>
+        </div>
+        <div class="form-field span-2">
+          <label class="form-label">Notes</label>
+          <textarea class="form-control" id="lead-notes" placeholder="Any additional notes..." style="min-height:60px"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-lead')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Confirm Modal ────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-confirm" onclick="handleModalClick(event,'modal-confirm')">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <span class="modal-title">Confirm Delete</span>
+      <button class="modal-close" onclick="closeModal('modal-confirm')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message" style="color:var(--text-secondary);font-size:.95rem;line-height:1.6"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-delete" id="confirm-ok-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   DATA LAYER
+══════════════════════════════════════════════════════════════ */
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function load(key) { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } }
+function save(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+
+let universities = load('abrovo_universities');
+let programs     = load('abrovo_programs');
+let leads        = load('abrovo_leads');
+
+function saveAll() {
+  save('abrovo_universities', universities);
+  save('abrovo_programs', programs);
+  save('abrovo_leads', leads);
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+/* ══════════════════════════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════════════════════════ */
+function doLogin() {
+  const u = document.getElementById('login-username').value.trim();
+  const p = document.getElementById('login-password').value;
+  const err = document.getElementById('login-error');
+  if (u === 'admin' && p === 'globalpath2024') {
+    err.classList.remove('show');
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    refreshAll();
+  } else {
+    err.classList.add('show');
+    document.getElementById('login-password').value = '';
+  }
+}
+document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('login-username').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogout() {
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════════════ */
+const pageNames = { overview:'Overview', universities:'Universities', programs:'Programs', leads:'Leads / Enquiries', intakes:'Intakes Calendar', settings:'Settings' };
+
+function navigate(page, linkEl) {
+  // close mobile sidebar
+  closeSidebar();
+  // deactivate all
+  document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  // activate
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  const navLink = linkEl || document.querySelector(`.nav-link[data-page="${page}"]`);
+  if (navLink) navLink.classList.add('active');
+  document.getElementById('page-title').textContent = pageNames[page] || page;
+  // page-specific refresh
+  if (page === 'overview') renderOverview();
+  if (page === 'universities') renderUniversities();
+  if (page === 'programs') { populateUniversityDropdowns(); renderPrograms(); }
+  if (page === 'leads') renderLeads();
+  if (page === 'intakes') renderIntakes();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SIDEBAR / HAMBURGER
+══════════════════════════════════════════════════════════════ */
+function toggleSidebar() {
+  const s = document.getElementById('sidebar');
+  const o = document.getElementById('sidebar-overlay');
+  s.classList.toggle('open');
+  o.classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════════════════ */
+function toast(msg, type='success') {
+  const icons = { success:'✅', error:'❌', info:'ℹ️' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span class="toast-icon">${icons[type]}</span> ${msg}`;
+  document.getElementById('toast-container').appendChild(t);
+  setTimeout(() => { t.style.animation = 'toastOut .3s ease forwards'; setTimeout(() => t.remove(), 300); }, 3200);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MODAL HELPERS
+══════════════════════════════════════════════════════════════ */
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function handleModalClick(e, id) { if (e.target.id === id) closeModal(id); }
+
+function confirmDelete(msg, onOk) {
+  document.getElementById('confirm-message').textContent = msg;
+  const btn = document.getElementById('confirm-ok-btn');
+  btn.onclick = () => { onOk(); closeModal('modal-confirm'); };
+  openModal('modal-confirm');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   OVERVIEW
+══════════════════════════════════════════════════════════════ */
+function renderOverview() {
+  const now = new Date();
+  const leadsThisMonth = leads.filter(l => {
+    const d = new Date(l.date);
+    return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear();
+  });
+  const pending = leads.filter(l => l.status === 'In Progress');
+  document.getElementById('stat-universities').textContent = universities.length;
+  document.getElementById('stat-programs').textContent = programs.length;
+  document.getElementById('stat-leads-month').textContent = leadsThisMonth.length;
+  document.getElementById('stat-pending').textContent = pending.length;
+  updateNavCounts();
+
+  const recent = [...leads].sort((a,b) => new Date(b.date)-new Date(a.date)).slice(0,6);
+  const tbody = document.getElementById('recent-leads-tbody');
+  if (!recent.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="table-empty"><div class="empty-icon">📭</div><p>No leads yet.</p></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = recent.map(l => `
+    <tr>
+      <td><strong>${esc(l.name)}</strong></td>
+      <td>${esc(l.phone)}</td>
+      <td>${esc(l.country)}</td>
+      <td>${formatDate(l.date)}</td>
+      <td>${statusBadge(l.status)}</td>
+    </tr>`).join('');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   UNIVERSITIES
+══════════════════════════════════════════════════════════════ */
+function openUniversityModal(id) {
+  clearForm('uni');
+  if (id) {
+    const u = universities.find(x => x.id === id);
+    if (!u) return;
+    document.getElementById('uni-edit-id').value = u.id;
+    document.getElementById('uni-modal-title').textContent = 'Edit University';
+    document.getElementById('uni-name').value = u.name || '';
+    document.getElementById('uni-country').value = u.country || '';
+    document.getElementById('uni-city').value = u.city || '';
+    document.getElementById('uni-ranking').value = u.ranking || '';
+    document.getElementById('uni-acceptance').value = u.acceptanceRate || '';
+    document.getElementById('uni-type').value = u.type || 'Public';
+    document.getElementById('uni-status').value = u.status || 'Active';
+    document.getElementById('uni-website').value = u.website || '';
+    document.getElementById('uni-banner').value = u.banner || '';
+    document.getElementById('uni-desc').value = u.description || '';
+  } else {
+    document.getElementById('uni-modal-title').textContent = 'Add University';
+  }
+  openModal('modal-university');
+}
+
+function saveUniversity() {
+  const name = document.getElementById('uni-name').value.trim();
+  const country = document.getElementById('uni-country').value.trim();
+  if (!name) { toast('University name is required', 'error'); return; }
+  const editId = document.getElementById('uni-edit-id').value;
+  const data = {
+    id: editId || uid(), name, country,
+    city: v('uni-city'), ranking: v('uni-ranking'), acceptanceRate: v('uni-acceptance'),
+    type: v('uni-type'), status: v('uni-status'), website: v('uni-website'),
+    banner: v('uni-banner'), description: v('uni-desc'),
+  };
+  if (editId) {
+    universities = universities.map(u => u.id === editId ? data : u);
+    toast('University updated ✓');
+  } else {
+    universities.push(data);
+    toast('University added successfully ✓');
+  }
+  saveAll(); closeModal('modal-university');
+  renderUniversities(); renderOverview(); updateNavCounts(); populateUniversityDropdowns();
+}
+
+function deleteUniversity(id) {
+  const u = universities.find(x => x.id === id);
+  confirmDelete(`Delete "${u?.name}"? Programs linked to this university will also be removed.`, () => {
+    universities = universities.filter(x => x.id !== id);
+    programs = programs.filter(p => p.universityId !== id);
+    saveAll(); renderUniversities(); renderOverview(); updateNavCounts(); populateUniversityDropdowns();
+    toast('University deleted', 'info');
+  });
+}
+
+function renderUniversities() {
+  const q = (document.getElementById('uni-search')?.value||'').toLowerCase();
+  const fc = document.getElementById('uni-filter-country')?.value||'';
+  const fs = document.getElementById('uni-filter-status')?.value||'';
+
+  // populate country filter
+  const cSel = document.getElementById('uni-filter-country');
+  const existing = cSel.innerHTML;
+  const countries = [...new Set(universities.map(u=>u.country).filter(Boolean))].sort();
+  cSel.innerHTML = '<option value="">All Countries</option>' + countries.map(c=>`<option${fc===c?' selected':''}>${c}</option>`).join('');
+
+  let filtered = universities;
+  if (q) filtered = filtered.filter(u => u.name.toLowerCase().includes(q) || (u.country||'').toLowerCase().includes(q));
+  if (fc) filtered = filtered.filter(u => u.country === fc);
+  if (fs) filtered = filtered.filter(u => u.status === fs);
+
+  const tbody = document.getElementById('uni-tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="8" class="table-empty"><div class="empty-icon">🏫</div><p>No universities found. Add one above!</p></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(u => {
+    const progCount = programs.filter(p => p.universityId === u.id).length;
+    return `<tr>
+      <td><strong>${esc(u.name)}</strong></td>
+      <td>${esc(u.country)}</td>
+      <td>${esc(u.city)}</td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-weight:600">${progCount}</span></td>
+      <td>${u.type||'—'}</td>
+      <td>${u.ranking ? '#'+u.ranking : '—'}</td>
+      <td>${u.status==='Active'?'<span class="badge badge-active">Active</span>':'<span class="badge badge-inactive">Inactive</span>'}</td>
+      <td><div class="actions-cell">
+        <button class="btn btn-edit btn-sm" onclick="openUniversityModal('${u.id}')">✏️ Edit</button>
+        <button class="btn btn-delete btn-sm" onclick="deleteUniversity('${u.id}')">🗑️ Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PROGRAMS
+══════════════════════════════════════════════════════════════ */
+function buildIntakeCheckboxes() {
+  const container = document.getElementById('intake-checkboxes');
+  container.innerHTML = MONTHS.map((m,i) => `
+    <div class="checkbox-item">
+      <input type="checkbox" id="intake-${m}" onchange="updateDeadlineFields()" />
+      <label for="intake-${m}">${m}</label>
+    </div>`).join('');
+}
+
+function updateDeadlineFields() {
+  const container = document.getElementById('intake-deadlines-container');
+  const checked = MONTHS.filter(m => document.getElementById('intake-'+m)?.checked);
+  if (!checked.length) { container.innerHTML = ''; return; }
+  container.innerHTML = '<div style="font-size:.8rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">Application Deadlines</div>' +
+    checked.map(m => `
+      <div class="intake-deadline-row">
+        <label>${m}</label>
+        <input class="form-control" type="date" id="deadline-${m}" style="flex:1;padding:7px 10px" />
+      </div>`).join('');
+}
+
+function addScholarshipRow(name='', amount='', eligibility='') {
+  const list = document.getElementById('scholarships-list');
+  const id = uid();
+  const row = document.createElement('div');
+  row.className = 'scholarship-row'; row.id = 'sc-'+id;
+  row.innerHTML = `
+    <input class="form-control" type="text" placeholder="Scholarship name" value="${esc(name)}" style="padding:7px 10px" />
+    <input class="form-control" type="text" placeholder="Amount (e.g. $5,000)" value="${esc(amount)}" style="padding:7px 10px" />
+    <input class="form-control" type="text" placeholder="Eligibility criteria" value="${esc(eligibility)}" style="padding:7px 10px" />
+    <button class="btn-remove-row" onclick="document.getElementById('sc-${id}').remove()">✕</button>`;
+  list.appendChild(row);
+}
+
+function openProgramModal(id) {
+  clearForm('prog');
+  buildIntakeCheckboxes();
+  document.getElementById('scholarships-list').innerHTML = '';
+  document.getElementById('intake-deadlines-container').innerHTML = '';
+
+  if (id) {
+    const p = programs.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('prog-edit-id').value = p.id;
+    document.getElementById('prog-modal-title').textContent = 'Edit Program';
+    document.getElementById('prog-name').value = p.name||'';
+    document.getElementById('prog-university').value = p.universityId||'';
+    document.getElementById('prog-level').value = p.level||"Bachelor's";
+    document.getElementById('prog-field').value = p.field||'';
+    document.getElementById('prog-duration').value = p.duration||'';
+    document.getElementById('prog-tuition').value = p.tuition||'';
+    document.getElementById('prog-currency').value = p.currency||'USD';
+    document.getElementById('prog-gpa').value = p.eligibility?.gpa||'';
+    document.getElementById('prog-ielts').value = p.eligibility?.ielts||'';
+    document.getElementById('prog-toefl').value = p.eligibility?.toefl||'';
+    document.getElementById('prog-workexp').value = p.eligibility?.workExp||'no';
+    // intakes
+    if (p.intakes) {
+      p.intakes.forEach(intake => {
+        const cb = document.getElementById('intake-'+intake.month);
+        if (cb) cb.checked = true;
+      });
+      updateDeadlineFields();
+      setTimeout(() => {
+        p.intakes.forEach(intake => {
+          const df = document.getElementById('deadline-'+intake.month);
+          if (df) df.value = intake.deadline||'';
+        });
+      }, 50);
+    }
+    // scholarships
+    if (p.scholarships) p.scholarships.forEach(s => addScholarshipRow(s.name, s.amount, s.eligibility));
+  } else {
+    document.getElementById('prog-modal-title').textContent = 'Add Program';
+  }
+  openModal('modal-program');
+}
+
+function saveProgram() {
+  const name = document.getElementById('prog-name').value.trim();
+  const uniId = document.getElementById('prog-university').value;
+  if (!name) { toast('Program name is required', 'error'); return; }
+  if (!uniId) { toast('Please select a university', 'error'); return; }
+
+  const checkedMonths = MONTHS.filter(m => document.getElementById('intake-'+m)?.checked);
+  const intakes = checkedMonths.map(m => ({
+    month: m,
+    deadline: document.getElementById('deadline-'+m)?.value||''
+  }));
+
+  const scRows = document.querySelectorAll('#scholarships-list .scholarship-row');
+  const scholarships = [...scRows].map(row => {
+    const inputs = row.querySelectorAll('input');
+    return { name: inputs[0].value, amount: inputs[1].value, eligibility: inputs[2].value };
+  }).filter(s => s.name);
+
+  const editId = document.getElementById('prog-edit-id').value;
+  const data = {
+    id: editId || uid(), name, universityId: uniId,
+    level: v('prog-level'), field: v('prog-field'), duration: v('prog-duration'),
+    tuition: v('prog-tuition'), currency: v('prog-currency'),
+    eligibility: {
+      gpa: v('prog-gpa'), ielts: v('prog-ielts'), toefl: v('prog-toefl'), workExp: v('prog-workexp')
+    },
+    intakes, scholarships
+  };
+  if (editId) {
+    programs = programs.map(p => p.id === editId ? data : p);
+    toast('Program updated ✓');
+  } else {
+    programs.push(data);
+    toast('Program added successfully ✓');
+  }
+  saveAll(); closeModal('modal-program');
+  renderPrograms(); renderOverview(); updateNavCounts();
+}
+
+function deleteProgram(id) {
+  const p = programs.find(x => x.id === id);
+  confirmDelete(`Delete program "${p?.name}"? This action cannot be undone.`, () => {
+    programs = programs.filter(x => x.id !== id);
+    saveAll(); renderPrograms(); renderOverview(); updateNavCounts();
+    toast('Program deleted', 'info');
+  });
+}
+
+function renderPrograms() {
+  const q = (document.getElementById('prog-search')?.value||'').toLowerCase();
+  const fl = document.getElementById('prog-filter-level')?.value||'';
+  const fu = document.getElementById('prog-filter-uni')?.value||'';
+
+  // populate uni filter
+  const sel = document.getElementById('prog-filter-uni');
+  const uniOptions = universities.map(u => `<option value="${u.id}"${fu===u.id?' selected':''}>${esc(u.name)}</option>`).join('');
+  sel.innerHTML = '<option value="">All Universities</option>' + uniOptions;
+
+  let filtered = programs;
+  if (q) filtered = filtered.filter(p => p.name.toLowerCase().includes(q) || (p.field||'').toLowerCase().includes(q));
+  if (fl) filtered = filtered.filter(p => p.level === fl);
+  if (fu) filtered = filtered.filter(p => p.universityId === fu);
+
+  const tbody = document.getElementById('prog-tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="table-empty"><div class="empty-icon">📚</div><p>No programs found. Add one above!</p></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(p => {
+    const uni = universities.find(u => u.id === p.universityId);
+    return `<tr>
+      <td><strong>${esc(p.name)}</strong></td>
+      <td>${esc(uni?.name||'—')}</td>
+      <td><span class="level-tag">${esc(p.level)}</span></td>
+      <td>${esc(p.field||'—')}</td>
+      <td>${esc(p.duration||'—')}</td>
+      <td><span style="font-family:'JetBrains Mono',monospace">${p.tuition ? '$'+Number(p.tuition).toLocaleString() : '—'}</span></td>
+      <td><div class="actions-cell">
+        <button class="btn btn-edit btn-sm" onclick="openProgramModal('${p.id}')">✏️ Edit</button>
+        <button class="btn btn-delete btn-sm" onclick="deleteProgram('${p.id}')">🗑️ Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LEADS
+══════════════════════════════════════════════════════════════ */
+function openLeadModal(id) {
+  clearForm('lead');
+  if (id) {
+    const l = leads.find(x => x.id === id);
+    if (!l) return;
+    document.getElementById('lead-edit-id').value = l.id;
+    document.getElementById('lead-modal-title').textContent = 'Edit Lead';
+    document.getElementById('lead-name').value = l.name||'';
+    document.getElementById('lead-email').value = l.email||'';
+    document.getElementById('lead-phone').value = l.phone||'';
+    document.getElementById('lead-country').value = l.country||'';
+    document.getElementById('lead-level').value = l.level||"Bachelor's";
+    document.getElementById('lead-status').value = l.status||'New';
+    document.getElementById('lead-notes').value = l.notes||'';
+  } else {
+    document.getElementById('lead-modal-title').textContent = 'Add Lead';
+  }
+  openModal('modal-lead');
+}
+
+function saveLead() {
+  const name = document.getElementById('lead-name').value.trim();
+  const phone = document.getElementById('lead-phone').value.trim();
+  if (!name) { toast('Name is required', 'error'); return; }
+  const editId = document.getElementById('lead-edit-id').value;
+  const data = {
+    id: editId || uid(), name, phone,
+    email: v('lead-email'), country: v('lead-country'), level: v('lead-level'),
+    status: v('lead-status'), notes: v('lead-notes'),
+    date: editId ? (leads.find(l=>l.id===editId)?.date || new Date().toISOString()) : new Date().toISOString()
+  };
+  if (editId) {
+    leads = leads.map(l => l.id === editId ? data : l);
+    toast('Lead updated ✓');
+  } else {
+    leads.push(data);
+    toast('New lead added ✓');
+  }
+  saveAll(); closeModal('modal-lead');
+  renderLeads(); renderOverview(); updateNavCounts();
+}
+
+function deleteLead(id) {
+  const l = leads.find(x => x.id === id);
+  confirmDelete(`Delete lead "${l?.name}"?`, () => {
+    leads = leads.filter(x => x.id !== id);
+    saveAll(); renderLeads(); renderOverview(); updateNavCounts();
+    toast('Lead deleted', 'info');
+  });
+}
+
+function updateLeadStatus(id, status) {
+  leads = leads.map(l => l.id === id ? { ...l, status } : l);
+  saveAll(); renderOverview(); updateNavCounts();
+}
+
+function renderLeads() {
+  const q = (document.getElementById('lead-search')?.value||'').toLowerCase();
+  const fs = document.getElementById('lead-filter-status')?.value||'';
+  const fc = document.getElementById('lead-filter-country')?.value||'';
+  const from = document.getElementById('lead-from')?.value;
+  const to = document.getElementById('lead-to')?.value;
+
+  // populate country filter
+  const cSel = document.getElementById('lead-filter-country');
+  const countries = [...new Set(leads.map(l=>l.country).filter(Boolean))].sort();
+  cSel.innerHTML = '<option value="">All Countries</option>' + countries.map(c=>`<option${fc===c?' selected':''}>${c}</option>`).join('');
+
+  let filtered = leads;
+  if (q) filtered = filtered.filter(l => l.name.toLowerCase().includes(q) || (l.email||'').toLowerCase().includes(q) || (l.phone||'').includes(q));
+  if (fs) filtered = filtered.filter(l => l.status === fs);
+  if (fc) filtered = filtered.filter(l => l.country === fc);
+  if (from) filtered = filtered.filter(l => new Date(l.date) >= new Date(from));
+  if (to) filtered = filtered.filter(l => new Date(l.date) <= new Date(to+'T23:59:59'));
+  filtered = [...filtered].sort((a,b) => new Date(b.date)-new Date(a.date));
+
+  const tbody = document.getElementById('lead-tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="8" class="table-empty"><div class="empty-icon">👥</div><p>No leads match your filters.</p></td></tr>`;
+    return;
+  }
+  const statusColors = { 'New':'badge-new','Contacted':'badge-contacted','In Progress':'badge-inprogress','Converted':'badge-converted','Lost':'badge-lost' };
+  tbody.innerHTML = filtered.map(l => `<tr>
+    <td><strong>${esc(l.name)}</strong></td>
+    <td><a href="mailto:${esc(l.email)}" style="color:var(--blue)">${esc(l.email||'—')}</a></td>
+    <td>${esc(l.phone)}</td>
+    <td>${esc(l.country||'—')}</td>
+    <td><span class="level-tag">${esc(l.level)}</span></td>
+    <td>${formatDate(l.date)}</td>
+    <td>
+      <select class="status-select" onchange="updateLeadStatus('${l.id}',this.value)" style="color:${statusSelectColor(l.status)}">
+        ${['New','Contacted','In Progress','Converted','Lost'].map(s=>`<option${s===l.status?' selected':''}>${s}</option>`).join('')}
+      </select>
+    </td>
+    <td><div class="actions-cell">
+      <button class="btn btn-edit btn-sm" onclick="openLeadModal('${l.id}')">✏️</button>
+      <button class="btn btn-delete btn-sm" onclick="deleteLead('${l.id}')">🗑️</button>
+    </div></td>
+  </tr>`).join('');
+}
+
+function clearLeadFilters() {
+  document.getElementById('lead-search').value='';
+  document.getElementById('lead-filter-status').value='';
+  document.getElementById('lead-filter-country').value='';
+  document.getElementById('lead-from').value='';
+  document.getElementById('lead-to').value='';
+  renderLeads();
+}
+
+function statusSelectColor(s) {
+  const m = {'New':'#1E40AF','Contacted':'#3730A3','In Progress':'#92400E','Converted':'#065F46','Lost':'#991B1B'};
+  return m[s]||'inherit';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INTAKES
+══════════════════════════════════════════════════════════════ */
+function renderIntakes() {
+  const container = document.getElementById('intakes-content');
+  const allIntakes = [];
+  programs.forEach(p => {
+    if (p.intakes && p.intakes.length) {
+      const uni = universities.find(u=>u.id===p.universityId);
+      p.intakes.forEach(i => allIntakes.push({
+        month: i.month, deadline: i.deadline,
+        program: p.name, university: uni?.name||'Unknown', level: p.level
+      }));
+    }
+  });
+  if (!allIntakes.length) {
+    container.innerHTML = `<p style="color:var(--text-secondary);text-align:center;padding:40px 0">No intake data yet. Add intakes in Programs. <span class="view-all-link" onclick="navigate('programs')">Manage Programs →</span></p>`;
+    return;
+  }
+  const grouped = {};
+  MONTHS.forEach(m => { grouped[m] = allIntakes.filter(i=>i.month===m); });
+  container.innerHTML = `<div style="overflow-x:auto"><table>
+    <thead><tr><th>Month</th><th>Program</th><th>University</th><th>Level</th><th>Deadline</th></tr></thead>
+    <tbody>${MONTHS.flatMap(m => grouped[m].map((i,idx) => `<tr>
+      ${idx===0 ? `<td rowspan="${grouped[m].length}" style="font-weight:700;color:var(--blue);vertical-align:top;padding-top:16px">${m}</td>` : ''}
+      <td>${esc(i.program)}</td>
+      <td>${esc(i.university)}</td>
+      <td><span class="level-tag">${esc(i.level)}</span></td>
+      <td>${i.deadline ? formatDate(i.deadline) : '—'}</td>
+    </tr>`)).join('')}</tbody>
+  </table></div>`;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EXPORT CSV
+══════════════════════════════════════════════════════════════ */
+function exportLeadsCSV() {
+  if (!leads.length) { toast('No leads to export', 'info'); return; }
+  const headers = ['Name','Email','Phone','Country Interest','Course Level','Date','Status','Notes'];
+  const rows = leads.map(l => [l.name,l.email,l.phone,l.country,l.level,formatDate(l.date),l.status,l.notes||''].map(f => `"${(f||'').replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `abrovo_leads_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); toast('Leads exported as CSV ✓');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SETTINGS
+══════════════════════════════════════════════════════════════ */
+function saveSettings() { toast('Settings saved ✓'); }
+
+function clearAllData() {
+  confirmDelete('This will permanently delete ALL universities, programs, and leads. Are you sure?', () => {
+    universities = []; programs = []; leads = []; saveAll();
+    refreshAll(); toast('All data cleared', 'info');
+  });
+}
+
+function loadSampleData() {
+  const uIds = [uid(), uid(), uid(), uid()];
+  universities = [
+    {id:uIds[0],name:'University of Toronto',country:'Canada',city:'Toronto',ranking:18,acceptanceRate:43,type:'Public',status:'Active',website:'https://utoronto.ca',description:'One of the world\'s leading research universities.'},
+    {id:uIds[1],name:'University College London',country:'UK',city:'London',ranking:9,acceptanceRate:55,type:'Public',status:'Active',website:'https://ucl.ac.uk',description:'A leading multidisciplinary research university.'},
+    {id:uIds[2],name:'University of Melbourne',country:'Australia',city:'Melbourne',ranking:33,acceptanceRate:70,type:'Public',status:'Active',website:'https://unimelb.edu.au',description:'Australia\'s second oldest university.'},
+    {id:uIds[3],name:'Northeastern University',country:'USA',city:'Boston',ranking:185,acceptanceRate:18,type:'Private',status:'Active',website:'https://northeastern.edu',description:'A global, experiential research university.'},
+  ];
+  programs = [
+    {id:uid(),universityId:uIds[0],name:'MSc Computer Science',level:"Master's",field:'Computer Science',duration:'2 years',tuition:45000,currency:'CAD',eligibility:{gpa:'3.0',ielts:'7.0',toefl:'100',workExp:'no'},intakes:[{month:'Sep',deadline:'2024-01-31'},{month:'Jan',deadline:'2024-08-31'}],scholarships:[{name:'OSAP Grant',amount:'$5,000',eligibility:'Canadian residents'}]},
+    {id:uid(),universityId:uIds[1],name:'LLM International Law',level:"Master's",field:'Law',duration:'1 year',tuition:28000,currency:'GBP',eligibility:{gpa:'3.5',ielts:'7.5',toefl:'109',workExp:'no'},intakes:[{month:'Sep',deadline:'2024-03-31'}],scholarships:[]},
+    {id:uid(),universityId:uIds[2],name:'Bachelor of Commerce',level:"Bachelor's",field:'Business',duration:'3 years',tuition:38000,currency:'AUD',eligibility:{gpa:'3.0',ielts:'6.5',toefl:'79',workExp:'no'},intakes:[{month:'Feb',deadline:'2023-10-31'},{month:'Jul',deadline:'2024-03-31'}],scholarships:[{name:'Melbourne International Scholarship',amount:'AUD 10,000',eligibility:'International students with GPA 3.8+'}]},
+    {id:uid(),universityId:uIds[3],name:'MS Data Science',level:"Master's",field:'Data Science',duration:'2 years',tuition:55000,currency:'USD',eligibility:{gpa:'3.3',ielts:'7.0',toefl:'100',workExp:'yes'},intakes:[{month:'Sep',deadline:'2024-01-15'},{month:'Jan',deadline:'2024-09-15'}],scholarships:[]},
+  ];
+  leads = [
+    {id:uid(),name:'Priya Mehta',email:'priya@email.com',phone:'+91 98765 43210',country:'Canada',level:"Master's",status:'New',date:new Date().toISOString(),notes:'Interested in CS programs'},
+    {id:uid(),name:'Arjun Singh',email:'arjun@email.com',phone:'+91 87654 32109',country:'UK',level:"Master's",status:'Contacted',date:new Date(Date.now()-2*864e5).toISOString(),notes:'Wants law programs'},
+    {id:uid(),name:'Sneha Kapoor',email:'sneha@email.com',phone:'+91 76543 21098',country:'Australia',level:"Bachelor's",status:'In Progress',date:new Date(Date.now()-5*864e5).toISOString(),notes:'Commerce background'},
+    {id:uid(),name:'Rahul Verma',email:'rahul@email.com',phone:'+91 65432 10987',country:'USA',level:"Master's",status:'Converted',date:new Date(Date.now()-10*864e5).toISOString(),notes:'Admitted to Northeastern'},
+    {id:uid(),name:'Ananya Das',email:'ananya@email.com',phone:'+91 54321 09876',country:'Germany',level:"PhD",status:'New',date:new Date(Date.now()-1*864e5).toISOString(),notes:'Research in AI'},
+  ];
+  saveAll(); refreshAll(); toast('Sample data loaded successfully ✓');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════════════════════ */
+function v(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+function esc(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function formatDate(d) { if (!d) return '—'; try { return new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); } catch { return d; } }
+function statusBadge(s) {
+  const m = {'New':'badge-new','Contacted':'badge-contacted','In Progress':'badge-inprogress','Converted':'badge-converted','Lost':'badge-lost'};
+  return `<span class="badge ${m[s]||'badge-new'}">${esc(s)}</span>`;
+}
+function clearForm(prefix) {
+  document.querySelectorAll(`[id^="${prefix}-"]`).forEach(el => {
+    if (el.type==='checkbox') el.checked=false;
+    else if (el.tagName==='SELECT') el.selectedIndex=0;
+    else el.value='';
+  });
+}
+function updateNavCounts() {
+  document.getElementById('nav-count-universities').textContent = universities.length;
+  document.getElementById('nav-count-programs').textContent = programs.length;
+  document.getElementById('nav-count-leads').textContent = leads.length;
+}
+function populateUniversityDropdowns() {
+  ['prog-university'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">Select University</option>' + universities.map(u=>`<option value="${u.id}"${cur===u.id?' selected':''}>${esc(u.name)}</option>`).join('');
+  });
+}
+function refreshAll() {
+  updateNavCounts();
+  renderOverview();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  buildIntakeCheckboxes();
+  updateNavCounts();
+});
+</script>
+</body>
+</html>
