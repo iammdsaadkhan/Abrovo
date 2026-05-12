@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destinations | Abrovo — Study Abroad Counselling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================
+       CORE CSS (Imported from index.html)
+    ========================================= */
+    :root {
+      --bg-dark: #0A0F1E; --bg-dark-2: #0D1428; --bg-white: #FFFFFF;
+      --accent: #2563EB; --accent-hover: #1D4ED8; --accent-light: rgba(37, 99, 235, 0.12);
+      --text-primary: #0F172A; --text-secondary: #64748B; --border: #E2E8F0;
+      --success: #10B981; --card-bg: #F8FAFC; --glass: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.13); --nav-height: 72px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif; --font-mono: 'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); color: var(--text-primary); background: var(--bg-white); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; } img { display: block; max-width: 100%; } ul { list-style: none; }
+
+    /* Buttons */
+    .btn-primary, .btn-secondary, .btn-cta, .btn-wa { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-weight: 600; border-radius: 50px; transition: all 0.25s ease; cursor: pointer; white-space: nowrap; border: none; }
+    .btn-primary { padding: 14px 28px; background: var(--accent); color: #fff; box-shadow: 0 4px 20px rgba(37,99,235,0.4); }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,99,235,0.5); }
+    .btn-secondary { padding: 14px 28px; background: transparent; color: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.2); }
+    .btn-secondary:hover { background: var(--glass); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+    
+    /* Navbar, Footer, Mobile Menu, Modals (Truncated for space, assume same as index.html base) */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height); display: flex; align-items: center; padding: 0 5%; transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease; background: var(--bg-dark); }
+    .navbar.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.06); }
+    .navbar.scrolled .nav-link { color: var(--text-primary); } .navbar.scrolled .logo-text { color: var(--text-primary); } .navbar.scrolled .logo-globe path { stroke: var(--text-primary); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1280px; margin: 0 auto; }
+    .logo { display: flex; align-items: center; gap: 10px; } .logo-globe { width: 32px; height: 32px; } .logo-globe path, .logo-globe circle { stroke: #fff; transition: stroke 0.4s ease; } .logo-text { font-family: var(--font-display); font-size: 1.5rem; color: #fff; } .logo-dot { color: var(--accent); }
+    .nav-links { display: flex; gap: 2px; } .nav-link { font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.85); padding: 8px 14px; border-radius: 8px; transition: color 0.2s, background 0.2s; } .nav-link:hover { color: var(--accent); background: var(--accent-light); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; } .btn-cta { padding: 9px 20px; background: var(--accent); color: #fff; font-size: 0.84rem; } .btn-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border-radius: 8px; } .hamburger span { width: 24px; height: 2px; background: #fff; transition: all 0.35s ease; } .navbar.scrolled .hamburger span { background: var(--text-primary); }
+
+    /* =========================================
+       DESTINATIONS PAGE SPECIFIC CSS
+    ========================================= */
+    .page-hero { position: relative; background: var(--bg-dark); padding: calc(var(--nav-height) + 80px) 5% 100px; text-align: center; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(37,99,235,0.15) 0%, transparent 80%); pointer-events: none; }
+    .page-hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+    .page-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); color: #fff; margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.02em; }
+    .page-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 40px; }
+
+    /* Detail Grid */
+    .dest-detail-section { padding: 80px 5%; background: var(--card-bg); }
+    .dest-detail-container { max-width: 1200px; margin: 0 auto; }
+    .country-block { background: #fff; border: 1px solid var(--border); border-radius: 24px; padding: 48px; margin-bottom: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.02); transition: transform 0.3s ease; }
+    .country-block:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+    .country-block:nth-child(even) { grid-template-columns: 1fr 1fr; direction: rtl; }
+    .country-block:nth-child(even) > * { direction: ltr; }
+    
+    .cb-visual { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; background: var(--bg-dark-2); display: flex; align-items: center; justify-content: center; }
+    .cb-flag { font-size: 8rem; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); transition: transform 0.5s ease; }
+    .country-block:hover .cb-flag { transform: scale(1.1); }
+    
+    .cb-content h2 { font-family: var(--font-display); font-size: 2.2rem; color: var(--text-primary); margin-bottom: 16px; }
+    .cb-desc { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+    
+    .cb-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    .cb-stat-item { background: var(--card-bg); padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
+    .cb-stat-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; letter-spacing: 0.05em; }
+    .cb-stat-value { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+
+    .cb-perks { list-style: none; margin-bottom: 32px; }
+    .cb-perks li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 12px; }
+    .cb-perks li::before { content: '✓'; color: var(--success); font-weight: bold; background: rgba(16,185,129,0.1); width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
+
+    /* Final CTA */
+    .final-cta { background: var(--bg-dark); padding: 100px 5%; text-align: center; position: relative; overflow: hidden; }
+    .final-cta h2 { font-family: var(--font-display); font-size: 2.5rem; color: #fff; margin-bottom: 16px; }
+    .final-cta p { font-size: 1.1rem; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 600px; margin-inline: auto; }
+
+    @media (max-width: 900px) {
+      .country-block, .country-block:nth-child(even) { grid-template-columns: 1fr; direction: ltr; padding: 32px; gap: 32px; }
+      .cb-visual { aspect-ratio: 16/9; }
+    }
+    @media (max-width: 600px) {
+      .cb-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Abrovo Home">
+        <svg class="logo-globe" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="13.5" stroke-width="1.4"/>
+          <ellipse cx="16" cy="16" rx="6" ry="13.5" stroke-width="1.4"/>
+          <path d="M2.5 11h27M2.5 21h27" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">Abrovo<span class="logo-dot">.</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link" style="color:var(--accent);">Destinations</a></li>
+        <li><a href="universities.html" class="nav-link">Universities</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="stories.html" class="nav-link">Success Stories</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="btn-cta" data-consult>Free Consultation →</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="page-hero-content fade-up">
+      <h1 class="page-title">Choose Your Global Destination</h1>
+      <p class="page-subtitle">Explore top countries for higher education, scholarships, visas, and unparalleled career opportunities. Your global journey starts here.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn-primary" data-consult>Book Free Consultation</button>
+        <a href="universities.html" class="btn-secondary">Explore Universities</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="dest-detail-section">
+    <div class="dest-detail-container">
+
+      <div class="country-block fade-up">
+        <div class="cb-visual" style="background: linear-gradient(135deg, #1e3a5f 0%, #0a1628 100%);">
+          <div class="cb-flag">🇺🇸</div>
+        </div>
+        <div class="cb-content">
+          <h2>United States</h2>
+          <p class="cb-desc">Home to the Ivy League and Silicon Valley, the US offers unmatched academic flexibility, cutting-edge research opportunities, and vibrant campus life.</p>
+          <div class="cb-stats">
+            <div class="cb-stat-item"><div class="cb-stat-label">Avg. Tuition</div><div class="cb-stat-value">$25k - $55k/yr</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Intakes</div><div class="cb-stat-value">August, January</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Post-Study Visa</div><div class="cb-stat-value">Up to 3 Years (STEM)</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Programs</div><div class="cb-stat-value">CS, Business, Eng.</div></div>
+          </div>
+          <ul class="cb-perks">
+            <li>World's largest international student population</li>
+            <li>Generous merit-based scholarships and assistantships</li>
+            <li>OPT and CPT pathways for professional experience</li>
+          </ul>
+          <a href="universities.html" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Explore US Universities →</a>
+        </div>
+      </div>
+
+      <div class="country-block fade-up">
+        <div class="cb-visual" style="background: linear-gradient(135deg, #2b1035 0%, #150a1e 100%);">
+          <div class="cb-flag">🇬🇧</div>
+        </div>
+        <div class="cb-content">
+          <h2>United Kingdom</h2>
+          <p class="cb-desc">Experience centuries of academic excellence with shorter, intensive programs. The UK is perfect for students looking to fast-track their careers.</p>
+          <div class="cb-stats">
+            <div class="cb-stat-item"><div class="cb-stat-label">Avg. Tuition</div><div class="cb-stat-value">£15k - £35k/yr</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Intakes</div><div class="cb-stat-value">September, January</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Post-Study Visa</div><div class="cb-stat-value">2 Years (Graduate Route)</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Programs</div><div class="cb-stat-value">Law, Finance, Arts</div></div>
+          </div>
+          <ul class="cb-perks">
+            <li>1-year Master's programs saving time and money</li>
+            <li>Russell Group universities offering elite education</li>
+            <li>Free healthcare via the NHS surcharge</li>
+          </ul>
+          <a href="universities.html" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Explore UK Universities →</a>
+        </div>
+      </div>
+
+      <div class="country-block fade-up">
+        <div class="cb-visual" style="background: linear-gradient(135deg, #351010 0%, #1e0a0a 100%);">
+          <div class="cb-flag">🇨🇦</div>
+        </div>
+        <div class="cb-content">
+          <h2>Canada</h2>
+          <p class="cb-desc">Known for its welcoming culture, high quality of life, and straightforward pathways to permanent residency, Canada is a top choice for long-term settlers.</p>
+          <div class="cb-stats">
+            <div class="cb-stat-item"><div class="cb-stat-label">Avg. Tuition</div><div class="cb-stat-value">CAD 20k - 40k/yr</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Intakes</div><div class="cb-stat-value">September, January</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Post-Study Visa</div><div class="cb-stat-value">Up to 3 Years (PGWP)</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Programs</div><div class="cb-stat-value">IT, Healthcare, Eng.</div></div>
+          </div>
+          <ul class="cb-perks">
+            <li>Excellent Return on Investment (ROI)</li>
+            <li>Co-op programs integrating paid work with study</li>
+            <li>Highly safe, multicultural, and inclusive society</li>
+          </ul>
+          <a href="universities.html" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Explore Canadian Universities →</a>
+        </div>
+      </div>
+
+      <div class="country-block fade-up">
+        <div class="cb-visual" style="background: linear-gradient(135deg, #102835 0%, #0a171e 100%);">
+          <div class="cb-flag">🇦🇺</div>
+        </div>
+        <div class="cb-content">
+          <h2>Australia</h2>
+          <p class="cb-desc">With its sunny climate and relaxed lifestyle, Australia boasts the prestigious Group of Eight (Go8) and excellent post-study work rights.</p>
+          <div class="cb-stats">
+            <div class="cb-stat-item"><div class="cb-stat-label">Avg. Tuition</div><div class="cb-stat-value">AUD 25k - 45k/yr</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Intakes</div><div class="cb-stat-value">February, July</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Post-Study Visa</div><div class="cb-stat-value">2 - 4 Years</div></div>
+            <div class="cb-stat-item"><div class="cb-stat-label">Top Programs</div><div class="cb-stat-value">Accounting, IT, Nursing</div></div>
+          </div>
+          <ul class="cb-perks">
+            <li>High minimum wage for part-time student jobs</li>
+            <li>Strong economy with skill-shortage opportunities</li>
+            <li>World-class research facilities and infrastructure</li>
+          </ul>
+          <a href="universities.html" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Explore Australian Universities →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="fade-up">
+      <h2>Still Confused About Choosing a Country?</h2>
+      <p>Our expert counsellors analyze your profile, budget, and career goals to match you with the perfect global destination.</p>
+      <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="btn-primary" style="background:#25D366; box-shadow: 0 4px 20px rgba(37,211,102,0.4);">
+        Talk to Counsellor on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    window.addEventListener('scroll', () => { document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50); });
+  </script>
+</body>
+</html>

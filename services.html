@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | Abrovo — Study Abroad Counselling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================
+       CORE CSS (Imported from index.html)
+    ========================================= */
+    :root {
+      --bg-dark: #0A0F1E; --bg-dark-2: #0D1428; --bg-white: #FFFFFF;
+      --accent: #2563EB; --accent-hover: #1D4ED8; --accent-light: rgba(37, 99, 235, 0.12);
+      --text-primary: #0F172A; --text-secondary: #64748B; --border: #E2E8F0;
+      --success: #10B981; --card-bg: #F8FAFC; --glass: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.13); --nav-height: 72px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif; --font-mono: 'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); color: var(--text-primary); background: var(--bg-white); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; } img { display: block; max-width: 100%; } ul { list-style: none; }
+
+    /* Buttons */
+    .btn-primary, .btn-secondary, .btn-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-body); font-weight: 600; border-radius: 50px; transition: all 0.25s ease; cursor: pointer; white-space: nowrap; border: none; }
+    .btn-primary { padding: 14px 28px; background: var(--accent); color: #fff; box-shadow: 0 4px 20px rgba(37,99,235,0.4); }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,99,235,0.5); }
+    .btn-secondary { padding: 14px 28px; background: transparent; color: rgba(255,255,255,0.9); border: 1.5px solid rgba(255,255,255,0.2); }
+    
+    /* Navbar styling omitted for brevity, identical to destinations.html */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height); display: flex; align-items: center; padding: 0 5%; transition: all 0.4s ease; background: var(--bg-dark); }
+    .navbar.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.06); }
+    .navbar.scrolled .nav-link { color: var(--text-primary); } .navbar.scrolled .logo-text { color: var(--text-primary); } .navbar.scrolled .logo-globe path { stroke: var(--text-primary); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1280px; margin: 0 auto; }
+    .logo { display: flex; align-items: center; gap: 10px; } .logo-globe { width: 32px; height: 32px; } .logo-globe path { stroke: #fff; } .logo-text { font-family: var(--font-display); font-size: 1.5rem; color: #fff; } .logo-dot { color: var(--accent); }
+    .nav-links { display: flex; gap: 2px; } .nav-link { font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.85); padding: 8px 14px; border-radius: 8px; transition: color 0.2s, background 0.2s; } .nav-link:hover { color: var(--accent); background: var(--accent-light); }
+    .nav-actions { display: flex; gap: 10px; } .btn-cta { padding: 9px 20px; background: var(--accent); color: #fff; font-size: 0.84rem; }
+
+    /* =========================================
+       SERVICES PAGE SPECIFIC CSS
+    ========================================= */
+    .srv-hero { position: relative; background: var(--bg-dark); padding: calc(var(--nav-height) + 100px) 5% 120px; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden; }
+    .srv-hero-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(37,99,235,0.2) 0%, transparent 60%); pointer-events: none; }
+    .srv-hero-content { position: relative; z-index: 2; max-width: 800px; }
+    .srv-hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4.5rem); color: #fff; margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.02em; }
+    .srv-hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 40px; }
+
+    /* Services Grid */
+    .srv-showcase { padding: 96px 5%; background: var(--bg-white); }
+    .srv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .srv-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 40px 32px; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; z-index: 1; overflow: hidden; }
+    .srv-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, transparent 100%); z-index: -1; opacity: 0; transition: opacity 0.3s ease; }
+    .srv-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(15,23,42,0.08); border-color: rgba(37,99,235,0.2); }
+    .srv-card:hover::before { opacity: 1; }
+    .srv-icon { font-size: 2.5rem; margin-bottom: 24px; display: inline-block; background: #fff; padding: 16px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .srv-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--text-primary); margin-bottom: 12px; }
+    .srv-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
+    .srv-list { list-style: none; }
+    .srv-list li { font-size: 0.85rem; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .srv-list li::before { content: '→'; color: var(--accent); font-weight: bold; }
+
+    /* Comparison Section */
+    .compare-section { padding: 96px 5%; background: var(--bg-dark); color: #fff; text-align: center; }
+    .compare-title { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 64px; }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1000px; margin: 0 auto; text-align: left; }
+    .compare-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 48px; }
+    .compare-card.abrovo { background: linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(15,23,42,0.5) 100%); border-color: rgba(37,99,235,0.3); position: relative; }
+    .compare-card.abrovo::before { content: 'Highly Recommended'; position: absolute; top: -14px; right: 32px; background: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 6px 12px; border-radius: 50px; }
+    .compare-card h3 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 24px; }
+    .compare-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 0.95rem; color: rgba(255,255,255,0.7); }
+    .compare-item.bad::before { content: '✕'; color: #ef4444; font-weight: bold; font-size: 1.2rem; line-height: 1; }
+    .compare-item.good::before { content: '✓'; color: var(--success); font-weight: bold; font-size: 1.2rem; line-height: 1; }
+    .compare-item.good { color: #fff; }
+
+    /* Animations */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1024px) { .srv-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .srv-grid, .compare-grid { grid-template-columns: 1fr; } .compare-card { padding: 32px; } }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Abrovo Home">
+        <svg class="logo-globe" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="13.5" stroke-width="1.4"/>
+          <ellipse cx="16" cy="16" rx="6" ry="13.5" stroke-width="1.4"/>
+          <path d="M2.5 11h27M2.5 21h27" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">Abrovo<span class="logo-dot">.</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+        <li><a href="universities.html" class="nav-link">Universities</a></li>
+        <li><a href="services.html" class="nav-link" style="color:var(--accent);">Services</a></li>
+        <li><a href="stories.html" class="nav-link">Success Stories</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="btn-cta" data-consult>Free Consultation →</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="srv-hero">
+    <div class="srv-hero-bg"></div>
+    <div class="srv-hero-content fade-up">
+      <h1 class="srv-hero-title">Everything You Need for Your Study Abroad Journey</h1>
+      <p class="srv-hero-sub">From profile evaluation to visa approval and beyond — we handle the complexities so you can focus on your future.</p>
+      <button class="btn-primary" data-consult>Get Started Today</button>
+    </div>
+  </header>
+
+  <section class="srv-showcase">
+    <div class="srv-grid">
+      <div class="srv-card fade-up">
+        <div class="srv-icon">🎯</div>
+        <h3 class="srv-title">Profile Evaluation</h3>
+        <p class="srv-desc">We deeply analyze your academic history, test scores, and extracurriculars to identify your true potential.</p>
+        <ul class="srv-list">
+          <li>SWOT Analysis of profile</li>
+          <li>Course selection guidance</li>
+        </ul>
+      </div>
+      <div class="srv-card fade-up">
+        <div class="srv-icon">🏛️</div>
+        <h3 class="srv-title">University Shortlisting</h3>
+        <p class="srv-desc">Get a data-backed list of Ambitious, Match, and Safe universities tailored to your specific profile and goals.</p>
+        <ul class="srv-list">
+          <li>ROI & Budget mapping</li>
+          <li>Acceptance rate tracking</li>
+        </ul>
+      </div>
+      <div class="srv-card fade-up">
+        <div class="srv-icon">✍️</div>
+        <h3 class="srv-title">SOP & LOR Assistance</h3>
+        <p class="srv-desc">Our expert editors help craft compelling narratives that make your application stand out to admission committees.</p>
+        <ul class="srv-list">
+          <li>Brainstorming sessions</li>
+          <li>Multiple review iterations</li>
+        </ul>
+      </div>
+      <div class="srv-card fade-up">
+        <div class="srv-icon">📤</div>
+        <h3 class="srv-title">Application Management</h3>
+        <p class="srv-desc">We handle the grueling paperwork, portal navigation, and deadline tracking for all your target universities.</p>
+        <ul class="srv-list">
+          <li>Error-free submissions</li>
+          <li>Direct university follow-ups</li>
+        </ul>
+      </div>
+      <div class="srv-card fade-up">
+        <div class="srv-icon">💰</div>
+        <h3 class="srv-title">Scholarship & Loans</h3>
+        <p class="srv-desc">Maximize your funding with dedicated scholarship applications and fast-tracked education loan processing.</p>
+        <ul class="srv-list">
+          <li>Merit & Need-based funds</li>
+          <li>Lowest interest loan partners</li>
+        </ul>
+      </div>
+      <div class="srv-card fade-up">
+        <div class="srv-icon">🛂</div>
+        <h3 class="srv-title">Visa Assistance</h3>
+        <p class="srv-desc">Navigate complex immigration laws easily. We ensure a 98% visa success rate with thorough preparation.</p>
+        <ul class="srv-list">
+          <li>Financial document review</li>
+          <li>1-on-1 Mock Interviews</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="compare-section">
+    <h2 class="compare-title fade-up">Doing It Alone vs. With Abrovo</h2>
+    <div class="compare-grid">
+      <div class="compare-card fade-up">
+        <h3>Applying Alone</h3>
+        <div class="compare-item bad">Overwhelmed by thousands of university choices</div>
+        <div class="compare-item bad">Generic SOP templates leading to rejections</div>
+        <div class="compare-item bad">Missed deadlines due to complex portals</div>
+        <div class="compare-item bad">High stress during visa interviews</div>
+        <div class="compare-item bad">No guidance on post-study work rights</div>
+      </div>
+      <div class="compare-card abrovo fade-up">
+        <h3>With Abrovo</h3>
+        <div class="compare-item good">Curated university list matching your exact profile</div>
+        <div class="compare-item good">Unique, expertly crafted essays that tell your story</div>
+        <div class="compare-item good">Dedicated manager tracking every single deadline</div>
+        <div class="compare-item good">Mock interviews ensuring 98% visa success rate</div>
+        <div class="compare-item good">End-to-end support including flights & housing</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    window.addEventListener('scroll', () => { document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50); });
+  </script>
+</body>
+</html>
