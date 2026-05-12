@@ -54,17 +54,8 @@
     @keyframes scrollBob { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
 
     /* MARQUEE */
-    .marquee-section { background: var(--bg-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; overflow: hidden; position: relative; }
-    .marquee-section::before, .marquee-section::after { content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none; }
-    .marquee-section::before { left: 0; background: linear-gradient(to right, var(--bg-white), transparent); }
-    .marquee-section::after { right: 0; background: linear-gradient(to left, var(--bg-white), transparent); }
-    .marquee-track { display: flex; align-items: center; padding: 18px 0; animation: marqueeScroll 28s linear infinite; width: max-content; }
-    .marquee-track:hover { animation-play-state: paused; }
-    .marquee-item { display: flex; align-items: center; gap: 10px; padding: 8px 32px; white-space: nowrap; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); border-right: 1px solid var(--border); transition: color 0.2s; }
-    .marquee-item:hover { color: var(--accent); }
-    .marquee-flag { font-size: 1.4rem; }
-    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
+    .marquee-flag { width: 26px; height: 18px; border-radius: 3px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    
     /* SHARED SECTION HEADERS */
     .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
     .section-label::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--accent); border-radius: 2px; }
@@ -102,28 +93,8 @@
     .hiw-step-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; }
 
     /* DESTINATIONS */
-    .destinations-section { background: var(--card-bg); padding: 96px 5%; }
-    .destinations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
-    .dest-card { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; cursor: pointer; background: var(--bg-dark); }
-    .dest-card:nth-child(1) { background: linear-gradient(135deg, #1e3a5f 0%, #0a1628 100%); }
-    .dest-card:nth-child(2) { background: linear-gradient(135deg, #1a1035 0%, #0d0a1e 100%); }
-    .dest-card:nth-child(3) { background: linear-gradient(135deg, #0d2818 0%, #051409 100%); }
-    .dest-card:nth-child(4) { background: linear-gradient(135deg, #1a2a0a 0%, #0d1505 100%); }
-    .dest-card:nth-child(5) { background: linear-gradient(135deg, #1a0a0a 0%, #0d0505 100%); }
-    .dest-card:nth-child(6) { background: linear-gradient(135deg, #1a1505 0%, #0d0b02 100%); }
-    .dest-card:nth-child(7) { background: linear-gradient(135deg, #0a1a2a 0%, #050d14 100%); }
-    .dest-card:nth-child(8) { background: linear-gradient(135deg, #1a0a1a 0%, #0d050d 100%); }
-    .dest-card:nth-child(9) { background: linear-gradient(135deg, #1a1205 0%, #0d0902 100%); }
-    .dest-card-inner { position: absolute; inset: 0; padding: 28px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%); transition: background 0.35s ease; }
-    .dest-flag { position: absolute; top: 24px; left: 24px; font-size: 2.8rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
-    .dest-card:hover .dest-flag { transform: scale(1.15) translateY(-4px); }
-    .dest-card-name { font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 8px; }
-    .dest-stats { display: flex; gap: 14px; flex-wrap: wrap; }
-    .dest-stat { font-size: 0.75rem; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 5px; }
-    .dest-overlay { position: absolute; inset: 0; background: rgba(37,99,235,0.88); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
-    .dest-card:hover .dest-overlay { opacity: 1; }
-    .dest-explore-btn { display: inline-flex; color: #fff; font-weight: 700; padding: 12px 24px; border: 2px solid rgba(255,255,255,0.6); border-radius: 50px; transform: translateY(10px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.2s; }
-    .dest-card:hover .dest-explore-btn { transform: translateY(0); border-color: #fff; }
+    .dest-flag { position: absolute; top: 24px; left: 24px; width: 56px; height: 42px; border-radius: 6px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+
 
     /* STATS BAND */
     .stats-band { background: var(--bg-dark); padding: 80px 5%; position: relative; overflow: hidden; }
@@ -173,7 +144,7 @@
       </ul>
 
       <div class="nav-actions">
-        <a href="https://wa.me/919748892883" target="_blank" rel="noopener" class="btn-wa" aria-label="Chat on WhatsApp">
+        <a href="https://api.whatsapp.com/send/?phone=919748892883&text=Hi%21+I%27m+interested+in+studying+abroad.+Can+you+guide+me%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn-wa" aria-label="Chat on WhatsApp">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
           </svg>
@@ -254,31 +225,28 @@
       </div>
     </div>
 
-    <div class="scroll-cue" aria-hidden="true">
-      <span>Scroll</span><div class="scroll-arrow"></div>
-    </div>
   </section>
 
   <section class="marquee-section" id="marquee">
-    <div class="marquee-track" aria-hidden="true">
-      <div class="marquee-item"><span class="marquee-flag">🇺🇸</span> United States</div>
-      <div class="marquee-item"><span class="marquee-flag">🇬🇧</span> United Kingdom</div>
-      <div class="marquee-item"><span class="marquee-flag">🇨🇦</span> Canada</div>
-      <div class="marquee-item"><span class="marquee-flag">🇦🇺</span> Australia</div>
-      <div class="marquee-item"><span class="marquee-flag">🇩🇪</span> Germany</div>
-      <div class="marquee-item"><span class="marquee-flag">🇫🇷</span> France</div>
-      <div class="marquee-item"><span class="marquee-flag">🇮🇪</span> Ireland</div>
-      <div class="marquee-item"><span class="marquee-flag">🇳🇿</span> New Zealand</div>
-      <div class="marquee-item"><span class="marquee-flag">🇸🇬</span> Singapore</div>
-      <div class="marquee-item"><span class="marquee-flag">🇺🇸</span> United States</div>
-      <div class="marquee-item"><span class="marquee-flag">🇬🇧</span> United Kingdom</div>
-      <div class="marquee-item"><span class="marquee-flag">🇨🇦</span> Canada</div>
-      <div class="marquee-item"><span class="marquee-flag">🇦🇺</span> Australia</div>
-      <div class="marquee-item"><span class="marquee-flag">🇩🇪</span> Germany</div>
-      <div class="marquee-item"><span class="marquee-flag">🇫🇷</span> France</div>
-      <div class="marquee-item"><span class="marquee-flag">🇮🇪</span> Ireland</div>
-      <div class="marquee-item"><span class="marquee-flag">🇳🇿</span> New Zealand</div>
-      <div class="marquee-item"><span class="marquee-flag">🇸🇬</span> Singapore</div>
+  <div class="marquee-track" aria-hidden="true">
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/us.png" class="marquee-flag" alt="USA"> United States</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/gb.png" class="marquee-flag" alt="UK"> United Kingdom</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/ca.png" class="marquee-flag" alt="Canada"> Canada</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/au.png" class="marquee-flag" alt="Australia"> Australia</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/de.png" class="marquee-flag" alt="Germany"> Germany</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/fr.png" class="marquee-flag" alt="France"> France</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/ie.png" class="marquee-flag" alt="Ireland"> Ireland</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/nz.png" class="marquee-flag" alt="New Zealand"> New Zealand</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/sg.png" class="marquee-flag" alt="Singapore"> Singapore</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/us.png" class="marquee-flag" alt="USA"> United States</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/gb.png" class="marquee-flag" alt="UK"> United Kingdom</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/ca.png" class="marquee-flag" alt="Canada"> Canada</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/au.png" class="marquee-flag" alt="Australia"> Australia</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/de.png" class="marquee-flag" alt="Germany"> Germany</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/fr.png" class="marquee-flag" alt="France"> France</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/ie.png" class="marquee-flag" alt="Ireland"> Ireland</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/nz.png" class="marquee-flag" alt="New Zealand"> New Zealand</div>
+      <div class="marquee-item"><img src="https://flagcdn.com/w40/sg.png" class="marquee-flag" alt="Singapore"> Singapore</div>
     </div>
   </section>
 
@@ -347,7 +315,7 @@
     </div>
   </section>
 
-  <section class="destinations-section">
+<section class="destinations-section">
     <div class="section-header center fade-up">
       <div class="section-label">Where to Study</div>
       <h2 class="section-title">Choose Your Destination</h2>
@@ -355,7 +323,8 @@
     </div>
     <div class="destinations-grid">
       <div class="dest-card fade-up delay-1" onclick="window.location.href='destinations.html'">
-        <div class="dest-flag">🇺🇸</div>
+        <img src="https://flagcdn.com/w80/us.png" class="dest-flag" alt="USA Flag">
+        
         <div class="dest-card-inner">
           <div class="dest-card-name">United States</div>
           <div class="dest-stats"><span class="dest-stat">200+ Universities</span></div>
@@ -363,7 +332,8 @@
         <div class="dest-overlay"><span class="dest-explore-btn">Explore USA →</span></div>
       </div>
       <div class="dest-card fade-up delay-2" onclick="window.location.href='destinations.html'">
-        <div class="dest-flag">🇬🇧</div>
+        <img src="https://flagcdn.com/w80/gb.png" class="dest-flag" alt="UK Flag">
+        
         <div class="dest-card-inner">
           <div class="dest-card-name">United Kingdom</div>
           <div class="dest-stats"><span class="dest-stat">130+ Universities</span></div>
@@ -371,7 +341,8 @@
         <div class="dest-overlay"><span class="dest-explore-btn">Explore UK →</span></div>
       </div>
       <div class="dest-card fade-up delay-3" onclick="window.location.href='destinations.html'">
-        <div class="dest-flag">🇨🇦</div>
+        <img src="https://flagcdn.com/w80/ca.png" class="dest-flag" alt="Canada Flag">
+        
         <div class="dest-card-inner">
           <div class="dest-card-name">Canada</div>
           <div class="dest-stats"><span class="dest-stat">100+ Universities</span></div>
