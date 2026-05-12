@@ -1,659 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog & Resources — Abrovo</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg-dark: #0A0F1E;
-    --bg-white: #FFFFFF;
-    --accent: #2563EB;
-    --accent-hover: #1D4ED8;
-    --text-primary: #0F172A;
-    --text-secondary: #64748B;
-    --border: #E2E8F0;
-    --success: #10B981;
-    --card-bg: #F8FAFC;
-    --font-display: 'DM Serif Display', serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); color: var(--text-primary); background: var(--bg-white); overflow-x: hidden; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog & Resources | Abrovo — Study Abroad Counselling</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css" />
 
-  /* ── NAVBAR ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    padding: 1.25rem 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
-  }
-  nav.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); box-shadow: 0 1px 20px rgba(0,0,0,0.08); }
-  .nav-logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-  .nav-logo svg { width: 28px; height: 28px; color: var(--accent); }
-  .nav-logo span { font-family: var(--font-display); font-size: 1.5rem; color: #fff; transition: color 0.3s; }
-  nav.scrolled .nav-logo span { color: var(--text-primary); }
-  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.85); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-  nav.scrolled .nav-links a { color: var(--text-secondary); }
-  .nav-links a:hover, .nav-links a.active { color: var(--accent) !important; }
-  .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
-  .btn-whatsapp { display: flex; align-items: center; gap: 0.4rem; background: #25D366; color: #fff; border: none; padding: 0.55rem 1.1rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
-  .btn-whatsapp:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,211,102,0.4); }
-  .btn-cta { background: var(--accent); color: #fff; border: none; padding: 0.55rem 1.25rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.2s; }
-  .btn-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-  .hamburger span { width: 24px; height: 2px; background: #fff; display: block; transition: all 0.3s; border-radius: 2px; }
-  nav.scrolled .hamburger span { background: var(--text-primary); }
-  .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--bg-white); padding: 5rem 2rem 2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 999; transform: translateY(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
-  .mobile-menu.open { transform: translateY(0); display: block; }
-  .mobile-menu a { display: block; padding: 0.85rem 0; font-size: 1rem; font-weight: 500; color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border); }
+  <style>
+    /* =========================================
+       PAGE-SPECIFIC STYLES (Blog)
+    ========================================= */
+    .page-hero { background: var(--bg-dark); padding: 140px 5% 80px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; color: rgba(255,255,255,0.8); font-size: 0.82rem; font-weight: 500; margin-bottom: 24px; position: relative; z-index: 2; }
+    .page-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); color: #fff; margin-bottom: 16px; position: relative; z-index: 2; }
+    .page-hero h1 em { color: var(--accent); font-style: normal; }
+    .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto; line-height: 1.6; position: relative; z-index: 2; }
 
-  /* ── ANIMATIONS ── */
-  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-  .fade-up.d1 { transition-delay: 0.1s; } .fade-up.d2 { transition-delay: 0.2s; } .fade-up.d3 { transition-delay: 0.3s; }
+    .blog-layout { display: grid; grid-template-columns: 1fr 320px; gap: 48px; max-width: 1200px; margin: 0 auto; padding: 48px 5% 96px; align-items: start; }
 
-  /* ── HERO ── */
-  .hero { background: var(--bg-dark); padding: 8rem 2rem 5rem; text-align: center; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.18) 0%, transparent 70%); }
-  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: #93c5fd; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.5rem; }
-  .hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5.5vw, 4rem); color: #fff; line-height: 1.15; margin-bottom: 1.25rem; }
-  .hero h1 em { color: var(--accent); font-style: normal; }
-  .hero p { color: rgba(255,255,255,0.65); font-size: 1.1rem; max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    /* Filter Bar */
+    .filter-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 0 5%; position: sticky; top: var(--nav-height); z-index: 900; }
+    .filter-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .filter-bar-inner::-webkit-scrollbar { display: none; }
+    .filter-tab { padding: 14px 20px; border: none; background: none; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s; margin-bottom: -1px; }
+    .filter-tab:hover { color: var(--text-primary); }
+    .filter-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
 
-  /* ── LAYOUT ── */
-  .blog-layout { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 5rem; align-items: start; }
+    /* Featured Article */
+    .featured-article { background: var(--bg-dark); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 40px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; border: 1px solid var(--border); }
+    .featured-article:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(10,15,30,0.15); }
+    .featured-thumb { display: flex; align-items: center; justify-content: center; font-size: 5rem; min-height: 300px; }
+    .featured-body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+    .cat-pill { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; align-self: flex-start; }
+    .featured-body .cat-pill { background: rgba(37,99,235,0.2); color: #93c5fd; }
+    .featured-body h2 { font-family: var(--font-display); font-size: 1.8rem; color: #fff; line-height: 1.3; margin-bottom: 12px; }
+    .featured-body p { color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .article-meta { display: flex; align-items: center; gap: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+    
+    /* Articles Grid */
+    .articles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .article-card { background: #fff; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; display: flex; flex-direction: column; }
+    .article-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+    .card-thumb { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-title { font-family: var(--font-display); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3; }
+    .card-excerpt { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px; flex-grow: 1; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-secondary); }
+    
+    /* Category Colors */
+    .pill-visa { background: #dbeafe; color: #1d4ed8; }
+    .pill-scholarship { background: #d1fae5; color: #065f46; }
+    .pill-country { background: #fce7f3; color: #9d174d; }
+    .pill-sop { background: #ede9fe; color: #5b21b6; }
+    .pill-test { background: #fff7ed; color: #c2410c; }
+    .pill-deadline { background: #fef3c7; color: #92400e; }
 
-  /* ── FILTER TABS ── */
-  .filter-bar { background: #fff; border-bottom: 2px solid var(--border); padding: 0 2rem; position: sticky; top: 70px; z-index: 100; }
-  .filter-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; }
-  .filter-bar-inner::-webkit-scrollbar { display: none; }
-  .filter-tab { padding: 0.85rem 1.25rem; border: none; background: none; font-family: var(--font-body); font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; position: relative; bottom: -2px; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
-  .filter-tab:hover { color: var(--accent); }
-  .filter-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+    /* Sidebar */
+    .sidebar { position: sticky; top: calc(var(--nav-height) + 20px); display: flex; flex-direction: column; gap: 24px; }
+    .sidebar-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 24px; }
+    .sidebar-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+    .popular-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; cursor: pointer; }
+    .popular-item:last-child { margin-bottom: 0; }
+    .popular-num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--border); line-height: 1; }
+    .popular-item:hover .popular-num { color: var(--accent); }
+    .popular-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.4; transition: color 0.2s; }
+    .popular-item:hover .popular-title { color: var(--accent); }
+    
+    /* Pagination */
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 48px; }
+    .page-btn { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); background: #fff; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+    .page-btn:hover, .page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .page-btn.prev-next { width: auto; padding: 0 16px; }
 
-  /* ── FEATURED ARTICLE ── */
-  .featured-article {
-    border-radius: 20px; overflow: hidden;
-    background: var(--bg-dark); display: grid; grid-template-columns: 1fr 1fr;
-    margin-bottom: 2.5rem; min-height: 340px;
-    transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
-  }
-  .featured-article:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
-  .featured-thumb {
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .thumb-placeholder {
-    width: 100%; height: 100%; min-height: 220px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 4rem;
-  }
-  .featured-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
-  .cat-pill { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 100px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.85rem; }
-  .featured-body .cat-pill { background: rgba(37,99,235,0.2); color: #93c5fd; }
-  .featured-body h2 { font-family: var(--font-display); font-size: 1.65rem; color: #fff; line-height: 1.3; margin-bottom: 0.85rem; }
-  .featured-body p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.65; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .meta-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: rgba(255,255,255,0.45); }
-  .read-more { display: inline-flex; align-items: center; gap: 0.35rem; color: #93c5fd; font-size: 0.85rem; font-weight: 600; cursor: pointer; margin-top: 1rem; transition: gap 0.2s; text-decoration: none; }
-  .read-more:hover { gap: 0.6rem; color: #bfdbfe; }
-
-  /* ── ARTICLE GRID ── */
-  .articles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .article-card { border-radius: 14px; overflow: hidden; background: var(--bg-white); border: 1px solid var(--border); transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; cursor: pointer; }
-  .article-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.09); border-color: transparent; }
-  .card-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; overflow: hidden; }
-  .card-body { padding: 1.25rem; }
-  .card-body .cat-pill { margin-bottom: 0.65rem; }
-  .card-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--text-primary); line-height: 1.4; margin-bottom: 0.5rem; }
-  .card-excerpt { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.85rem; }
-  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.85rem; border-top: 1px solid var(--border); }
-  .card-meta { display: flex; gap: 0.85rem; }
-  .card-meta span { font-size: 0.76rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.25rem; }
-  .read-more-card { font-size: 0.82rem; font-weight: 600; color: var(--accent); cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 0.25rem; transition: gap 0.2s; }
-  .read-more-card:hover { gap: 0.45rem; }
-
-  /* Category pill colours */
-  .pill-visa { background: #dbeafe; color: #1d4ed8; }
-  .pill-scholarship { background: #d1fae5; color: #065f46; }
-  .pill-country { background: #fce7f3; color: #9d174d; }
-  .pill-sop { background: #ede9fe; color: #5b21b6; }
-  .pill-test { background: #fff7ed; color: #c2410c; }
-  .pill-deadline { background: #fef3c7; color: #92400e; }
-
-  /* ── PAGINATION ── */
-  .pagination { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
-  .page-btn { width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--border); background: none; display: flex; align-items: center; justify-content: center; font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
-  .page-btn:hover, .page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .page-btn.prev-next { width: auto; padding: 0 0.85rem; gap: 0.3rem; }
-
-  /* ── SIDEBAR ── */
-  .sidebar { position: sticky; top: 130px; display: flex; flex-direction: column; gap: 1.5rem; }
-  .sidebar-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
-  .sidebar-card h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--text-primary); margin-bottom: 1.1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border); }
-  /* popular */
-  .popular-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1rem; cursor: pointer; }
-  .popular-item:last-child { margin-bottom: 0; }
-  .popular-num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--border); line-height: 1; flex-shrink: 0; width: 28px; }
-  .popular-item:hover .popular-num { color: var(--accent); }
-  .popular-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); line-height: 1.4; transition: color 0.2s; }
-  .popular-item:hover .popular-title { color: var(--accent); }
-  .popular-meta { font-size: 0.76rem; color: var(--text-secondary); margin-top: 2px; }
-  /* newsletter */
-  .newsletter-form { display: flex; flex-direction: column; gap: 0.65rem; }
-  .newsletter-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.35rem; }
-  .newsletter-input { width: 100%; padding: 0.65rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 0.88rem; color: var(--text-primary); background: #fff; outline: none; transition: border-color 0.2s; }
-  .newsletter-input:focus { border-color: var(--accent); }
-  .newsletter-btn { background: var(--accent); color: #fff; border: none; padding: 0.65rem; border-radius: 8px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-  .newsletter-btn:hover { background: var(--accent-hover); }
-  .newsletter-success { display: none; text-align: center; padding: 0.75rem; background: #d1fae5; border-radius: 8px; font-size: 0.88rem; font-weight: 600; color: #065f46; }
-  /* free resources */
-  .resource-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 10px; background: #fff; border: 1px solid var(--border); margin-bottom: 0.6rem; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; text-decoration: none; }
-  .resource-item:last-child { margin-bottom: 0; }
-  .resource-item:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(37,99,235,0.1); }
-  .resource-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-  .resource-info .r-title { font-size: 0.83rem; font-weight: 600; color: var(--text-primary); }
-  .resource-info .r-meta { font-size: 0.73rem; color: var(--text-secondary); margin-top: 1px; }
-  .download-icon { margin-left: auto; color: var(--text-secondary); flex-shrink: 0; }
-  .resource-item:hover .download-icon { color: var(--accent); }
-
-  /* ── FOOTER ── */
-  footer { background: var(--bg-dark); padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.08); }
-  .footer-inner { max-width: 1200px; margin: 0 auto; }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; }
-  .footer-col h4 { font-family: var(--font-display); font-size: 1.1rem; color: #fff; margin-bottom: 1.25rem; }
-  .footer-col p { color: rgba(255,255,255,0.5); font-size: 0.88rem; line-height: 1.7; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 0.6rem; }
-  .footer-col ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
-  .footer-col ul li a:hover { color: var(--accent); }
-  .footer-socials { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
-  .social-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); transition: background 0.2s, color 0.2s; text-decoration: none; }
-  .social-icon:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-  .footer-bottom p { color: rgba(255,255,255,0.35); font-size: 0.82rem; }
-
-  /* ── WA FLOAT ── */
-  .wa-float { position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 900; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); cursor: pointer; text-decoration: none; transition: transform 0.2s; animation: pulse-wa 2.5s infinite; }
-  .wa-float:hover { transform: scale(1.08); }
-  .wa-float svg { width: 28px; height: 28px; color: #fff; }
-  @keyframes pulse-wa { 0%,100%{ box-shadow:0 4px 20px rgba(37,211,102,0.4); }50%{ box-shadow:0 4px 32px rgba(37,211,102,0.7),0 0 0 8px rgba(37,211,102,0.12); } }
-  .mobile-bar { display:none; position:fixed; bottom:0; left:0; right:0; z-index:800; background:#fff; border-top:1px solid var(--border); padding:0.75rem 1rem; gap:0.75rem; }
-  .mobile-bar a { flex:1; display:flex; align-items:center; justify-content:center; gap:0.4rem; padding:0.65rem; border-radius:10px; font-weight:600; font-size:0.9rem; text-decoration:none; }
-  .mobile-bar .mb-call { background:var(--accent); color:#fff; }
-  .mobile-bar .mb-wa { background:#25D366; color:#fff; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1024px) {
-    .blog-layout { grid-template-columns: 1fr; }
-    .sidebar { position: static; }
-    .articles-grid { grid-template-columns: 1fr 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .featured-article { grid-template-columns: 1fr; }
-    .featured-thumb { min-height: 200px; }
-  }
-  @media (max-width: 768px) {
-    .nav-links, .nav-actions .btn-whatsapp { display: none; }
-    .hamburger { display: flex; }
-    .articles-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
-    .mobile-bar { display: flex; }
-    .wa-float { bottom: 5rem; }
-    .blog-layout { padding: 2rem 1rem 4rem; }
-  }
-</style>
+    @media (max-width: 1024px) {
+      .blog-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .featured-article { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body>
+<body class="dark-hero">
 
-<!-- NAVBAR -->
-<nav id="navbar">
-  <a href="index.html" class="nav-logo">
-    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"/>
-      <ellipse cx="14" cy="14" rx="5" ry="12" stroke="currentColor" stroke-width="2"/>
-      <line x1="2" y1="14" x2="26" y2="14" stroke="currentColor" stroke-width="2"/>
-      <path d="M4 8.5C7 10 10 11 14 11s7-1 10-2.5M4 19.5C7 18 10 17 14 17s7 1 10 2.5" stroke="currentColor" stroke-width="1.5"/>
-    </svg>
-    <span>Abrovo</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="#">Destinations</a></li>
-    <li><a href="universities.html">Universities</a></li>
-    <li><a href="#">Services</a></li>
-    <li><a href="stories.html">Stories</a></li>
-    <li><a href="blog.html" class="active">Blog</a></li>
-  </ul>
-  <div class="nav-actions">
-    <a href="https://wa.me/919748892883" class="btn-whatsapp" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      WhatsApp
-    </a>
-    <a href="#" class="btn-cta">Free Consultation</a>
-  </div>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
-
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="#">Destinations</a>
-  <a href="universities.html">Universities</a>
-  <a href="#">Services</a>
-  <a href="stories.html">Success Stories</a>
-  <a href="blog.html">Blog</a>
-  <a href="https://wa.me/919748892883" target="_blank">Chat on WhatsApp</a>
-  <a href="#">Free Consultation</a>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    Knowledge Hub
-  </div>
-  <h1 class="fade-up">Your <em>Study Abroad</em><br>Resource Centre</h1>
-  <p class="fade-up d1">Visa guides, scholarship tips, SOP templates, country-specific advice — everything you need to plan a successful study abroad journey.</p>
-</section>
-
-<!-- FILTER BAR -->
-<div class="filter-bar">
-  <div class="filter-bar-inner" id="blogFilterTabs">
-    <button class="filter-tab active" data-filter="all">All</button>
-    <button class="filter-tab" data-filter="visa">🛂 Visa Guide</button>
-    <button class="filter-tab" data-filter="scholarship">💰 Scholarships</button>
-    <button class="filter-tab" data-filter="country">🌍 Country Guides</button>
-    <button class="filter-tab" data-filter="sop">✍️ SOP Tips</button>
-    <button class="filter-tab" data-filter="test">📝 Test Prep</button>
-    <button class="filter-tab" data-filter="deadline">📅 Deadlines</button>
-  </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="blog-layout">
-  <!-- MAIN COLUMN -->
-  <main>
-    <!-- FEATURED ARTICLE -->
-    <div id="featuredSection"></div>
-    <!-- ARTICLES GRID -->
-    <div class="articles-grid" id="articlesGrid"></div>
-    <!-- PAGINATION -->
-    <div class="pagination" id="pagination"></div>
-  </main>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <!-- Popular Articles -->
-    <div class="sidebar-card fade-up">
-      <h3>🔥 Popular Articles</h3>
-      <div id="popularList"></div>
-    </div>
-
-    <!-- Newsletter -->
-    <div class="sidebar-card fade-up d1">
-      <h3>📬 Weekly Digest</h3>
-      <div class="newsletter-form">
-        <p class="newsletter-desc">Get the latest visa updates, scholarship deadlines, and study abroad tips every week.</p>
-        <input type="email" class="newsletter-input" placeholder="Your email address" id="sidebarEmail">
-        <button class="newsletter-btn" id="sidebarNewsBtn">Subscribe Free →</button>
-        <div class="newsletter-success" id="sidebarSuccess">🎉 You're subscribed! Check your inbox.</div>
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/favicon.png" alt="Abrovo Icon">
+        <span class="logo-text">Abrovo<span class="logo-dot">.</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+        <li><a href="universities.html" class="nav-link">Universities</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="stories.html" class="nav-link">Success Stories</a></li>
+        <li><a href="blog.html" class="nav-link active">Blog</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="https://wa.me/919748892883" target="_blank" class="btn-wa">Chat on WhatsApp</a>
+        <a href="#" class="btn-cta desktop-only" data-consult>Free Consultation →</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
       </div>
     </div>
+  </nav>
 
-    <!-- Free Resources -->
-    <div class="sidebar-card fade-up d2">
-      <h3>📦 Free Resources</h3>
-      <a href="#" class="resource-item">
-        <div class="resource-icon" style="background:#dbeafe;">📄</div>
-        <div class="resource-info">
-          <div class="r-title">IELTS Preparation Guide</div>
-          <div class="r-meta">PDF · 48 pages · Free</div>
-        </div>
-        <svg class="download-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-      </a>
-      <a href="#" class="resource-item">
-        <div class="resource-icon" style="background:#d1fae5;">📝</div>
-        <div class="resource-info">
-          <div class="r-title">SOP Writing Template</div>
-          <div class="r-meta">DOCX · Editable · Free</div>
-        </div>
-        <svg class="download-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-      </a>
-      <a href="#" class="resource-item">
-        <div class="resource-icon" style="background:#ede9fe;">🎓</div>
-        <div class="resource-info">
-          <div class="r-title">Scholarship Database 2025</div>
-          <div class="r-meta">Excel · 200+ entries · Free</div>
-        </div>
-        <svg class="download-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-      </a>
-      <a href="#" class="resource-item">
-        <div class="resource-icon" style="background:#fff7ed;">✈️</div>
-        <div class="resource-info">
-          <div class="r-title">Pre-Departure Checklist</div>
-          <div class="r-meta">PDF · 2 pages · Free</div>
-        </div>
-        <svg class="download-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-      </a>
-      <a href="#" class="resource-item">
-        <div class="resource-icon" style="background:#fce7f3;">🗓️</div>
-        <div class="resource-info">
-          <div class="r-title">Intake Deadline Calendar</div>
-          <div class="r-meta">PDF · Jan–Dec 2025 · Free</div>
-        </div>
-        <svg class="download-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-      </a>
-    </div>
-  </aside>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>Abrovo</h4>
-        <p>Your trusted partner for overseas education. We guide students from shortlisting to visa — and beyond.</p>
-        <div class="footer-socials">
-          <a href="#" class="social-icon" aria-label="Instagram"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-          <a href="#" class="social-icon" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-          <a href="#" class="social-icon" aria-label="YouTube"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
-          <a href="#" class="social-icon" aria-label="Facebook"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="universities.html">Universities</a></li>
-          <li><a href="stories.html">Success Stories</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Destinations</h4>
-        <ul>
-          <li><a href="#">Study in USA 🇺🇸</a></li>
-          <li><a href="#">Study in UK 🇬🇧</a></li>
-          <li><a href="#">Study in Canada 🇨🇦</a></li>
-          <li><a href="#">Study in Australia 🇦🇺</a></li>
-          <li><a href="#">Study in Germany 🇩🇪</a></li>
-          <li><a href="#">Study in Ireland 🇮🇪</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact Us</h4>
-        <ul>
-          <li><a href="tel:+919748892883">📞 +91 97488 92883</a></li>
-          <li><a href="mailto:hello@abrovo.in">✉️ hello@abrovo.in</a></li>
-          <li><a href="#">📍 Salt Lake, Kolkata</a></li>
-          <li><a href="#">🕐 Mon–Sat, 9am – 7pm</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Abrovo. All rights reserved.</p>
-      <p>Made with ❤️ for aspiring global students</p>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="index.html" class="mob-link">Home</a></li>
+      <li><a href="destinations.html" class="mob-link">Destinations</a></li>
+      <li><a href="universities.html" class="mob-link">Universities</a></li>
+      <li><a href="services.html" class="mob-link">Services</a></li>
+      <li><a href="stories.html" class="mob-link">Success Stories</a></li>
+      <li><a href="blog.html" class="mob-link active">Blog</a></li>
+    </ul>
+    <div class="mob-actions">
+      <a href="#" class="btn-cta" data-consult style="justify-content:center;">Free Consultation →</a>
     </div>
   </div>
-</footer>
 
-<a href="https://wa.me/919748892883" class="wa-float" target="_blank" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-</a>
-<div class="mobile-bar">
-  <a href="tel:+919748892883" class="mb-call">📞 Call Us</a>
-  <a href="https://wa.me/919748892883" class="mb-wa" target="_blank">💬 WhatsApp</a>
-</div>
+  <section class="page-hero">
+    <div class="hero-badge fade-up">Knowledge Hub</div>
+    <h1 class="fade-up delay-1">Your <em>Study Abroad</em><br>Resource Centre</h1>
+    <p class="fade-up delay-2">Visa guides, scholarship tips, SOP templates, country-specific advice — everything you need to plan a successful study abroad journey.</p>
+  </section>
 
-<script>
-// ── BLOG DATA ──
-const articles = [
-  {
-    id: 1, featured: true,
-    category: "visa", catLabel: "Visa Guide", catClass: "pill-visa",
-    emoji: "🛂",
-    thumbBg: "linear-gradient(135deg,#1e3a8a 0%,#0f172a 100%)",
-    title: "Complete F-1 Student Visa Guide for Indian Students (2025)",
-    excerpt: "Everything you need to know about applying for an F-1 visa — from DS-160 to the visa interview. Step-by-step guide with real interview questions, document checklist, and common rejection reasons to avoid.",
-    readTime: "12 min read",
-    date: "May 8, 2025",
-    popular: true
-  },
-  {
-    id: 2, category: "scholarship", catLabel: "Scholarships", catClass: "pill-scholarship",
-    emoji: "💰",
-    thumbBg: "linear-gradient(135deg,#065f46 0%,#0f172a 100%)",
-    title: "Top 10 Fully-Funded Scholarships for Indian Students in 2025",
-    excerpt: "From Chevening to Fulbright — a curated list of fully-funded opportunities with deadlines, eligibility criteria, and application tips from scholars who won them.",
-    readTime: "9 min read",
-    date: "Apr 29, 2025",
-    popular: true
-  },
-  {
-    id: 3, category: "country", catLabel: "Country Guide", catClass: "pill-country",
-    emoji: "🇨🇦",
-    thumbBg: "linear-gradient(135deg,#7f1d1d 0%,#0f172a 100%)",
-    title: "Studying in Canada: Everything Indian Students Need to Know in 2025",
-    excerpt: "PR pathways, tuition costs, top universities, PGWP explained — this is the only Canada guide you'll need before starting your application.",
-    readTime: "15 min read",
-    date: "Apr 22, 2025",
-    popular: false
-  },
-  {
-    id: 4, category: "sop", catLabel: "SOP Tips", catClass: "pill-sop",
-    emoji: "✍️",
-    thumbBg: "linear-gradient(135deg,#4c1d95 0%,#1e1b4b 100%)",
-    title: "How to Write an SOP That Gets You Into Top Universities",
-    excerpt: "The difference between a rejected and accepted SOP is storytelling. Learn the 5-paragraph structure, the 'thread technique', and the 3 mistakes that kill most applications.",
-    readTime: "8 min read",
-    date: "Apr 15, 2025",
-    popular: true
-  },
-  {
-    id: 5, category: "test", catLabel: "Test Prep", catClass: "pill-test",
-    emoji: "📝",
-    thumbBg: "linear-gradient(135deg,#78350f 0%,#1c1917 100%)",
-    title: "IELTS vs TOEFL vs PTE: Which Test Should You Take in 2025?",
-    excerpt: "A comprehensive, data-driven comparison of the three major English proficiency tests. Includes university acceptance rates, scoring patterns, and which test is easier for Indian students.",
-    readTime: "7 min read",
-    date: "Apr 10, 2025",
-    popular: true
-  },
-  {
-    id: 6, category: "deadline", catLabel: "Deadlines", catClass: "pill-deadline",
-    emoji: "📅",
-    thumbBg: "linear-gradient(135deg,#713f12 0%,#1c1917 100%)",
-    title: "Fall 2026 Application Deadlines: USA, UK & Canada Master's Programs",
-    excerpt: "Don't miss your intake window. This living document tracks rolling deadlines for 50+ programs across top universities for the Fall 2026 cycle.",
-    readTime: "5 min read",
-    date: "Apr 5, 2025",
-    popular: false
-  },
-  {
-    id: 7, category: "country", catLabel: "Country Guide", catClass: "pill-country",
-    emoji: "🇩🇪",
-    thumbBg: "linear-gradient(135deg,#1e3a8a 0%,#312e81 100%)",
-    title: "Studying in Germany for Free: The Complete Guide for Indian Students",
-    excerpt: "Public universities in Germany charge nearly zero tuition. But getting in requires specific preparation — German language, APS certificate, and more. Here's the full roadmap.",
-    readTime: "11 min read",
-    date: "Mar 28, 2025",
-    popular: false
-  },
-  {
-    id: 8, category: "sop", catLabel: "SOP Tips", catClass: "pill-sop",
-    emoji: "🔍",
-    thumbBg: "linear-gradient(135deg,#581c87 0%,#0f172a 100%)",
-    title: "LOR vs SOP: What Admissions Officers Actually Look For",
-    excerpt: "Misconceptions around Letters of Recommendation cost many students their admits. Learn what to ask your recommenders to write and what red-flag phrases to avoid.",
-    readTime: "6 min read",
-    date: "Mar 20, 2025",
-    popular: false
-  },
-  {
-    id: 9, category: "visa", catLabel: "Visa Guide", catClass: "pill-visa",
-    emoji: "🇬🇧",
-    thumbBg: "linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%)",
-    title: "UK Student Visa (Tier 4) Step-by-Step: 2025 Updated Guide",
-    excerpt: "CAS number, financial requirements, biometric enrollment, NHS surcharge — everything you need to apply for the UK Student Route visa without a single rejection.",
-    readTime: "10 min read",
-    date: "Mar 12, 2025",
-    popular: false
-  },
-  {
-    id: 10, category: "scholarship", catLabel: "Scholarships", catClass: "pill-scholarship",
-    emoji: "🎓",
-    thumbBg: "linear-gradient(135deg,#014737 0%,#0f172a 100%)",
-    title: "Australia Awards & Other Scholarships for Indian Students 2025",
-    excerpt: "A guide to government-funded and university-specific scholarships for students targeting Australian universities — including application timelines and insider tips.",
-    readTime: "8 min read",
-    date: "Mar 5, 2025",
-    popular: false
-  },
-];
-
-const ITEMS_PER_PAGE = 4;
-let currentFilter = 'all';
-let currentPage = 1;
-
-function filteredArticles() {
-  return currentFilter === 'all' ? articles : articles.filter(a => a.category === currentFilter);
-}
-
-function renderFeatured(filter) {
-  const sec = document.getElementById('featuredSection');
-  const featured = filter === 'all' ? articles.find(a => a.featured) : null;
-  if (!featured) { sec.innerHTML = ''; return; }
-  sec.innerHTML = `
-    <div class="featured-article fade-up">
-      <div class="featured-thumb thumb-placeholder" style="background:${featured.thumbBg}">
-        <span style="font-size:4.5rem;">${featured.emoji}</span>
-      </div>
-      <div class="featured-body">
-        <span class="cat-pill ${featured.catClass}">${featured.catLabel}</span>
-        <h2>${featured.title}</h2>
-        <p>${featured.excerpt}</p>
-        <div class="article-meta">
-          <span class="meta-item">⏱ ${featured.readTime}</span>
-          <span class="meta-item">📅 ${featured.date}</span>
-        </div>
-        <a href="#" class="read-more">Read Full Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
+  <div class="filter-bar">
+    <div class="filter-bar-inner" id="blogFilterTabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="visa">🛂 Visa Guide</button>
+      <button class="filter-tab" data-filter="scholarship">💰 Scholarships</button>
+      <button class="filter-tab" data-filter="country">🌍 Country Guides</button>
+      <button class="filter-tab" data-filter="sop">✍️ SOP Tips</button>
+      <button class="filter-tab" data-filter="test">📝 Test Prep</button>
+      <button class="filter-tab" data-filter="deadline">📅 Deadlines</button>
     </div>
-  `;
-  observer.observe(sec.querySelector('.fade-up'));
-}
+  </div>
 
-function renderArticles() {
-  const grid = document.getElementById('articlesGrid');
-  const all = filteredArticles().filter(a => !a.featured || currentFilter !== 'all');
-  const total = all.length;
-  const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-  const start = (currentPage - 1) * ITEMS_PER_PAGE;
-  const page = all.slice(start, start + ITEMS_PER_PAGE);
+  <div class="blog-layout">
+    <main>
+      <div id="featuredSection"></div>
+      <div class="articles-grid" id="articlesGrid"></div>
+      <div class="pagination" id="pagination"></div>
+    </main>
 
-  grid.innerHTML = '';
-  page.forEach((a, i) => {
-    const div = document.createElement('div');
-    div.className = 'article-card fade-up';
-    div.style.transitionDelay = (i % 2 * 0.1) + 's';
-    div.innerHTML = `
-      <div class="card-thumb" style="background:${a.thumbBg}">
-        <span>${a.emoji}</span>
+    <aside class="sidebar">
+      <div class="sidebar-card fade-up">
+        <h3>🔥 Popular Articles</h3>
+        <div id="popularList"></div>
       </div>
-      <div class="card-body">
-        <span class="cat-pill ${a.catClass}">${a.catLabel}</span>
-        <div class="card-title">${a.title}</div>
-        <div class="card-excerpt">${a.excerpt}</div>
-        <div class="card-footer">
-          <div class="card-meta">
-            <span>⏱ ${a.readTime}</span>
-            <span>📅 ${a.date}</span>
+      
+      <div class="sidebar-card fade-up delay-1">
+        <h3>📬 Weekly Digest</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">Get the latest visa updates and scholarship deadlines every week.</p>
+        <div id="newsletterForm" style="display:flex; flex-direction:column; gap:10px;">
+          <input type="email" id="sidebarEmail" placeholder="Your email address" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px;">
+          <button id="sidebarNewsBtn" class="btn-primary" style="width:100%; justify-content:center;">Subscribe Free →</button>
+        </div>
+        <div id="sidebarSuccess" style="display:none; padding:12px; background:#d1fae5; color:#065f46; border-radius:8px; text-align:center; font-weight:600; font-size:0.9rem;">
+          🎉 You're subscribed!
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-bottom" style="text-align:center; padding-top:40px; border-top:1px solid rgba(255,255,255,0.1);">
+        <p class="footer-copyright">&copy; 2025 Abrovo Education Pvt. Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div class="consult-overlay" id="globalConsultModal">
+    <div class="consult-modal">
+      <div class="consult-header">
+        <div><h2>Book Free Consultation</h2></div>
+        <button class="consult-close" id="closeConsultModal">✕</button>
+      </div>
+      <form id="consultForm">
+        <div class="cform-group"><label>Name</label><input type="text" required></div>
+        <div class="cform-group"><label>Phone</label><input type="tel" required></div>
+        <button type="submit" class="cform-submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Blog Data
+    const articles = [
+      { id: 1, featured: true, category: "visa", catLabel: "Visa Guide", catClass: "pill-visa", emoji: "🛂", thumbBg: "linear-gradient(135deg,#1e3a8a 0%,#0f172a 100%)", title: "Complete F-1 Student Visa Guide for Indian Students (2025)", excerpt: "Everything you need to know about applying for an F-1 visa — from DS-160 to the visa interview.", readTime: "12 min read", date: "May 8, 2025", popular: true },
+      { id: 2, category: "scholarship", catLabel: "Scholarships", catClass: "pill-scholarship", emoji: "💰", thumbBg: "linear-gradient(135deg,#065f46 0%,#0f172a 100%)", title: "Top 10 Fully-Funded Scholarships for Indian Students in 2025", excerpt: "From Chevening to Fulbright — a curated list of fully-funded opportunities with deadlines.", readTime: "9 min read", date: "Apr 29, 2025", popular: true },
+      { id: 3, category: "country", catLabel: "Country Guide", catClass: "pill-country", emoji: "🇨🇦", thumbBg: "linear-gradient(135deg,#7f1d1d 0%,#0f172a 100%)", title: "Studying in Canada: Everything Indian Students Need to Know", excerpt: "PR pathways, tuition costs, top universities, PGWP explained.", readTime: "15 min read", date: "Apr 22, 2025", popular: false },
+      { id: 4, category: "sop", catLabel: "SOP Tips", catClass: "pill-sop", emoji: "✍️", thumbBg: "linear-gradient(135deg,#4c1d95 0%,#1e1b4b 100%)", title: "How to Write an SOP That Gets You Into Top Universities", excerpt: "Learn the 5-paragraph structure, the 'thread technique', and the 3 mistakes to avoid.", readTime: "8 min read", date: "Apr 15, 2025", popular: true },
+      { id: 5, category: "test", catLabel: "Test Prep", catClass: "pill-test", emoji: "📝", thumbBg: "linear-gradient(135deg,#78350f 0%,#1c1917 100%)", title: "IELTS vs TOEFL vs PTE: Which Test Should You Take?", excerpt: "A comprehensive, data-driven comparison of the three major English proficiency tests.", readTime: "7 min read", date: "Apr 10, 2025", popular: true }
+    ];
+
+    const ITEMS_PER_PAGE = 4;
+    let currentFilter = 'all';
+    let currentPage = 1;
+
+    function filteredArticles() { return currentFilter === 'all' ? articles : articles.filter(a => a.category === currentFilter); }
+
+    function renderFeatured(filter) {
+      const sec = document.getElementById('featuredSection');
+      const featured = filter === 'all' ? articles.find(a => a.featured) : null;
+      if (!featured) { sec.innerHTML = ''; return; }
+      sec.innerHTML = `
+        <div class="featured-article fade-up">
+          <div class="featured-thumb" style="background:${featured.thumbBg}">${featured.emoji}</div>
+          <div class="featured-body">
+            <span class="cat-pill ${featured.catClass}">${featured.catLabel}</span>
+            <h2>${featured.title}</h2>
+            <p>${featured.excerpt}</p>
+            <div class="article-meta"><span>⏱ ${featured.readTime}</span><span>📅 ${featured.date}</span></div>
           </div>
-          <a href="#" class="read-more-card">Read More →</a>
         </div>
-      </div>
-    `;
-    grid.appendChild(div);
-    observer.observe(div);
-  });
+      `;
+    }
 
-  renderPagination(totalPages);
-}
+    function renderArticles() {
+      const grid = document.getElementById('articlesGrid');
+      const all = filteredArticles().filter(a => !a.featured || currentFilter !== 'all');
+      const totalPages = Math.ceil(all.length / ITEMS_PER_PAGE);
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const page = all.slice(start, start + ITEMS_PER_PAGE);
 
-function renderPagination(total) {
-  const pag = document.getElementById('pagination');
-  if (total <= 1) { pag.innerHTML = ''; return; }
-  let html = `<button class="page-btn prev-next" ${currentPage===1?'disabled':''} onclick="goPage(${currentPage-1})">← Prev</button>`;
-  for (let i = 1; i <= total; i++) {
-    html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-  }
-  html += `<button class="page-btn prev-next" ${currentPage===total?'disabled':''} onclick="goPage(${currentPage+1})">Next →</button>`;
-  pag.innerHTML = html;
-}
+      grid.innerHTML = '';
+      page.forEach((a, i) => {
+        grid.innerHTML += `
+          <div class="article-card fade-up">
+            <div class="card-thumb" style="background:${a.thumbBg}">${a.emoji}</div>
+            <div class="card-body">
+              <div><span class="cat-pill ${a.catClass}">${a.catLabel}</span></div>
+              <div class="card-title">${a.title}</div>
+              <div class="card-excerpt">${a.excerpt}</div>
+              <div class="card-footer"><span>${a.readTime}</span></div>
+            </div>
+          </div>
+        `;
+      });
+      renderPagination(totalPages);
+    }
 
-function goPage(n) {
-  currentPage = n;
-  renderArticles();
-  document.querySelector('.blog-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+    function renderPagination(total) {
+      const pag = document.getElementById('pagination');
+      if (total <= 1) { pag.innerHTML = ''; return; }
+      let html = `<button class="page-btn prev-next" ${currentPage===1?'disabled':''} onclick="goPage(${currentPage-1})">← Prev</button>`;
+      for (let i = 1; i <= total; i++) html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+      html += `<button class="page-btn prev-next" ${currentPage===total?'disabled':''} onclick="goPage(${currentPage+1})">Next →</button>`;
+      pag.innerHTML = html;
+    }
 
-function renderPopular() {
-  const popular = articles.filter(a => a.popular).slice(0, 5);
-  const list = document.getElementById('popularList');
-  list.innerHTML = popular.map((a, i) => `
-    <div class="popular-item">
-      <div class="popular-num">0${i+1}</div>
-      <div>
-        <div class="popular-title">${a.title}</div>
-        <div class="popular-meta">${a.readTime} · ${a.date}</div>
-      </div>
-    </div>
-  `).join('');
-}
+    function goPage(n) { currentPage = n; renderArticles(); }
 
-// Filter tabs
-document.getElementById('blogFilterTabs').addEventListener('click', e => {
-  if (!e.target.matches('.filter-tab')) return;
-  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-  e.target.classList.add('active');
-  currentFilter = e.target.dataset.filter;
-  currentPage = 1;
-  renderFeatured(currentFilter);
-  renderArticles();
-});
+    function renderPopular() {
+      document.getElementById('popularList').innerHTML = articles.filter(a => a.popular).slice(0, 5).map((a, i) => `
+        <div class="popular-item">
+          <div class="popular-num">0${i+1}</div>
+          <div><div class="popular-title">${a.title}</div><div style="font-size:0.75rem; color:var(--text-secondary)">${a.readTime}</div></div>
+        </div>
+      `).join('');
+    }
 
-// Newsletter
-document.getElementById('sidebarNewsBtn').addEventListener('click', () => {
-  const email = document.getElementById('sidebarEmail').value;
-  if (!email || !email.includes('@')) { document.getElementById('sidebarEmail').style.borderColor = '#ef4444'; return; }
-  document.getElementById('sidebarNewsBtn').style.display = 'none';
-  document.getElementById('sidebarEmail').style.display = 'none';
-  document.getElementById('sidebarSuccess').style.display = 'block';
-});
+    document.getElementById('blogFilterTabs').addEventListener('click', e => {
+      if (!e.target.matches('.filter-tab')) return;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      currentFilter = e.target.dataset.filter;
+      currentPage = 1;
+      renderFeatured(currentFilter);
+      renderArticles();
+    });
 
-// Observer
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.getElementById('sidebarNewsBtn').addEventListener('click', () => {
+      document.getElementById('newsletterForm').style.display = 'none';
+      document.getElementById('sidebarSuccess').style.display = 'block';
+    });
 
-// Navbar
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
-document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
-
-// Init
-renderFeatured('all');
-renderArticles();
-renderPopular();
-</script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFeatured('all');
+      renderArticles();
+      renderPopular();
+    });
+  </script>
 </body>
 </html>
