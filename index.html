@@ -50,16 +50,17 @@
     /* =========================================
        NAVBAR
     ========================================= */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      height: var(--nav-height);
-      display: flex;
-      align-items: center;
-      padding: 0 5%;
-      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
-    }
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  /* Added 'transform' to the transition list below */
+  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease, transform 0.4s ease;
+}
     .navbar.scrolled {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
@@ -71,6 +72,9 @@
     .navbar.scrolled .logo-dot { color: var(--accent); }
     .navbar.scrolled .logo-globe path { stroke: var(--text-primary); }
 
+    .navbar.navbar-hidden {
+  transform: translateY(-100%);
+    }
     .nav-inner {
       display: flex;
       align-items: center;
@@ -2470,10 +2474,29 @@
 
   <!-- ============ JAVASCRIPT ============ -->
   <script>
-    /* ---- Navbar scroll behaviour ---- */
+/* ---- Navbar scroll behaviour (Hide on scroll down, show on scroll up) ---- */
     const navbar = document.getElementById('navbar');
+    let lastScrollY = window.scrollY;
+
     window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
+      const currentScrollY = window.scrollY;
+
+      // 1. Toggle the solid/glass background when not at the very top
+      navbar.classList.toggle('scrolled', currentScrollY > 60);
+
+      // 2. Hide when scrolling down, show when scrolling up
+      // We also check if mobile menu is NOT open so we don't hide the nav while the user is navigating
+      const isMobileMenuOpen = document.getElementById('mobileMenu').classList.contains('open');
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 72 && !isMobileMenuOpen) {
+        // Scrolling down & past the navbar height
+        navbar.classList.add('navbar-hidden');
+      } else {
+        // Scrolling up (or at the top)
+        navbar.classList.remove('navbar-hidden');
+      }
+
+      lastScrollY = currentScrollY;
     }, { passive: true });
 
     /* ---- Hamburger menu ---- */
