@@ -16,9 +16,9 @@
        PAGE-SPECIFIC STYLES (Blog)
     ========================================= */
     .page-hero { background: var(--bg-dark); padding: 140px 5% 80px; text-align: center; position: relative; overflow: hidden; }
-    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%); }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%); pointer-events: none; }
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; color: rgba(255,255,255,0.8); font-size: 0.82rem; font-weight: 500; margin-bottom: 24px; position: relative; z-index: 2; }
-    .page-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); color: #fff; margin-bottom: 16px; position: relative; z-index: 2; }
+    .page-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); color: #fff; margin-bottom: 16px; position: relative; z-index: 2; line-height: 1.1; }
     .page-hero h1 em { color: var(--accent); font-style: normal; }
     .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto; line-height: 1.6; position: relative; z-index: 2; }
 
@@ -33,7 +33,7 @@
     .filter-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
 
     /* Featured Article */
-    .featured-article { background: var(--bg-dark); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 40px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; border: 1px solid var(--border); }
+    .featured-article { background: var(--bg-dark); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 40px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; border: 1px solid var(--border); min-height: 340px; }
     .featured-article:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(10,15,30,0.15); }
     .featured-thumb { display: flex; align-items: center; justify-content: center; font-size: 5rem; min-height: 300px; }
     .featured-body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
@@ -49,10 +49,11 @@
     .article-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
     .card-thumb { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
     .card-body { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
-    .card-title { font-family: var(--font-display); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3; }
+    .card-title { font-family: var(--font-display); font-size: 1.15rem; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3; }
     .card-excerpt { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px; flex-grow: 1; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-secondary); }
-    
+    .read-more-card { color: var(--accent); font-weight: 600; font-size: 0.85rem; }
+
     /* Category Colors */
     .pill-visa { background: #dbeafe; color: #1d4ed8; }
     .pill-scholarship { background: #d1fae5; color: #065f46; }
@@ -72,9 +73,14 @@
     .popular-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.4; transition: color 0.2s; }
     .popular-item:hover .popular-title { color: var(--accent); }
     
+    .resource-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: #fff; border: 1px solid var(--border); margin-bottom: 10px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+    .resource-item:last-child { margin-bottom: 0; }
+    .resource-item:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(37,99,235,0.1); }
+    .resource-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+
     /* Pagination */
     .pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 48px; }
-    .page-btn { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); background: #fff; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+    .page-btn { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); background: #fff; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
     .page-btn:hover, .page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
     .page-btn.prev-next { width: auto; padding: 0 16px; }
 
@@ -159,14 +165,39 @@
       
       <div class="sidebar-card fade-up delay-1">
         <h3>📬 Weekly Digest</h3>
-        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">Get the latest visa updates and scholarship deadlines every week.</p>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6;">Get the latest visa updates, scholarship deadlines, and study abroad tips every week.</p>
         <div id="newsletterForm" style="display:flex; flex-direction:column; gap:10px;">
-          <input type="email" id="sidebarEmail" placeholder="Your email address" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px;">
+          <input type="email" id="sidebarEmail" placeholder="Your email address" style="width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:10px; font-family:var(--font-body); font-size:0.95rem;">
           <button id="sidebarNewsBtn" class="btn-primary" style="width:100%; justify-content:center;">Subscribe Free →</button>
         </div>
-        <div id="sidebarSuccess" style="display:none; padding:12px; background:#d1fae5; color:#065f46; border-radius:8px; text-align:center; font-weight:600; font-size:0.9rem;">
+        <div id="sidebarSuccess" style="display:none; padding:14px; background:#d1fae5; color:#065f46; border-radius:10px; text-align:center; font-weight:600; font-size:0.9rem;">
           🎉 You're subscribed!
         </div>
+      </div>
+
+      <div class="sidebar-card fade-up delay-2">
+        <h3>📦 Free Resources</h3>
+        <a href="#" class="resource-item">
+          <div class="resource-icon" style="background:#dbeafe;">📄</div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">IELTS Prep Guide</div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary);">PDF · 48 pages · Free</div>
+          </div>
+        </a>
+        <a href="#" class="resource-item">
+          <div class="resource-icon" style="background:#d1fae5;">📝</div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">SOP Writing Template</div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary);">DOCX · Editable · Free</div>
+          </div>
+        </a>
+        <a href="#" class="resource-item">
+          <div class="resource-icon" style="background:#ede9fe;">🎓</div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">Scholarship Database</div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary);">Excel · 200+ entries · Free</div>
+          </div>
+        </a>
       </div>
     </aside>
   </div>
@@ -180,31 +211,46 @@
   <div class="consult-overlay" id="globalConsultModal">
     <div class="consult-modal">
       <div class="consult-header">
-        <div><h2>Book Free Consultation</h2></div>
+        <div><h2>Book Free Consultation</h2><p>Our experts will contact you shortly</p></div>
         <button class="consult-close" id="closeConsultModal">✕</button>
       </div>
       <form id="consultForm">
-        <div class="cform-group"><label>Name</label><input type="text" required></div>
-        <div class="cform-group"><label>Phone</label><input type="tel" required></div>
-        <button type="submit" class="cform-submit">Submit</button>
+        <div class="cform-group"><label>Full Name</label><input type="text" required placeholder="John Doe"></div>
+        <div class="cform-group"><label>Phone</label><input type="tel" required placeholder="+91 98765 43210"></div>
+        <button type="submit" class="cform-submit">Submit Request</button>
       </form>
     </div>
   </div>
 
   <script src="js/main.js"></script>
   <script>
-    // Blog Data
+    // --- Data ---
     const articles = [
-      { id: 1, featured: true, category: "visa", catLabel: "Visa Guide", catClass: "pill-visa", emoji: "🛂", thumbBg: "linear-gradient(135deg,#1e3a8a 0%,#0f172a 100%)", title: "Complete F-1 Student Visa Guide for Indian Students (2025)", excerpt: "Everything you need to know about applying for an F-1 visa — from DS-160 to the visa interview.", readTime: "12 min read", date: "May 8, 2025", popular: true },
-      { id: 2, category: "scholarship", catLabel: "Scholarships", catClass: "pill-scholarship", emoji: "💰", thumbBg: "linear-gradient(135deg,#065f46 0%,#0f172a 100%)", title: "Top 10 Fully-Funded Scholarships for Indian Students in 2025", excerpt: "From Chevening to Fulbright — a curated list of fully-funded opportunities with deadlines.", readTime: "9 min read", date: "Apr 29, 2025", popular: true },
-      { id: 3, category: "country", catLabel: "Country Guide", catClass: "pill-country", emoji: "🇨🇦", thumbBg: "linear-gradient(135deg,#7f1d1d 0%,#0f172a 100%)", title: "Studying in Canada: Everything Indian Students Need to Know", excerpt: "PR pathways, tuition costs, top universities, PGWP explained.", readTime: "15 min read", date: "Apr 22, 2025", popular: false },
-      { id: 4, category: "sop", catLabel: "SOP Tips", catClass: "pill-sop", emoji: "✍️", thumbBg: "linear-gradient(135deg,#4c1d95 0%,#1e1b4b 100%)", title: "How to Write an SOP That Gets You Into Top Universities", excerpt: "Learn the 5-paragraph structure, the 'thread technique', and the 3 mistakes to avoid.", readTime: "8 min read", date: "Apr 15, 2025", popular: true },
-      { id: 5, category: "test", catLabel: "Test Prep", catClass: "pill-test", emoji: "📝", thumbBg: "linear-gradient(135deg,#78350f 0%,#1c1917 100%)", title: "IELTS vs TOEFL vs PTE: Which Test Should You Take?", excerpt: "A comprehensive, data-driven comparison of the three major English proficiency tests.", readTime: "7 min read", date: "Apr 10, 2025", popular: true }
+      { id: 1, featured: true, category: "visa", catLabel: "Visa Guide", catClass: "pill-visa", emoji: "🛂", thumbBg: "linear-gradient(135deg,#1e3a8a 0%,#0f172a 100%)", title: "Complete F-1 Student Visa Guide for Indian Students (2025)", excerpt: "Everything you need to know about applying for an F-1 visa — from DS-160 to the visa interview. Step-by-step guide with real interview questions, document checklist, and common rejection reasons to avoid.", readTime: "12 min read", date: "May 8, 2025", popular: true },
+      { id: 2, category: "scholarship", catLabel: "Scholarships", catClass: "pill-scholarship", emoji: "💰", thumbBg: "linear-gradient(135deg,#065f46 0%,#0f172a 100%)", title: "Top 10 Fully-Funded Scholarships for Indian Students in 2025", excerpt: "From Chevening to Fulbright — a curated list of fully-funded opportunities with deadlines, eligibility criteria, and application tips from scholars who won them.", readTime: "9 min read", date: "Apr 29, 2025", popular: true },
+      { id: 3, category: "country", catLabel: "Country Guide", catClass: "pill-country", emoji: "🇨🇦", thumbBg: "linear-gradient(135deg,#7f1d1d 0%,#0f172a 100%)", title: "Studying in Canada: Everything Indian Students Need to Know in 2025", excerpt: "PR pathways, tuition costs, top universities, PGWP explained — this is the only Canada guide you'll need before starting your application.", readTime: "15 min read", date: "Apr 22, 2025", popular: false },
+      { id: 4, category: "sop", catLabel: "SOP Tips", catClass: "pill-sop", emoji: "✍️", thumbBg: "linear-gradient(135deg,#4c1d95 0%,#1e1b4b 100%)", title: "How to Write an SOP That Gets You Into Top Universities", excerpt: "The difference between a rejected and accepted SOP is storytelling. Learn the 5-paragraph structure, the 'thread technique', and the 3 mistakes that kill most applications.", readTime: "8 min read", date: "Apr 15, 2025", popular: true },
+      { id: 5, category: "test", catLabel: "Test Prep", catClass: "pill-test", emoji: "📝", thumbBg: "linear-gradient(135deg,#78350f 0%,#1c1917 100%)", title: "IELTS vs TOEFL vs PTE: Which Test Should You Take in 2025?", excerpt: "A comprehensive, data-driven comparison of the three major English proficiency tests. Includes university acceptance rates, scoring patterns, and which test is easier for Indian students.", readTime: "7 min read", date: "Apr 10, 2025", popular: true },
+      { id: 6, category: "deadline", catLabel: "Deadlines", catClass: "pill-deadline", emoji: "📅", thumbBg: "linear-gradient(135deg,#713f12 0%,#1c1917 100%)", title: "Fall 2026 Application Deadlines: USA, UK & Canada Master's Programs", excerpt: "Don't miss your intake window. This living document tracks rolling deadlines for 50+ programs across top universities for the Fall 2026 cycle.", readTime: "5 min read", date: "Apr 5, 2025", popular: false },
+      { id: 7, category: "country", catLabel: "Country Guide", catClass: "pill-country", emoji: "🇩🇪", thumbBg: "linear-gradient(135deg,#1e3a8a 0%,#312e81 100%)", title: "Studying in Germany for Free: The Complete Guide for Indian Students", excerpt: "Public universities in Germany charge nearly zero tuition. But getting in requires specific preparation — German language, APS certificate, and more. Here's the full roadmap.", readTime: "11 min read", date: "Mar 28, 2025", popular: false },
+      { id: 8, category: "sop", catLabel: "SOP Tips", catClass: "pill-sop", emoji: "🔍", thumbBg: "linear-gradient(135deg,#581c87 0%,#0f172a 100%)", title: "LOR vs SOP: What Admissions Officers Actually Look For", excerpt: "Misconceptions around Letters of Recommendation cost many students their admits. Learn what to ask your recommenders to write and what red-flag phrases to avoid.", readTime: "6 min read", date: "Mar 20, 2025", popular: false },
+      { id: 9, category: "visa", catLabel: "Visa Guide", catClass: "pill-visa", emoji: "🇬🇧", thumbBg: "linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%)", title: "UK Student Visa (Tier 4) Step-by-Step: 2025 Updated Guide", excerpt: "CAS number, financial requirements, biometric enrollment, NHS surcharge — everything you need to apply for the UK Student Route visa without a single rejection.", readTime: "10 min read", date: "Mar 12, 2025", popular: false },
+      { id: 10, category: "scholarship", catLabel: "Scholarships", catClass: "pill-scholarship", emoji: "🎓", thumbBg: "linear-gradient(135deg,#014737 0%,#0f172a 100%)", title: "Australia Awards & Other Scholarships for Indian Students 2025", excerpt: "A guide to government-funded and university-specific scholarships for students targeting Australian universities — including application timelines and insider tips.", readTime: "8 min read", date: "Mar 5, 2025", popular: false }
     ];
 
     const ITEMS_PER_PAGE = 4;
     let currentFilter = 'all';
     let currentPage = 1;
+    
+    // Create local intersection observer for dynamically generated elements
+    const gridObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          gridObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
     function filteredArticles() { return currentFilter === 'all' ? articles : articles.filter(a => a.category === currentFilter); }
 
@@ -223,6 +269,7 @@
           </div>
         </div>
       `;
+      gridObserver.observe(sec.querySelector('.fade-up'));
     }
 
     function renderArticles() {
@@ -234,17 +281,23 @@
 
       grid.innerHTML = '';
       page.forEach((a, i) => {
-        grid.innerHTML += `
-          <div class="article-card fade-up">
-            <div class="card-thumb" style="background:${a.thumbBg}">${a.emoji}</div>
-            <div class="card-body">
-              <div><span class="cat-pill ${a.catClass}">${a.catLabel}</span></div>
-              <div class="card-title">${a.title}</div>
-              <div class="card-excerpt">${a.excerpt}</div>
-              <div class="card-footer"><span>${a.readTime}</span></div>
+        const div = document.createElement('div');
+        div.className = 'article-card fade-up';
+        div.style.transitionDelay = (i % 2 * 0.1) + 's';
+        div.innerHTML = `
+          <div class="card-thumb" style="background:${a.thumbBg}">${a.emoji}</div>
+          <div class="card-body">
+            <div><span class="cat-pill ${a.catClass}">${a.catLabel}</span></div>
+            <div class="card-title">${a.title}</div>
+            <div class="card-excerpt">${a.excerpt}</div>
+            <div class="card-footer">
+              <span>⏱ ${a.readTime}</span>
+              <span class="read-more-card">Read More →</span>
             </div>
           </div>
         `;
+        grid.appendChild(div);
+        gridObserver.observe(div);
       });
       renderPagination(totalPages);
     }
@@ -258,13 +311,20 @@
       pag.innerHTML = html;
     }
 
-    function goPage(n) { currentPage = n; renderArticles(); }
+    function goPage(n) { 
+      currentPage = n; 
+      renderArticles(); 
+      document.querySelector('.blog-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
     function renderPopular() {
       document.getElementById('popularList').innerHTML = articles.filter(a => a.popular).slice(0, 5).map((a, i) => `
         <div class="popular-item">
           <div class="popular-num">0${i+1}</div>
-          <div><div class="popular-title">${a.title}</div><div style="font-size:0.75rem; color:var(--text-secondary)">${a.readTime}</div></div>
+          <div>
+            <div class="popular-title">${a.title}</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:2px;">⏱ ${a.readTime} · 📅 ${a.date}</div>
+          </div>
         </div>
       `).join('');
     }
@@ -280,6 +340,11 @@
     });
 
     document.getElementById('sidebarNewsBtn').addEventListener('click', () => {
+      const email = document.getElementById('sidebarEmail').value;
+      if(!email || !email.includes('@')) {
+        document.getElementById('sidebarEmail').style.borderColor = '#ef4444';
+        return;
+      }
       document.getElementById('newsletterForm').style.display = 'none';
       document.getElementById('sidebarSuccess').style.display = 'block';
     });

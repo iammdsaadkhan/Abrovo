@@ -16,11 +16,17 @@
        PAGE-SPECIFIC STYLES (Stories)
     ========================================= */
     .page-hero { background: var(--bg-dark); padding: 140px 5% 80px; text-align: center; position: relative; overflow: hidden; }
-    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%); }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%); pointer-events: none; }
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; color: rgba(255,255,255,0.8); font-size: 0.82rem; font-weight: 500; margin-bottom: 24px; position: relative; z-index: 2; }
     .page-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); color: #fff; margin-bottom: 16px; position: relative; z-index: 2; line-height: 1.1; }
     .page-hero h1 em { color: var(--accent); font-style: normal; }
     .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto; line-height: 1.6; position: relative; z-index: 2; }
+
+    /* Stats Band */
+    .hero-stats { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-top: 48px; position: relative; z-index: 2; }
+    .hero-stat { text-align: center; }
+    .hero-stat .num { font-family: var(--font-mono); font-size: 2.2rem; font-weight: 600; color: #93c5fd; line-height: 1; }
+    .hero-stat .label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 
     /* Featured Story */
     .featured-section { padding: 80px 5%; background: var(--bg-white); }
@@ -29,9 +35,16 @@
     .featured-avatar { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #7c3aed); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 4rem; color: #fff; border: 4px solid rgba(255,255,255,0.2); margin: 0 auto 16px; }
     .featured-tag { background: var(--success); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; }
     .featured-content { padding: 48px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
-    .featured-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .featured-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .featured-label::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
     .featured-content h2 { font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 4px; }
     .featured-quote { font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.85); font-style: italic; border-left: 3px solid var(--accent); padding-left: 20px; margin: 24px 0; }
+
+    /* Before & After */
+    .before-after { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 20px; background: rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; }
+    .ba-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .ba-value { font-size: 0.95rem; color: rgba(255,255,255,0.9); font-weight: 500; line-height: 1.5; }
+    .ba-divider { background: rgba(255,255,255,0.1); width: 1px; height: 100%; }
 
     /* Stories Grid */
     .stories-section { padding: 40px 5% 96px; background: var(--card-bg); }
@@ -40,24 +53,44 @@
     .filter-tab.active, .filter-tab:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
     
     .stories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
-    .story-card { background: #fff; border-radius: 16px; border: 1px solid var(--border); padding: 24px; transition: transform 0.3s, box-shadow 0.3s; border-bottom: 4px solid transparent; }
+    .story-card { background: #fff; border-radius: 16px; border: 1px solid var(--border); padding: 24px; transition: transform 0.3s, box-shadow 0.3s; border-bottom: 3px solid transparent; }
     .story-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); border-bottom-color: var(--accent); }
     .story-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-    .story-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.6rem; color: #fff; }
-    .story-name { font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
-    .story-uni { font-family: var(--font-display); font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; }
-    .story-quote { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; font-style: italic; }
+    .story-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.6rem; color: #fff; flex-shrink: 0; }
+    .story-meta { flex: 1; }
+    .story-name { font-weight: 700; font-size: 1.05rem; color: var(--text-primary); }
+    .country-badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid; flex-shrink: 0; }
+    .country-usa { background: #dbeafe; color: #1d4ed8; border-color: #bfdbfe; }
+    .country-uk { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
+    .country-canada { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+    .country-australia { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+    .country-germany { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+    
+    .story-uni { font-family: var(--font-display); font-size: 1.15rem; color: var(--text-primary); margin-bottom: 8px; }
+    .story-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag { background: var(--card-bg); border: 1px solid var(--border); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+    .story-quote { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; font-style: italic; border-top: 1px solid var(--border); padding-top: 16px; }
+    .story-quote::before { content: '"'; color: var(--accent); font-size: 1.2rem; font-weight: 700; font-style: normal; }
 
     /* Videos */
     .video-section { padding: 96px 5%; background: var(--bg-white); }
     .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
-    .video-thumb { border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; background: var(--bg-dark); position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .play-btn { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+    .video-thumb { border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; background: var(--bg-dark); position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.3s, box-shadow 0.3s; }
+    .video-thumb:hover { transform: scale(1.03); box-shadow: 0 16px 48px rgba(0,0,0,0.15); }
+    .play-btn { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); border: 2px solid #fff; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; z-index: 2; position: relative; }
     .video-thumb:hover .play-btn { transform: scale(1.1); background: var(--accent); border-color: var(--accent); }
+    
+    .video-info-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 32px 20px 20px; z-index: 2; text-align: center; }
+    .vname { color: #fff; font-weight: 600; font-size: 1rem; }
+    .vuni { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; }
+    
+    .video-avatar { position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); color: #fff; font-size: 1.2rem; z-index: 2; }
 
     @media (max-width: 900px) {
       .featured-card { grid-template-columns: 1fr; }
       .featured-photo { padding: 60px 20px; }
+      .before-after { grid-template-columns: 1fr; gap: 16px; }
+      .ba-divider { display: none; }
     }
   </style>
 </head>
@@ -102,7 +135,14 @@
   <section class="page-hero">
     <div class="hero-badge fade-up">Student Testimonials</div>
     <h1 class="fade-up delay-1">10,000+ <em>Dreams</em><br>Fulfilled</h1>
-    <p class="fade-up delay-2">Real stories from real students. Your dream university is closer than you think.</p>
+    <p class="fade-up delay-2">Real stories from real students — from Kolkata to Cambridge, from Mumbai to Melbourne. Your dream university is closer than you think.</p>
+    
+    <div class="hero-stats fade-up delay-3">
+      <div class="hero-stat"><div class="num">10,000+</div><div class="label">Students Placed</div></div>
+      <div class="hero-stat"><div class="num">500+</div><div class="label">Universities</div></div>
+      <div class="hero-stat"><div class="num">20+</div><div class="label">Countries</div></div>
+      <div class="hero-stat"><div class="num">98%</div><div class="label">Visa Success</div></div>
+    </div>
   </section>
 
   <section class="featured-section">
@@ -116,10 +156,23 @@
       <div class="featured-content">
         <div class="featured-label">USA · Master's · Fall 2024</div>
         <h2>Priya Sharma</h2>
-        <div style="color: rgba(255,255,255,0.6); margin-bottom: 16px;">From Kolkata → Carnegie Mellon University</div>
+        <div style="color: rgba(255,255,255,0.6); margin-bottom: 16px;">From Kolkata → Carnegie Mellon University, Pittsburgh</div>
         <blockquote class="featured-quote">
           "I came to Abrovo with a 3.2 GPA, no research experience, and absolutely no idea how to approach US universities. They not only helped me craft a compelling story around my work experience, but also identified programs I had never considered. Getting into CMU's MSCS program still feels surreal."
         </blockquote>
+        
+        <div class="before-after">
+          <div>
+            <div class="ba-label">📋 When She Came</div>
+            <div class="ba-value">B.Tech CSE, 3.2 GPA<br>2 yrs software experience<br>IELTS 7.0, No GRE</div>
+          </div>
+          <div class="ba-divider"></div>
+          <div>
+            <div class="ba-label">🎓 Result</div>
+            <div class="ba-value">MS Computer Science<br>Carnegie Mellon University<br>$22,000 Merit Scholarship</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -127,19 +180,29 @@
   <section class="stories-section">
     <div class="filter-tabs" id="storyFilterTabs">
       <button class="filter-tab active" data-filter="all">All Stories</button>
-      <button class="filter-tab" data-filter="USA">🇺🇸 USA</button>
-      <button class="filter-tab" data-filter="UK">🇬🇧 UK</button>
-      <button class="filter-tab" data-filter="Canada">🇨🇦 Canada</button>
-      <button class="filter-tab" data-filter="Australia">🇦🇺 Australia</button>
+      <button class="filter-tab" data-filter="usa">🇺🇸 USA</button>
+      <button class="filter-tab" data-filter="uk">🇬🇧 UK</button>
+      <button class="filter-tab" data-filter="canada">🇨🇦 Canada</button>
+      <button class="filter-tab" data-filter="australia">🇦🇺 Australia</button>
+      <button class="filter-tab" data-filter="germany">🇩🇪 Germany</button>
     </div>
     <div class="stories-grid" id="storiesGrid"></div>
+    <div id="noResults" style="display:none; text-align:center; padding: 48px; color:var(--text-secondary);">No stories found for this filter.</div>
   </section>
 
   <section class="video-section">
-    <div style="text-align: center; margin-bottom: 48px;">
-      <h2 style="font-family: var(--font-display); font-size: 2.5rem; color: var(--text-primary);">Hear It From Them</h2>
+    <div style="text-align: center; margin-bottom: 48px;" class="fade-up">
+      <div style="font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px;">Video Testimonials</div>
+      <h2 style="font-family: var(--font-display); font-size: 2.5rem; color: var(--text-primary);">Hear It From Our Students</h2>
+      <p style="color: var(--text-secondary); margin-top: 8px;">Watch real students talk about their journey with Abrovo — from application to offer letter.</p>
     </div>
     <div class="video-grid" id="videoGrid"></div>
+  </section>
+
+  <section style="background: var(--bg-dark); padding: 96px 5%; text-align: center; color: #fff;">
+    <h2 class="fade-up" style="font-family: var(--font-display); font-size: 2.8rem; margin-bottom: 16px;">Ready to Write<br><em style="color:var(--accent);font-style:normal;">Your Story?</em></h2>
+    <p class="fade-up delay-1" style="color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 32px; line-height: 1.6;">Join 10,000+ students who trusted Abrovo to guide them to their dream university. Your free consultation is just one click away.</p>
+    <button class="btn-primary fade-up delay-2" data-consult style="padding: 16px 32px; font-size: 1.05rem;">Start Free Consultation →</button>
   </section>
 
   <footer class="footer">
@@ -151,13 +214,13 @@
   <div class="consult-overlay" id="globalConsultModal">
     <div class="consult-modal">
       <div class="consult-header">
-        <div><h2>Book Free Consultation</h2></div>
+        <div><h2>Book Free Consultation</h2><p>Our experts will contact you shortly</p></div>
         <button class="consult-close" id="closeConsultModal">✕</button>
       </div>
       <form id="consultForm">
-        <div class="cform-group"><label>Name</label><input type="text" required></div>
-        <div class="cform-group"><label>Phone</label><input type="tel" required></div>
-        <button type="submit" class="cform-submit">Submit</button>
+        <div class="cform-group"><label>Full Name</label><input type="text" required placeholder="John Doe"></div>
+        <div class="cform-group"><label>Phone</label><input type="tel" required placeholder="+91 98765 43210"></div>
+        <button type="submit" class="cform-submit">Submit Request</button>
       </form>
     </div>
   </div>
@@ -166,27 +229,63 @@
   <script>
     // Story Data Logic
     const stories = [
-      { name:"Priya Sharma", city:"Kolkata", country:"USA", uni:"Carnegie Mellon University", quote:"They turned my average profile into a compelling story.", avatar:"P", bg:"linear-gradient(135deg,#2563EB,#7c3aed)" },
-      { name:"Arjun Mehta", city:"Mumbai", country:"UK", uni:"London School of Economics", quote:"My SOP was mediocre until Abrovo rewrote it.", avatar:"A", bg:"linear-gradient(135deg,#0f172a,#1e3a8a)" },
-      { name:"Sneha Reddy", city:"Hyderabad", country:"Canada", uni:"Rotman School of Management", quote:"The mock interview sessions were intense but worth it.", avatar:"S", bg:"linear-gradient(135deg,#dc2626,#ea580c)" },
-      { name:"Rohit Verma", city:"Delhi", country:"Australia", uni:"University of Melbourne", quote:"From profile evaluation to visa stamp — Abrovo was there.", avatar:"R", bg:"linear-gradient(135deg,#059669,#0284c7)" }
+      { id:1, name:"Priya Sharma", city:"Kolkata", country:"usa", countryLabel:"USA", program:"MS Computer Science", uni:"Carnegie Mellon University", intake:"Fall 2024", quote:"They turned my average profile into a compelling story. CMU was a dream I barely dared to say out loud.", avatar:"P", avatarBg:"linear-gradient(135deg,#2563EB,#7c3aed)" },
+      { id:2, name:"Arjun Mehta", city:"Mumbai", country:"uk", countryLabel:"UK", program:"MSc Finance", uni:"London School of Economics", intake:"Sep 2023", quote:"My SOP was mediocre until Abrovo rewrote it. LSE admitted me with a partial scholarship I hadn't even applied for.", avatar:"A", avatarBg:"linear-gradient(135deg,#0f172a,#1e3a8a)" },
+      { id:3, name:"Sneha Reddy", city:"Hyderabad", country:"canada", countryLabel:"Canada", program:"MBA", uni:"Rotman School of Management", intake:"Sep 2024", quote:"The mock interview sessions were intense but worth it. Rotman's offer was the best day of my professional life.", avatar:"S", avatarBg:"linear-gradient(135deg,#dc2626,#ea580c)" },
+      { id:4, name:"Rohit Verma", city:"Delhi", country:"australia", countryLabel:"Australia", program:"MS Data Science", uni:"University of Melbourne", intake:"Feb 2024", quote:"From profile evaluation to visa stamp — Abrovo was there every single step. Could not have done this alone.", avatar:"R", avatarBg:"linear-gradient(135deg,#059669,#0284c7)" },
+      { id:5, name:"Ananya Iyer", city:"Chennai", country:"germany", countryLabel:"Germany", program:"MS Mechanical Engineering", uni:"TU Munich", intake:"Oct 2023", quote:"TU Munich was a stretch. My counsellor helped me identify exactly what was missing and we fixed it. Admitted!", avatar:"A", avatarBg:"linear-gradient(135deg,#d97706,#b45309)" },
+      { id:6, name:"Karan Bhatia", city:"Pune", country:"usa", countryLabel:"USA", program:"MS Electrical Engineering", uni:"University of Michigan", intake:"Fall 2023", quote:"Three rejections before coming to Abrovo. One attempt after — UMich. The difference was the guidance.", avatar:"K", avatarBg:"linear-gradient(135deg,#7c3aed,#2563EB)" },
+      { id:7, name:"Nidhi Gupta", city:"Bangalore", country:"uk", countryLabel:"UK", program:"MA International Relations", uni:"University of Edinburgh", intake:"Sep 2024", quote:"Edinburgh was always my dream. Abrovo made it happen in my very first cycle. Their SOP team is exceptional.", avatar:"N", avatarBg:"linear-gradient(135deg,#0891b2,#0f172a)" },
+      { id:8, name:"Dev Patel", city:"Ahmedabad", country:"canada", countryLabel:"Canada", program:"MS Artificial Intelligence", uni:"University of Toronto", intake:"Jan 2024", quote:"From shortlisting to acceptance — 6 months. UofT AI program. Abrovo's connections made the difference.", avatar:"D", avatarBg:"linear-gradient(135deg,#be123c,#7c3aed)" }
     ];
+
+    function countryClass(c) {
+      return { usa:"country-usa", uk:"country-uk", canada:"country-canada", australia:"country-australia", germany:"country-germany" }[c] || "country-usa";
+    }
+
+    const gridObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          gridObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
     function renderStories(filter) {
       const grid = document.getElementById('storiesGrid');
+      const noRes = document.getElementById('noResults');
       grid.innerHTML = '';
+      
       const data = filter === 'all' ? stories : stories.filter(s => s.country === filter);
-      data.forEach(s => {
-        grid.innerHTML += `
-          <div class="story-card fade-up">
-            <div class="story-header">
-              <div class="story-avatar" style="background:${s.bg}">${s.avatar}</div>
-              <div><div class="story-name">${s.name}</div><div style="font-size:0.8rem; color:var(--text-secondary)">📍 ${s.city}</div></div>
+      if (!data.length) { 
+        noRes.style.display = 'block'; 
+        return; 
+      }
+      noRes.style.display = 'none';
+
+      data.forEach((s, i) => {
+        const card = document.createElement('div');
+        card.className = 'story-card fade-up';
+        card.style.transitionDelay = (i % 3 * 0.1) + 's';
+        card.innerHTML = `
+          <div class="story-header">
+            <div class="story-avatar" style="background:${s.avatarBg}">${s.avatar}</div>
+            <div class="story-meta">
+              <div class="story-name">${s.name}</div>
+              <div style="font-size:0.8rem; color:var(--text-secondary)">📍 ${s.city}</div>
             </div>
-            <div class="story-uni">${s.uni}</div>
-            <div class="story-quote">"${s.quote}"</div>
+            <span class="country-badge ${countryClass(s.country)}">${s.countryLabel}</span>
           </div>
+          <div class="story-uni">Got into <span style="color:var(--accent)">${s.uni}</span></div>
+          <div class="story-tags">
+            <span class="tag">${s.program}</span>
+            <span class="tag">${s.intake}</span>
+          </div>
+          <div class="story-quote">${s.quote}</div>
         `;
+        grid.appendChild(card);
+        gridObserver.observe(card);
       });
     }
 
@@ -198,19 +297,32 @@
     });
 
     const videos = [
-      { bg:"linear-gradient(135deg,#1e3a8a,#0f172a)" },
-      { bg:"linear-gradient(135deg,#7c3aed,#0f172a)" },
-      { bg:"linear-gradient(135deg,#059669,#0f172a)" }
+      { name:"Rahul Nair", detail:"MS CS → Stanford University", grad:"R", bg1:"#1e3a8a", bg2:"#0f172a" },
+      { name:"Meera Sharma", detail:"MBA → INSEAD, France", grad:"M", bg1:"#7c3aed", bg2:"#0f172a" },
+      { name:"Tarun Agarwal", detail:"MS Finance → Imperial College", grad:"T", bg1:"#059669", bg2:"#0f172a" },
+      { name:"Pooja Krishnan", detail:"MS AI → University of Toronto", grad:"P", bg1:"#dc2626", bg2:"#0f172a" },
+      { name:"Sahil Saxena", detail:"MS Robotics → ETH Zurich", grad:"S", bg1:"#d97706", bg2:"#0f172a" },
+      { name:"Diya Malhotra", detail:"MArch → UCL London", grad:"D", bg1:"#0891b2", bg2:"#0f172a" }
     ];
 
     function renderVideos() {
       const grid = document.getElementById('videoGrid');
-      videos.forEach(v => {
-        grid.innerHTML += `
-          <div class="video-thumb fade-up" style="background:${v.bg}" onclick="alert('Video Play')">
-            <div class="play-btn"><svg viewBox="0 0 24 24" fill="#fff" width="24" style="margin-left:4px;"><path d="M8 5v14l11-7z"/></svg></div>
+      videos.forEach((v, i) => {
+        const el = document.createElement('div');
+        el.className = 'video-thumb fade-up';
+        el.style.background = `linear-gradient(135deg, ${v.bg1}, ${v.bg2})`;
+        el.style.transitionDelay = (i % 3 * 0.1) + 's';
+        el.onclick = () => alert(`Video: ${v.name} – ${v.detail}\n(Connect a YouTube embed in production)`);
+        el.innerHTML = `
+          <div class="play-btn"><svg viewBox="0 0 24 24" fill="#fff" width="24" style="margin-left:4px;"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-avatar" style="background:linear-gradient(135deg, ${v.bg1}, ${v.bg2})">${v.grad}</div>
+          <div class="video-info-overlay">
+            <div class="vname">${v.name}</div>
+            <div class="vuni">${v.detail}</div>
           </div>
         `;
+        grid.appendChild(el);
+        gridObserver.observe(el);
       });
     }
 
